@@ -10,6 +10,6 @@
         <property name="connection.useUnicode">true</property>
         <property name="connection.characterEncoding">utf8</property>
 
-        <mapping resource="classpath:java/entity/Student.hbm.xml" />
+        <mapping resource="classpath:java/entity/User.hbm.xml" />
     </session-factory>
 </hibernate-configuration>

@@ -4,8 +4,10 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
     <package name="demo1" extends="struts-default" namespace="/">
-        <action name="Student_*" class="studentAction" method="{1}">
-            <result name="success">/success.html</result>
+        <action name="user_*" class="userAction" method="{1}">
+            <result name="admin">/admin.html</result>
+            <result name="teacher">/teacher.html</result>
+            <result name="student">/student.html</result>
         </action>
     </package>
 

@@ -15,33 +15,34 @@
 
     <!-- 配置c3p0连接池 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
-        <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/ssh"></property>
-        <property name="user" value="root"></property>
-        <property name="password" value="123456"></property>
+        <property name="driverClass" value="com.mysql.jdbc.Driver" />
+        <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/ssh" />
+        <property name="user" value="root" />
+        <property name="password" value="123456" />
     </bean>
 
     <!-- sessionfactory创建 -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"></property>
-        <property name="configLocations" value="classpath:hibernate.cfg.xml"></property>
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocations" value="classpath:hibernate.cfg.xml" />
     </bean>
 
     <!-- 事务管理器 -->
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"></property>
+        <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <bean id="studentDao" class="dao.StudentDaoImpl">
-        <property name="sessionFactory" ref="sessionFactory"></property>
-    </bean>
-    <bean id="studentService" class="service.StudentServiceImpl">
-        <property name="studentDao" ref="studentDao"></property>
+    <bean id="userDao" class="dao.UserDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
-    <bean id="studentAction" class="action.StudentAction">
-        <property name="studentService" ref="studentService"></property>
+    <bean id="userService" class="service.UserServiceImpl" >
+        <property name="userDao" ref="userDao" />
+    </bean>
+
+    <bean id="userAction" class="action.UserAction">
+        <property name="userService" ref="userService" />
     </bean>
 </beans>
