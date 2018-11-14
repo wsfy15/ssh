@@ -1,0 +1,39 @@
+目录结构
+
+src/main/java： 存放java类
+src/test/java： 存放JUnit tests
+src/main/resources： 配置文件
+src/main/webapp/resources： includes CSS, images and all Javascript files
+
+src/main/webapp/WEB-INF：
+在该目录之外的资源，用户是可以通过浏览器进行直接访问的，位于该目录下的所有资源，用户通过浏览器是无法访问的，
+但内部servlet（getResource、getResourceAsStream方法）是可以进行调用的。
+所以很多mvc框架（如：springmvc）提倡，将jsp文件放在WEB-INF目录下进行保护，所有的jsp访问都通过servlet进行跳转。
+
+src/main/webapp/WEB-INF/classes： will contain all compiled java classes and resources
+src/main/webapp/WEB-INF/tags：
+src/main/webapp/WEB-INF/views：
+
+
+解决hibernate + mysql中文查询不出结果，单独sql语句正常
+修改配置数据库链接处
+<property name="jdbcUrl">
+    <value>jdbc:mysql:///crm?useUnicode=true&amp;characterEncoding=UTF-8</value>
+</property>
+
+创建数据库指定utf8编码
+    CREATE DATABASE dbname DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+
+创建表指定utf8编码
+    CREATE TABLE 'author' (
+        'authorid' char(20) NOT NULL,
+        'name' char(20) NOT NULL,
+        'age' char(20) NOT NULL,
+        'country' char(20) NOT NULL
+    ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
+
+业务层实现类记得加上 @Transactional
+
+
