@@ -70,5 +70,6 @@
     <orderEntry type="library" name="Maven: org.apache.struts:struts2-spring-plugin:2.3.35" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.2" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-entitymanager:5.0.7.Final" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.51" level="project" />
   </component>
 </module>

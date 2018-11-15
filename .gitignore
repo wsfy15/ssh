@@ -16,7 +16,7 @@
 *.rar
 
 
-.idea/
-javaProject.iml
+#.idea/
+#ssh.iml
 target/
 

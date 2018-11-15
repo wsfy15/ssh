@@ -12,16 +12,14 @@
            <h1 align="center">用户登录</h1><br>
            <div align="center">
                 <label>用户名：
-             <input type="text" name="id" value="Your name"
-                    onfocus="if(this.value=='Your name')this.value='';" >
+                    <input type="text" name="id" >
                 </label>
                 <label>密码：
-             <input type="password" name="password" value="Your password"
-                    onfocus="if(this.value=='Your password')this.value='';">
+                    <input type="password" name="password">
                 </label>
 
-             <input type="submit" name="Submit"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-             <input type="reset" name="Reset" value="重置">
+             <input type="submit" > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             <input type="reset"  value="重置">
                 <br>
            </div>
         </form>
