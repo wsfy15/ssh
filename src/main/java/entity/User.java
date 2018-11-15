@@ -39,7 +39,7 @@ public class User {
         return password;
     }
 
-    public void setPassword(String passwd) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -49,5 +49,10 @@ public class User {
 
     public void setClassNo(String classNo) {
         this.classNo = classNo;
+    }
+
+    @Override
+    public String toString(){
+        return "id: " + this.id + "\npasswd: " + this.password + "\nname: " + this.name;
     }
 }

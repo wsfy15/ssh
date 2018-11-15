@@ -25,7 +25,8 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
         s.setId("2015211000");
         s.setClassNo("2015211001");
         s.setName("小明");
-        s.setPassword(MD5utils.md5("123"));
+        s.setPassword(MD5utils.md5("123456"));
+        s.setRole(0);
 
         this.userService.save(s);
         return SUCCESS;

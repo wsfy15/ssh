@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User s) {
+        System.out.println(s);
         this.userDao.save(s);
     }
 

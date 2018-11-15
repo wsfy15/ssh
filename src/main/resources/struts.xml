@@ -8,6 +8,7 @@
             <result name="admin">/admin.html</result>
             <result name="teacher">/teacher.html</result>
             <result name="student">/student.html</result>
+            <result name="success">/success.html</result>
         </action>
     </package>
 
