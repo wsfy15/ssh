@@ -11,5 +11,6 @@
         <property name="connection.characterEncoding">utf8</property>
 
         <mapping resource="classpath:java/entity/User.hbm.xml" />
+        <mapping resource="classpath:java/entity/Course.hbm.xml" />
     </session-factory>
 </hibernate-configuration>

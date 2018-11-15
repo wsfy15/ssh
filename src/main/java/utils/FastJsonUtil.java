@@ -21,7 +21,7 @@ public class FastJsonUtil {
 		return JSON.toJSONString(object,SerializerFeature.DisableCircularReferenceDetect);
 	}
 	//输出json
-	public static void write_json(HttpServletResponse response,String jsonString)
+	public static void writeJson(HttpServletResponse response,String jsonString)
 	{
 		response.setContentType("application/json;utf-8");
 		response.setCharacterEncoding("UTF-8");
@@ -60,13 +60,11 @@ public class FastJsonUtil {
 		}
 		Map<String,Object> map = (Map) JSON.parse(json);
 
-		for(String key:map.keySet())
-		{
+		for(String key:map.keySet()) {
 			Object object=map.get(key);
 			if(isEntity(object)){
 				String jsonString = JSON.toJSONString(object);
 				JsonFormatterAddPrefix(jsonString,prefix+key+".",newmap);
-				
 			}else{
 				newmap.put(prefix+key, object);
 			}
@@ -81,28 +79,22 @@ public class FastJsonUtil {
 	 */
 	private static boolean isEntity(Object object)
 	{
-		if(object instanceof String  )
-		{
+		if(object instanceof String  ) {
 			return false;
 		}
-		if(object instanceof Integer  )
-		{
+		if(object instanceof Integer) {
 			return false;
 		}
-		if(object instanceof Long  )
-		{
+		if(object instanceof Long) {
 			return false;
 		}
-		if(object instanceof java.math.BigDecimal  )
-		{
+		if(object instanceof java.math.BigDecimal) {
 			return false;
 		}
-		if(object instanceof Date  )
-		{
+		if(object instanceof Date) {
 			return false;
 		}
-		if(object instanceof java.util.Collection )
-		{
+		if(object instanceof java.util.Collection) {
 			return false;
 		}
 		return true;

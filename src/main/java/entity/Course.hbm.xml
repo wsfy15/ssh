@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="entity.Course" table="Course">
+        <id name="co_id" column="co_id" />
+
+        <property name="co_name" column="co_name" />
+        <property name="co_ro_num" column="co_ro_num" />
+        <property name="co_data" type="date" column="co_data" />
+        <property name="co_describe" column="co_describe" />
+        <property name="co_te_id" column="co_te_id" />
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="entity.Course" table="Assignment">
+        <id name="as_id" column="as_id" />
+
+        <property name="as_name" column="as_name" />
+        <property name="as_describe" column="as_describe" />
+        <property name="as_ddl" type="date" column="as_ddl" />
+        <property name="as_assigntime" type="time" column="as_assigntime" />
+        <property name="as_co_id" column="as_co_id" />
+        <property name="as_proportion" column="as_proportion" />
+    </class>
+</hibernate-mapping>
