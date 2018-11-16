@@ -16,7 +16,8 @@
 *.rar
 
 
-#.idea/
+.idea/
 #ssh.iml
 target/
+logs/
 

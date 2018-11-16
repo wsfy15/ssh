@@ -10,6 +10,6 @@ import com.opensymphony.xwork2.ModelDriven;
  * Date 18-11-15 下午10:58
  * @Version 1.0
  **/
-public class TeacherAction extends ActionSupport implements ModelDriven<> {
-
+public class TeacherAction extends ActionSupport  {
+//implements ModelDriven<>
 }

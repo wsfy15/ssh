@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta charset="UTF-8">
-        <title>teacher</title>
+        <meta charset="utf-8">
+        <title>教师管理平台</title>
+        <link href="css/Teacher.css" rel="stylesheet" type="text/css" />
+
+        <script type="text/javascript">
+            var selectedLi;
+
+            function change(page) {
+                if (selectedLi == null) {
+                    selectedLi = page;
+                    selectedLi.className = null;
+                } else {
+                    selectedLi.className = null;
+                    selectedLi = page;
+                }
+                page.className = "li";
+                // 在同一目录下 创建1.html 2.html 3.html 取消注释下面的iframe 可使用此方法进行切换
+                document.getElementById('content').src = page.rel+".html";
+                //document.getElementById('container').innerHTML = "#######" + page.rel;
+            }
+        </script>
     </head>
+
     <body>
-        <h1>teacher</h1>
+        <ul id="menu">
+            <li><a onclick="change(this)" href="javascript:;" rel="1" class="li">设置课程</a></li>
+            <li><a onclick="change(this)" href="javascript:;" rel="2">添加学生名单</a></li>
+            <li><a onclick="change(this)" href="javascript:;" rel="3"></a></li>
+        </ul>
+
+        <div id="container" class="container">
+            <iframe id="content" class="iframe" src="#"></iframe>
+        </div>
+
+        <script type="text/javascript">
+            var ul = document.getElementById("menu");
+            var li = ul.getElementsByTagName("li")[0];
+            selectedLi = li.getElementsByTagName("a")[0];
+        </script>
+
     </body>
 </html>

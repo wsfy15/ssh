@@ -14,6 +14,20 @@ src/main/webapp/WEB-INF/classes： will contain all compiled java classes and re
 src/main/webapp/WEB-INF/tags：
 src/main/webapp/WEB-INF/views：
 
+classpath:指向java文件编译部署后的class所在的路径，即target/classes目录
+对与maven项目，找到pom.xml的<build>节点，添加以下代码，
+可以将xml配置文件编译时也一起打包输出。而不需要将这些配置文件都放在resources目录中
+ <build>
+    <resources>
+        <resource>
+            <directory>src/main/java</directory>
+            <includes>
+                <include>**/*.xml</include>
+            </includes>
+        </resource>
+    </resources>
+</build>
+
 
 解决hibernate + mysql中文查询不出结果，单独sql语句正常
 修改配置数据库链接处
@@ -33,7 +47,12 @@ src/main/webapp/WEB-INF/views：
     ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 
-
 业务层实现类记得加上 @Transactional
 
 
+导出excel文件：https://www.jianshu.com/p/698bebdf2129
+
+maven导入异常：到这里下载jar包 http://maven.aliyun.com/mvn/search
+更改已有依赖版本后不更新：找到仓库目录，删除已有依赖，再reimport
+
+TODO:  读取excel
