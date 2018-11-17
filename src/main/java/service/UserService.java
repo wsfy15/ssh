@@ -3,7 +3,7 @@ package service;
 import entity.User;
 
 public interface UserService {
-    public void save(User s);
-    public String login(User s);
+    void save(User s);
+    String login(User s);
 
 }

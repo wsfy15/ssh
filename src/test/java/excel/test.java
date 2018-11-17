@@ -29,31 +29,14 @@ public class test {
         File file = new File("C:\\Users\\passwdIs123\\Desktop\\java.xlsx");
         MultipartFile mulFile = new MockMultipartFile("java.xlsx", "java.xlsx",
                 ContentType.APPLICATION_OCTET_STREAM.toString(), new FileInputStream(file));
-        List<String[]> strings = ExcelUtils.readExcel(mulFile);
-        for(String[] strings1:strings){
-            for(String s : strings1){
-                System.out.print(s);
+        List<List<String[]>> lists = ExcelUtils.readExcel(mulFile);
+        for(List<String[]> list : lists){
+            for(String[] s : list){
+                System.out.println(s.toString());
             }
-            System.out.println();
         }
 
 //        obj.testLog();
-    }
-
-    private void readExcel(File file) throws Exception{
-        // 读取Excel模板
-        XSSFWorkbook wb = new XSSFWorkbook(file);
-        // 读取了模板内sheet的内容
-        XSSFSheet sheet = wb.getSheetAt(0);
-        // 在相应的单元格进行（读取）赋值 行列分别从0开始
-        XSSFCell cell = sheet.getRow(1).getCell(1);
-        cell.setCellValue("张三");
-        // 修改模板内容导出新模板
-        FileOutputStream out = new FileOutputStream("C:\\Users\\passwdIs123\\Desktop\\java2.xlsx");
-        // 关闭相应的流
-        wb.write(out);
-        out.close();
-        wb.close();
     }
 
     private void testLog() {

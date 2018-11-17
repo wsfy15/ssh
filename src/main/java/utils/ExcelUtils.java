@@ -20,9 +20,10 @@ public class ExcelUtils {
     /**
      * 读入excel文件，解析后返回
      * @param file
+     * @return List<List<String[]> >  最外层每个list表示每个sheet，里层的list表示一行数据
      * @throws IOException
      */
-    public static List<String[]> readExcel(MultipartFile file) throws IOException {
+    public static List<List<String[]> > readExcel(MultipartFile file) throws IOException {
         //检查文件
         checkFile(file);
         logger.info("check file {} success", file.getOriginalFilename());
@@ -31,10 +32,11 @@ public class ExcelUtils {
         Workbook workbook = getWorkBook(file);
 
         //创建返回对象，把每行中的值作为一个数组，所有行作为一个集合返回
-        List<String[]> list = new ArrayList<>();
 
+        List<List<String[]> > lists = new ArrayList<>();
         if(workbook != null){
-            for(int sheetNum = 0;sheetNum < workbook.getNumberOfSheets();sheetNum++){
+            for(int sheetNum = 0; sheetNum < workbook.getNumberOfSheets();sheetNum++){
+                List<String[]> list = new ArrayList<>();
                 //获得当前sheet工作表
                 Sheet sheet = workbook.getSheetAt(sheetNum);
                 if(sheet == null){
@@ -44,9 +46,10 @@ public class ExcelUtils {
                 //获得当前sheet的 开始行 和 结束行
                 int firstRowNum  = sheet.getFirstRowNum();
                 int lastRowNum = sheet.getLastRowNum();
+                logger.info("first row:{} last row: {}", firstRowNum, lastRowNum);
 
-                //循环除了第一行的所有行
-                for(int rowNum = firstRowNum + 1;rowNum <= lastRowNum; rowNum++){
+                //循环所有行，第一行表示字段名
+                for(int rowNum = firstRowNum;rowNum <= lastRowNum; rowNum++){
                     //获得当前行
                     Row row = sheet.getRow(rowNum);
                     if(row == null){
@@ -55,20 +58,22 @@ public class ExcelUtils {
 
                     //获得当前行的 开始列 和 列数
                     int firstCellNum = row.getFirstCellNum();
-                    int lastCellNum = row.getPhysicalNumberOfCells();
-
+                    int cellCount = row.getPhysicalNumberOfCells();
+                    logger.info("first col:{} last col: {}", firstCellNum, cellCount + firstCellNum);
                     //循环当前行的每一列
-                    String[] cells = new String[lastCellNum];
-                    for(int cellNum = firstCellNum; cellNum < lastCellNum; cellNum++){
-                        Cell cell = row.getCell(cellNum);
+                    String[] cells = new String[cellCount];
+                    for(int cellNum = 0; cellNum < cellCount; cellNum++){
+                        Cell cell = row.getCell(cellNum + firstCellNum);
                         cells[cellNum] = getCellValue(cell);
                     }
                     list.add(cells);
                 }
+
+                lists.add(list);
             }
             workbook.close();
         }
-        return list;
+        return lists;
     }
 
     /**
