@@ -10,6 +10,10 @@
             <result name="student">/student.html</result>
             <result name="success">/success.html</result>
         </action>
+
+        <action name="course_*" class="courseAction">
+            <result name="success">/success.html</result>
+        </action>
     </package>
 
 </struts>

@@ -45,4 +45,8 @@
     <bean id="userAction" class="action.UserAction">
         <property name="userService" ref="userService" />
     </bean>
+
+    <bean id="courseAction" class="action.CourseAction">
+        <property name="" ref="" />
+    </bean>
 </beans>

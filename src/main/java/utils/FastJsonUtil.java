@@ -24,7 +24,8 @@ public class FastJsonUtil {
 	public static void writeJson(HttpServletResponse response,String jsonString)
 	{
 		response.setContentType("application/json;utf-8");
-		response.setCharacterEncoding("UTF-8");
+//		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
 		try {
 			response.getWriter().print(jsonString);
 		} catch (IOException e) {
@@ -44,7 +45,7 @@ public class FastJsonUtil {
 		String json= JSON.toJSONString(map);		
 		return json;
 	}
-	
+
 
 	/**
 	 * JSON串自动加前缀
