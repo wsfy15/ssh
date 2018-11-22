@@ -46,7 +46,7 @@
         <property name="userService" ref="userService" />
     </bean>
 
-    <bean id="courseAction" class="action.CourseAction">
-        <property name="" ref="" />
-    </bean>
+    <!--<bean id="courseAction" class="action.CourseAction">-->
+        <!--<property name="" ref="" />-->
+    <!--</bean>-->
 </beans>

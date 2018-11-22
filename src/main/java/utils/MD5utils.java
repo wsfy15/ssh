@@ -25,7 +25,7 @@ public class MD5utils {
         for (int i = 0; i < 32 - md5code.length(); i++) {
             md5code = "0" + md5code;
         }
-        System.out.println(md5code);
+//        System.out.println(md5code);
         return md5code;
     }
 }

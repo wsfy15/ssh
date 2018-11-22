@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -68,24 +70,31 @@
             selectedLi.className = null;
             selectedLi = page;
         }
-        document.getElementById('content').src = page.rel+".html";
+        document.getElementById('content').src = page.rel;
     }
 
 </script>
 </head>
 <body>
-<ul id="menu">
-    <li><a onclick="change(this)" href="javascript:;" rel="student_infor" class="li">个人信息</a></li>
-    <li><a onclick="change(this)" href="javascript:;" rel="student_course">查看课程</a></li>
-    <li><a onclick="change(this)" href="javascript:;" rel="student3"></a></li>
-</ul>
-<div id="container" class="container">
-    <iframe id="content" class="iframe" src="student_infor.html"></iframe>
-</div>
-<!--<script type="text/javascript">
-    var ul = document.getElementById("menu");
-    var li = ul.getElementsByTagName("li")[0];
-    selectedLi = li.getElementsByTagName("a")[0];
-</script>-->
+    <ul id="menu">
+        <li>
+            <a onclick="change(this)" href="javascript:" rel="${ pageContext.request.contextPath }/student/infor.html" class="li">个人信息</a>
+        </li>
+        <li>
+            <a onclick="change(this)" href="javascript:" rel="${ pageContext.request.contextPath }/student/course.html">查看课程</a>
+        </li>
+        <li>
+            <a onclick="change(this)" href="javascript:" rel="${ pageContext.request.contextPath }/student/"></a>
+        </li>
+    </ul>
+
+    <div id="container" class="container">
+        <iframe id="content" class="iframe" src="${ pageContext.request.contextPath }/student/infor.html"></iframe>
+    </div>
+    <!--<script type="text/javascript">
+        var ul = document.getElementById("menu");
+        var li = ul.getElementsByTagName("li")[0];
+        selectedLi = li.getElementsByTagName("a")[0];
+    </script>-->
 </body>
 </html>

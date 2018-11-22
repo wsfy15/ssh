@@ -5,7 +5,7 @@ import java.util.Objects;
 
 /**
  * @ClassName Homework
- * @Description TODO
+ * @Description 学生提交的作业
  * Author sf
  * Date 18-11-15 下午10:41
  * @Version 1.0

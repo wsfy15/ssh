@@ -1,10 +1,13 @@
 package action;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import entity.User;
 import service.UserService;
 import utils.MD5utils;
+
+import java.util.Map;
 
 public class UserAction extends ActionSupport implements ModelDriven<User> {
     private static final long serialVersionUID = -6398052356842807636L;
@@ -33,11 +36,13 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
     }
 
     public String login(){
-        System.out.println(user);
+//        System.out.println(user);
         user.setPassword(MD5utils.md5(user.getPassword()));
         String res = userService.login(user);
 
         if(res != null){
+            ActionContext.getContext().getSession().put("id", user.getId());
+            ActionContext.getContext().getSession().put("role", user.getRole());
             return res;
         }
 

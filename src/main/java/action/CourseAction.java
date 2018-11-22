@@ -14,7 +14,7 @@ public class CourseAction extends ActionSupport implements ModelDriven<Course> {
     public String save(){
         HttpServletRequest request = ServletActionContext.getRequest();
         String tid = request.getParameter("tid");
-        new CourseServiceImpl().save(course, tid);
+        //new CourseServiceImpl().save(course, tid);
         return SUCCESS;
     }
 
