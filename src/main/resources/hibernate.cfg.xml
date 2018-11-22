@@ -13,5 +13,6 @@
         <mapping resource="classpath:entity/User.hbm.xml" />
         <mapping resource="classpath:entity/Course.hbm.xml" />
         <mapping resource="classpath:entity/Assignment.hbm.xml" />
+        <mapping resource="classpath:entity/Homework.hbm.xml" />
     </session-factory>
 </hibernate-configuration>

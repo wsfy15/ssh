@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @ClassName Homework
@@ -10,19 +11,20 @@ import java.util.Date;
  * @Version 1.0
  **/
 public class Homework {
-    private String ho_as_id;    // 作业编号参考ass编号
+
+    private HomeworkPK homeworkPK;
     private Date ho_time;       // 作业提交时间
     private String ho_path;     // 作业存放的地址
     private String ho_name;     // 作业名称
     private String ho_us_id;    // 提交人id
-    private String ho_gr_id;    // 相关联的小组编号
 
-    public String getHo_as_id() {
-        return ho_as_id;
+
+    public HomeworkPK getHomeworkPK() {
+        return homeworkPK;
     }
 
-    public void setHo_as_id(String ho_as_id) {
-        this.ho_as_id = ho_as_id;
+    public void setHomeworkPK(HomeworkPK homeworkPK) {
+        this.homeworkPK = homeworkPK;
     }
 
     public Date getHo_time() {
@@ -57,11 +59,4 @@ public class Homework {
         this.ho_us_id = ho_us_id;
     }
 
-    public String getHo_gr_id() {
-        return ho_gr_id;
-    }
-
-    public void setHo_gr_id(String ho_gr_id) {
-        this.ho_gr_id = ho_gr_id;
-    }
 }
