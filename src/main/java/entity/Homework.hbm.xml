@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="entity.Course" table="Course">
+        <!-- 联合主键 -->
+        <composite-id name="homeworkPK" class="entity.HomeworkPK">
+            <key-property name="ho_as_id" column="ho_as_id"  type="string"/>
+            <key-property name="ho_gr_id" column="ho_gr_id"  type="string"/>
+        </composite-id>
+
+
+        <property name="ho_time" column="ho_time" type="date" />
+        <property name="ho_path" column="ho_path" />
+        <property name="ho_name"  column="ho_name" />
+        <property name="ho_us_id" column="ho_us_id" />
+    </class>
+</hibernate-mapping>

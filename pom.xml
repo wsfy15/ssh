@@ -91,18 +91,18 @@
       <version>4.0.0</version>
     </dependency>
 
-      <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-mock</artifactId>
-          <version>2.0.8</version>
-          <scope>test</scope>
-      </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-mock</artifactId>
+      <version>2.0.8</version>
+      <scope>test</scope>
+    </dependency>
 
-      <dependency>
-          <groupId>org.apache.httpcomponents</groupId>
-          <artifactId>httpcore</artifactId>
-          <version>4.3.2</version>
-      </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpcore</artifactId>
+      <version>4.3.2</version>
+    </dependency>
 
       <!-- slf4j核心包-->
     <dependency>
@@ -158,12 +158,13 @@
       <artifactId>fastjson</artifactId>
       <version>1.2.51</version>
     </dependency>
-      <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-mock</artifactId>
-          <version>2.0.8</version>
-          <scope>compile</scope>
-      </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-mock</artifactId>
+      <version>2.0.8</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 
   <build>
