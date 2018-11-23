@@ -12,9 +12,17 @@
         var jsonObject = JSON.parse(text, null);
 
     </script>
+    <link href="studshow.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<select id="uli"></select><button id="but1">显示课程</button>
+<div id="leftcontainer">
+<span class="setleft wid80"><span class="fyhbx">*</span>选择课程</span>
+<div class=" posirelative select-out-div">
+    <select class="m-wrap  " id="uli" style="width: 180px; padding: 2px 0;"></select><button id="but1">显示课程</button>
+    <span class="select-hide-span" ><b class="select-show-b"  ></b></span>
+</div>
+</div>
+<div id="rightcontainer">
 <table id="table1" border="1">
     <tr>
         <th>课程id</th>
@@ -31,7 +39,7 @@
     <th id="cgroup">4</th>
     </tr>
 </table>
-
+</div>
 <script>
 
     $(function () {
