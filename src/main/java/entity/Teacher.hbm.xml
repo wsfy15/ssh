@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="entity.Teacher" table="Teacher">
+        <id name="id" column="te_id" />
+
+        <property name="name" column="te_name" />
+        <property name="password" column="te_password" />
+
+        <set name="courses" inverse="true">
+            <key column="co_teacher" />
+            <one-to-many class="entity.Course" />
+        </set>
+    </class>
+</hibernate-mapping>

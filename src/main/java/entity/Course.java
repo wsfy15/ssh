@@ -13,9 +13,10 @@ public class Course {
     private String co_id;       // 课程id
     private String co_name;     // 完整课程名
     private Integer co_ro_num;  // 本学期点名次数
-    private Date co_data;       // 开课时间
+    private Date co_date;       // 开课时间
     private String co_describe; // 课程描述
-    private String co_te_id;    // 课程教师编号
+
+    private User teacher;       // 课程教师编号
 
     public String getCo_id() {
         return co_id;
@@ -41,12 +42,12 @@ public class Course {
         this.co_ro_num = co_ro_num;
     }
 
-    public Date getCo_data() {
-        return co_data;
+    public Date getCo_date() {
+        return co_date;
     }
 
-    public void setCo_data(Date co_data) {
-        this.co_data = co_data;
+    public void setCo_date(Date co_date) {
+        this.co_date = co_date;
     }
 
     public String getCo_describe() {
@@ -57,11 +58,11 @@ public class Course {
         this.co_describe = co_describe;
     }
 
-    public String getCo_te_id() {
-        return co_te_id;
+    public User getTeacher() {
+        return teacher;
     }
 
-    public void setCo_te_id(String co_te_id) {
-        this.co_te_id = co_te_id;
+    public void setTeacher(User teacher) {
+        this.teacher = teacher;
     }
 }

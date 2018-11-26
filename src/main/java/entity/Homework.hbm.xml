@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="entity.Course" table="Course">
+    <class name="entity.Homework" table="Homework">
         <!-- 联合主键 -->
         <composite-id name="homeworkPK" class="entity.HomeworkPK">
             <key-property name="ho_as_id" column="ho_as_id"  type="string"/>

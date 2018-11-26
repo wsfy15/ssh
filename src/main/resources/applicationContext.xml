@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringFacetInspection -->
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
@@ -34,19 +35,45 @@
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <bean id="userDao" class="dao.UserDaoImpl">
+
+    <bean id="courseDao" class="dao.CourseDaoImpl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
+    <bean id="adminDao" class="dao.AdminDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="studentDao" class="dao.StudentDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="teacherDao" class="dao.TeacherDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+
     <bean id="userService" class="service.UserServiceImpl" >
-        <property name="userDao" ref="userDao" />
+        <property name="teacherDao" ref="teacherDao" />
+        <property name="adminDao" ref="adminDao" />
+        <property name="studentDao" ref="studentDao" />
     </bean>
 
     <bean id="userAction" class="action.UserAction">
         <property name="userService" ref="userService" />
     </bean>
 
-    <!--<bean id="courseAction" class="action.CourseAction">-->
-        <!--<property name="" ref="" />-->
-    <!--</bean>-->
+
+    <bean id="teacherService" class="service.TeacherServiceImpl">
+        <property name="courseDao" ref="courseDao" />
+        <property name="teacherDao" ref="teacherDao" />
+        <property name="studentDao" ref="studentDao" />
+    </bean>
+
+    <bean id="teacherAction" class="action.TeacherAction">
+        <property name="teacherService" ref="teacherService" />
+    </bean>
+
+
+
 </beans>

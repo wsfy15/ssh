@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Set;
+
 public class User {
     public static final Integer ADMIN = 0;
     public static final Integer TEACHER = 1;
@@ -8,16 +10,7 @@ public class User {
     private String id;      // 学号/教工号
     private String name;    // 姓名
     private String password;  // 密码
-    private String classNo; // 所属班级
-    private Integer role;   // 角色(权限)
 
-    public Integer getRole() {
-        return role;
-    }
-
-    public void setRole(Integer role) {
-        this.role = role;
-    }
 
     public String getId() {
         return id;
@@ -43,13 +36,7 @@ public class User {
         this.password = password;
     }
 
-    public String getClassNo() {
-        return classNo;
-    }
 
-    public void setClassNo(String classNo) {
-        this.classNo = classNo;
-    }
 
     @Override
     public String toString(){

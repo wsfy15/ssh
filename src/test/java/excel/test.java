@@ -1,15 +1,20 @@
 package excel;
 
 
+import dao.CourseDao;
+import dao.CourseDaoImpl;
 import org.apache.http.entity.ContentType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import service.TeacherService;
+import service.TeacherServiceImpl;
 import sun.reflect.Reflection;
 import utils.ExcelUtils;
 import utils.LogUtils;
@@ -47,5 +52,13 @@ public class test {
         logger.info("This is info message.");
         // 记录error级别的信息
         logger.error("This is error message.");
+    }
+
+    @Test
+    public void count(){
+        TeacherService teacherService = new TeacherServiceImpl();
+        CourseDao courseDao = new CourseDaoImpl();
+        ((TeacherServiceImpl) teacherService).setCourseDao(courseDao);
+        System.out.println(teacherService.CourseIDGenerator());
     }
 }

@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="entity.Course" table="Assignment">
+    <class name="entity.Assignment" table="Assignment">
         <id name="as_id" column="as_id" />
 
         <property name="as_name" column="as_name" />

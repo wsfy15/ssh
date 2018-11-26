@@ -11,9 +11,9 @@ contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 </head>
 <body>
     <div id="platform">
-        <form method="post" action="${pageContext.request.contextPath }/course_save.action">
+        <form method="post" action="${pageContext.request.contextPath }/teacher_saveCourse.action">
             <p >课程名:<input type="text" name="co_name" /></p>
-            <p>开课时间: <input type="date" name="co_data" /></p>
+            <p>开课时间: <input type="date" name="co_date" /></p>
             <p>课程描述: <input type="text" name="co_describe" /></p>
             <p>点名次数: <input type="number" min="0" name="co_ro_num" /></p>
             <input type="submit" value="Submit" />

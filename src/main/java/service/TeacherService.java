@@ -1,6 +1,12 @@
 package service;
 
+import entity.Course;
+
 public interface TeacherService {
 
-    Boolean addStudent() throws Exception;
+    Boolean addStudentByExcel() throws Exception;
+    String TeacherIDGenerator();
+    String CourseIDGenerator();
+
+    void saveCourse(String teacher_id, Course course);
 }

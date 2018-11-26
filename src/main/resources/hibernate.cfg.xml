@@ -10,9 +10,11 @@
         <property name="connection.useUnicode">true</property>
         <property name="connection.characterEncoding">utf8</property>
 
-        <mapping resource="classpath:entity/User.hbm.xml" />
         <mapping resource="classpath:entity/Course.hbm.xml" />
         <mapping resource="classpath:entity/Assignment.hbm.xml" />
         <mapping resource="classpath:entity/Homework.hbm.xml" />
+        <mapping resource="classpath:entity/Student.hbm.xml" />
+        <mapping resource="classpath:entity/Teacher.hbm.xml" />
+        <mapping resource="classpath:entity/Admin.hbm.xml" />
     </session-factory>
 </hibernate-configuration>

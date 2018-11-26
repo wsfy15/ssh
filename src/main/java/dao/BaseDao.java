@@ -1,5 +1,7 @@
 package dao;
 
+import org.hibernate.criterion.DetachedCriteria;
+
 import java.util.List;
 
 /*
@@ -20,4 +22,6 @@ public interface BaseDao<T> {
 
     List<T> findAll();
 
+    // 记录总数
+    long count();
 }

@@ -1,19 +1,37 @@
 package service;
 
+import dao.CourseDao;
+import dao.CourseDaoImpl;
+import dao.StudentDao;
+import dao.TeacherDao;
+import entity.Course;
+import entity.Student;
+import entity.Teacher;
 import entity.User;
 import org.apache.http.entity.ContentType;
+import org.slf4j.Logger;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import utils.ExcelUtils;
+import utils.LogUtils;
 import utils.MD5utils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
 
+@Transactional
 public class TeacherServiceImpl implements TeacherService {
+    private static Logger logger = LogUtils.getLogger();
+
+    private CourseDao courseDao;
+    private TeacherDao teacherDao;
+    private StudentDao studentDao;
+
+
     @Override
-    public Boolean addStudent() throws Exception{
+    public Boolean addStudentByExcel() throws Exception{
         File file = new File("java.xlsx");
         MultipartFile mulFile = new MockMultipartFile("java.xlsx", "java.xlsx",
                 ContentType.APPLICATION_OCTET_STREAM.toString(), new FileInputStream(file));
@@ -48,8 +66,8 @@ public class TeacherServiceImpl implements TeacherService {
 
             for(int i = 1; i < sheet.size(); i++){
                 String[] student = sheet.get(i);
-                User user = new User();
-                user.setId(IDGenerator());
+                Student user = new Student();
+                user.setId(StudentIDGenerator());
                 user.setName(student[nameIndex]);
 
                 if(passwordIndex == -1){
@@ -59,14 +77,64 @@ public class TeacherServiceImpl implements TeacherService {
                 }
 
                 user.setClassNo(student[classIndex]);
-                user.setRole(User.STUDENT);
             }
         }
 
         return true;
     }
 
-    private static String IDGenerator(){
-        return "1234567890";
+    @Override
+    public void saveCourse(String teacher_id, Course course) {
+        Teacher teacher = teacherDao.findById(teacher_id);
+        String course_id = CourseIDGenerator();
+        logger.debug("course id: {}", course_id);
+        course.setCo_id(course_id);
+        course.setTeacher(teacher);
+        teacher.getCourses().add(course);
+        courseDao.save(course);
     }
+
+    public  String TeacherIDGenerator(){
+        long count = this.teacherDao.count();
+        String id = "1010".concat(String.format("%06d", count));
+        return id;
+    }
+
+    public String StudentIDGenerator(){
+        long count = this.studentDao.count();
+        String id = "2015".concat(String.format("%06d", count));
+        return id;
+    }
+
+    public  String CourseIDGenerator(){
+        // 长度为6,从 000 001 ~ 999 999
+        long count = this.courseDao.count();
+        String id = String.format("%06d", count);
+        return id;
+    }
+
+    public StudentDao getStudentDao() {
+        return studentDao;
+    }
+
+    public void setStudentDao(StudentDao studentDao) {
+        this.studentDao = studentDao;
+    }
+
+    public CourseDao getCourseDao() {
+        return courseDao;
+    }
+
+    public void setCourseDao(CourseDao courseDao) {
+        this.courseDao = courseDao;
+    }
+
+    public TeacherDao getTeacherDao() {
+        return teacherDao;
+    }
+
+    public void setTeacherDao(TeacherDao teacherDao) {
+        this.teacherDao = teacherDao;
+    }
+
 }

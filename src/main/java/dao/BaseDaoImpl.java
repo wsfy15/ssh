@@ -1,5 +1,7 @@
 package dao;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import java.lang.reflect.ParameterizedType;
@@ -54,6 +56,21 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
     @Override
     public List<T> findAll() {
         return (List<T>) this.getHibernateTemplate().find("from " + clazz.getSimpleName());
+    }
+
+    @Override
+    public long count() {
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(clazz);
+        detachedCriteria.setProjection(Projections.rowCount());
+        System.out.println(clazz.getSimpleName());
+        List<T> ts = (List<T>) this.getHibernateTemplate().find("from " + clazz.getSimpleName());
+        return ts.size();
+        //List<Number> list = (List<Number> )this.getHibernateTemplate().findByCriteria(detachedCriteria);
+//        if(list != null && list.size() > 0){
+//            return list.get(0).longValue();
+//        }
+
+        //return 0;
     }
 
 }
