@@ -74,6 +74,14 @@
         <property name="teacherService" ref="teacherService" />
     </bean>
 
+    <bean id="studentService" class="service.StudentServiceImpl">
+        <property name="courseDao" ref="courseDao" />
+        <property name="studentDao" ref="studentDao" />
+    </bean>
+
+    <bean id="studentAction" class="action.StudentAction">
+        <property name="studentService" ref="studentService" />
+    </bean>
 
 
 </beans>

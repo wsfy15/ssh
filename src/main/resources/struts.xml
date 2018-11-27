@@ -26,6 +26,11 @@
         <action name="teacher_*" class="teacherAction" method="{1}">
 
         </action>
+
+        <action name="student_*" class="studentAction" method="{1}">
+            <result name="course">/student/course.jsp</result>
+        </action>
+
     </package>
 
 </struts>

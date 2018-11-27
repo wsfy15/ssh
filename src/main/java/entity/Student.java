@@ -1,5 +1,8 @@
 package entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @ClassName Student
  * @Description TODO
@@ -9,6 +12,7 @@ package entity;
  **/
 public class Student extends User {
     private String classNo; // 所属班级
+    private Set<Course> courses = new HashSet<>();
 
     public String getClassNo() {
         return classNo;
@@ -18,4 +22,11 @@ public class Student extends User {
         this.classNo = classNo;
     }
 
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
 }

@@ -56,24 +56,18 @@
             border-style: none;
 
         }
-
     </style>
-</head>
-<body>
-<script type="text/javascript">
-    var selectedLi;
-    function change(page) {
-        if (selectedLi == null) {
-            selectedLi = page;
-            selectedLi.className = null;
-        } else {
-            selectedLi.className = null;
-            selectedLi = page;
-        }
-        document.getElementById('content').src = page.rel;
-    }
 
-</script>
+    <script type="text/javascript">
+        var selectedLi;
+        function change(page) {
+            selectedLi = page;
+            selectedLi.className = null;
+
+            document.getElementById('content').src = page.rel;
+        }
+
+    </script>
 </head>
 <body>
     <ul id="menu">
@@ -81,15 +75,17 @@
             <a onclick="change(this)" href="javascript:" rel="${ pageContext.request.contextPath }/student/infor.html" class="li">个人信息</a>
         </li>
         <li>
-            <a onclick="change(this)" href="javascript:" rel="${ pageContext.request.contextPath }/student/course.html">查看课程</a>
+            <a onclick="change(this)" href="javascript:" rel="${ pageContext.request.contextPath }/student_getAllCourse.action">
+                查看课程
+            </a>
         </li>
         <li>
-            <a onclick="change(this)" href="javascript:" rel="${ pageContext.request.contextPath }/student/"></a>
+            <a onclick="change(this)" href="javascript:" rel="${ pageContext.request.contextPath }/error.html">123</a>
         </li>
     </ul>
 
     <div id="container" class="container">
-        <iframe id="content" class="iframe" src="${ pageContext.request.contextPath }/student/infor.html"></iframe>
+        <iframe id="content" class="iframe" src="${ pageContext.request.contextPath }/student/infor.html" ></iframe>
     </div>
     <!--<script type="text/javascript">
         var ul = document.getElementById("menu");

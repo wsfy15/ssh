@@ -29,6 +29,13 @@ public class TeacherServiceImpl implements TeacherService {
     private TeacherDao teacherDao;
     private StudentDao studentDao;
 
+//    public void addCourseForStudent(){
+//        Student student = studentDao.findById("2015211003");
+//        Course course = courseDao.findById("000000");
+//
+//        student.getCourses().add(course);
+//        studentDao.update(student);
+//    }
 
     @Override
     public Boolean addStudentByExcel() throws Exception{

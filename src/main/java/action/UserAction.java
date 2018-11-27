@@ -57,6 +57,8 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
         return SUCCESS;
     }
 
+
+
     public String login(){
 //        System.out.println(user.getPassword());
         String res = userService.login(user);

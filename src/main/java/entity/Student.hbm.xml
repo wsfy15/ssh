@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE hibernate-configuration PUBLIC
-        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
     <class name="entity.Student" table="Student">
@@ -11,5 +10,9 @@
         <property name="classNo" column="st_class" />
         <property name="password" column="st_password" />
 
+        <set name="courses" table="student_course" cascade="save-update">
+            <key column="id" />
+            <many-to-many class="entity.Course" column="co_id" />
+        </set>
     </class>
 </hibernate-mapping>

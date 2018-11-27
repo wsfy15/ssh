@@ -40,6 +40,8 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
 
     Teacher teacher = new Teacher();
 
+
+
     @Override
     public Teacher getModel() {
         return teacher;
@@ -58,8 +60,8 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
             logger.debug("before saveCourse");
             teacherService.saveCourse((String)session.get("id"), course);
             logger.debug("saveCourse success");
-            return SUCCESS;
 
+            return SUCCESS;
         } catch (IllegalAccessException|InvocationTargetException e) {
             e.printStackTrace();
         }

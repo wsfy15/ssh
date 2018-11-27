@@ -1,6 +1,8 @@
 package entity;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @ClassName Course
@@ -16,7 +18,9 @@ public class Course {
     private Date co_date;       // 开课时间
     private String co_describe; // 课程描述
 
-    private User teacher;       // 课程教师编号
+    private Teacher teacher;       // 课程教师编号
+
+    private Set<Student> students = new HashSet<>();
 
     public String getCo_id() {
         return co_id;
@@ -58,11 +62,19 @@ public class Course {
         this.co_describe = co_describe;
     }
 
-    public User getTeacher() {
+    public Teacher getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(User teacher) {
+    public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
     }
 }

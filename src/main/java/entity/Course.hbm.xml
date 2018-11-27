@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE hibernate-configuration PUBLIC
-        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
     <class name="entity.Course" table="Course">
@@ -11,7 +10,12 @@
         <property name="co_ro_num" column="co_ro_num" />
         <property name="co_date" type="date" column="co_date" />
         <property name="co_describe" column="co_describe" />
+
         <many-to-one name="teacher" class="entity.Teacher" column="co_teacher"/>
 
+        <set name="students" table="student_course" inverse="true">
+            <key column="co_id" />
+            <many-to-many class="entity.Student" column="id" />
+        </set>
     </class>
 </hibernate-mapping>
