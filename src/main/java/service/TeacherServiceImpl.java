@@ -1,13 +1,11 @@
 package service;
 
 import dao.CourseDao;
-import dao.CourseDaoImpl;
 import dao.StudentDao;
 import dao.TeacherDao;
 import entity.Course;
 import entity.Student;
 import entity.Teacher;
-import entity.User;
 import org.apache.http.entity.ContentType;
 import org.slf4j.Logger;
 import org.springframework.mock.web.MockMultipartFile;
@@ -38,20 +36,21 @@ public class TeacherServiceImpl implements TeacherService {
 //    }
 
     @Override
-    public Boolean addStudentByExcel() throws Exception{
-        File file = new File("java.xlsx");
-        MultipartFile mulFile = new MockMultipartFile("java.xlsx", "java.xlsx",
-                ContentType.APPLICATION_OCTET_STREAM.toString(), new FileInputStream(file));
-        List<List<String[]>> studentSheets = ExcelUtils.readExcel(mulFile);
+    public Boolean addStudentByExcel(List<List<String[]>> studentSheets){
+        logger.debug("sheets size:{}", studentSheets.size());
         for(List<String[]> sheet : studentSheets){
+            if(sheet.size() == 0){
+                continue;
+            }
+
             // 检查表字段
             // 必须有名字和班级，可以没有密码，则默认与ID相同
             int nameIndex = -1;
             int passwordIndex = -1;
             int classIndex = -1;
-            String[] strings = sheet.get(0);
-            for(int i = 0; i < strings.length; i++){
-                switch (strings[i]){
+            String[] fieldName = sheet.get(0);
+            for(int i = 0; i < fieldName.length; i++){
+                switch (fieldName[i]){
                     case "name":
                         nameIndex = i;
                         break;
@@ -66,7 +65,6 @@ public class TeacherServiceImpl implements TeacherService {
                 }
             }
 
-
             if(nameIndex == -1 || classIndex == -1){
                 return false;
             }
@@ -75,6 +73,8 @@ public class TeacherServiceImpl implements TeacherService {
                 String[] student = sheet.get(i);
                 Student user = new Student();
                 user.setId(StudentIDGenerator());
+                logger.debug("student ID:{}", user.getId());
+
                 user.setName(student[nameIndex]);
 
                 if(passwordIndex == -1){
@@ -84,6 +84,7 @@ public class TeacherServiceImpl implements TeacherService {
                 }
 
                 user.setClassNo(student[classIndex]);
+                studentDao.save(user);
             }
         }
 

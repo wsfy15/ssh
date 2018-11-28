@@ -1,12 +1,13 @@
 package service;
 
 
+import com.alibaba.fastjson.JSONArray;
 import entity.Course;
 
 import java.util.Set;
 
 public interface StudentService {
 
-    Set<Course> findCourse(String id);
+    JSONArray findCourse(String id);
 
 }

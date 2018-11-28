@@ -58,6 +58,7 @@
         }
     </style>
 
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
         var selectedLi;
         function change(page) {
@@ -67,25 +68,55 @@
             document.getElementById('content').src = page.rel;
         }
 
+
+
+        function queryCourse(){
+            var url = "${ pageContext.request.contextPath }/student_getAllCourse.action";
+            var id="<%=session.getAttribute("id")%>";
+            var param = {"id": id };
+            $.post(url, param, function(data){
+                // 遍历
+                $(data).each(function(i,n){
+                    console.log(n);
+                    $('#table1').append("<tr></tr>");
+                    $('#table1').children(':last-child').append("<th>"+ n.co_id + "</th>");
+                    $('#table1').children(':last-child').append("<th>"+ n.co_name + "</th>");
+                    $('#table1').children(':last-child').append("<th>"+ n.co_describe + "</th>");
+                    $('#table1').children(':last-child').append("<th>"+ n.teacher_name + "</th>");
+                    $('#table1').children(':last-child').append("<th>???</th>");
+                });
+            },"json");
+        }
+
     </script>
 </head>
 <body>
     <ul id="menu">
         <li>
-            <a onclick="change(this)" href="javascript:" rel="${ pageContext.request.contextPath }/student/infor.html" class="li">个人信息</a>
-        </li>
-        <li>
-            <a onclick="change(this)" href="javascript:" rel="${ pageContext.request.contextPath }/student_getAllCourse.action">
+            <a onclick="queryCourse(this)" href="javascript:" >
                 查看课程
             </a>
         </li>
+
+        <li>
+            <a onclick="change(this)" href="javascript:" rel="${ pageContext.request.contextPath }/student/infor.html" class="li">个人信息</a>
+        </li>
+
         <li>
             <a onclick="change(this)" href="javascript:" rel="${ pageContext.request.contextPath }/error.html">123</a>
         </li>
     </ul>
 
     <div id="container" class="container">
-        <iframe id="content" class="iframe" src="${ pageContext.request.contextPath }/student/infor.html" ></iframe>
+        <table id="table1" border="1">
+            <tr>
+                <th>课程id</th>
+                <th>课名</th>
+                <th>课程简介</th>
+                <th>教师</th>
+                <th>小组情况</th>
+            </tr>
+        </table>
     </div>
     <!--<script type="text/javascript">
         var ul = document.getElementById("menu");

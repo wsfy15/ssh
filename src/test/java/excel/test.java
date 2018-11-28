@@ -32,14 +32,14 @@ public class test {
     public static void main(String[] args) throws Exception{
         test obj = new test();
         File file = new File("C:\\Users\\passwdIs123\\Desktop\\java.xlsx");
-        MultipartFile mulFile = new MockMultipartFile("java.xlsx", "java.xlsx",
-                ContentType.APPLICATION_OCTET_STREAM.toString(), new FileInputStream(file));
-        List<List<String[]>> lists = ExcelUtils.readExcel(mulFile);
-        for(List<String[]> list : lists){
-            for(String[] s : list){
-                System.out.println(s.toString());
-            }
-        }
+//        MultipartFile mulFile = new MockMultipartFile("java.xlsx", "java.xlsx",
+//                ContentType.APPLICATION_OCTET_STREAM.toString(), new FileInputStream(file));
+//        List<List<String[]>> lists = ExcelUtils.readExcel(mulFile);
+//        for(List<String[]> list : lists){
+//            for(String[] s : list){
+//                System.out.println(s.toString());
+//            }
+//        }
 
 //        obj.testLog();
     }

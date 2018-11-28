@@ -6,6 +6,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -23,13 +24,13 @@ public class ExcelUtils {
      * @return List<List<String[]> >  最外层每个list表示每个sheet，里层的list表示一行数据
      * @throws IOException
      */
-    public static List<List<String[]> > readExcel(MultipartFile file) throws IOException {
+    public static List<List<String[]> > readExcel(String path) throws IOException {
         //检查文件
-        checkFile(file);
-        logger.info("check file {} success", file.getOriginalFilename());
+        checkFile(path);
+        logger.info("check file {} success", path);
 
         //获得Workbook工作薄对象
-        Workbook workbook = getWorkBook(file);
+        Workbook workbook = getWorkBook(path);
 
         //创建返回对象，把每行中的值作为一个数组，所有行作为一个集合返回
 
@@ -81,34 +82,34 @@ public class ExcelUtils {
      * @param file
      * @throws IOException
      */
-    private static void checkFile(MultipartFile file) throws IOException{
+    private static void checkFile(String path) throws IOException{
         //判断文件是否存在
-        if(null == file){
+        if(null == path){
             logger.error("文件不存在！");
             throw new FileNotFoundException("文件不存在！");
         }
-        //获得文件名
-        String fileName = file.getOriginalFilename();
+
         //判断文件是否是excel文件
-        if(!fileName.endsWith(xls) && !fileName.endsWith(xlsx)){
-            logger.error(fileName + "不是excel文件");
-            throw new IOException(fileName + "不是excel文件");
+        if(!path.endsWith(xls) && !path.endsWith(xlsx)){
+            logger.error(path + "不是excel文件");
+            throw new IOException(path + "不是excel文件");
         }
     }
 
-    private static Workbook getWorkBook(MultipartFile file) {
+    private static Workbook getWorkBook(String path) {
         //获得文件名
-        String fileName = file.getOriginalFilename();
+        //String fileName = file.getOriginalFilename();
         //创建Workbook工作薄对象，表示整个excel
         Workbook workbook = null;
         try {
             //获取excel文件的io流
-            InputStream is = file.getInputStream();
+            //InputStream is = file.getInputStream();
+            InputStream is = new FileInputStream(path);
             //根据文件后缀名不同(xls和xlsx)获得不同的Workbook实现类对象
-            if(fileName.endsWith(xls)){
+            if(path.endsWith(xls)){
                 //2003
                 workbook = new HSSFWorkbook(is);
-            }else if(fileName.endsWith(xlsx)){
+            }else if(path.endsWith(xlsx)){
                 //2007
                 workbook = new XSSFWorkbook(is);
             }

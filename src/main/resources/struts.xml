@@ -3,6 +3,11 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
+    <!-- 常量定义在struts-core/org/apache/struts2/default.properties -->
+    <!-- 20MB -->
+    <constant name="struts.multipart.maxSize" value="20971520" />
+    <constant name="struts.multipart.saveDir" value="/home/sf/Desktop/ssh/files" />
+
     <package name="demo1" extends="struts-default" namespace="/">
         <global-results>
             <result name="login">/index.jsp</result>

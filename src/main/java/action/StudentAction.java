@@ -1,5 +1,6 @@
 package action;
 
+import com.alibaba.fastjson.JSONArray;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -9,8 +10,10 @@ import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import service.StudentService;
+import utils.FastJsonUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,15 +36,19 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
     public String getAllCourse(){
         Map<String, Object> session = ActionContext.getContext().getSession();
         HttpServletRequest request = ServletActionContext.getRequest();
-        String id = (String) session.get("id");
+//        String id = (String) session.get("id");
+        String id = student.getId();
+        System.out.println(id);
+        JSONArray courses = studentService.findCourse(id);
 
-        Set<Course> courses = studentService.findCourse(id);
-        for(Course c : courses){
-            System.out.println(c.getCo_id());
-        }
-        request.setAttribute("courses", courses);
-//        session.put("courses", courses);
-        return "course";
+
+        // 使用fastjson，把list转换成json字符串
+        String jsonString = FastJsonUtil.toJSONString(courses);
+        // 把json字符串写到浏览器
+        HttpServletResponse response = ServletActionContext.getResponse();
+        // 输出
+        FastJsonUtil.writeJson(response, jsonString);
+        return NONE;
     }
 
     public StudentService getStudentService() {
