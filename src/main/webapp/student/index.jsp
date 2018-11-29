@@ -50,11 +50,10 @@
             background: #ccc;
         }
 
-        .iframe {
+        iframe {
             width: 100%;
             height:100%;
             border-style: none;
-
         }
     </style>
 
@@ -103,11 +102,12 @@
         </li>
 
         <li>
-            <a onclick="change(this)" href="javascript:" rel="${ pageContext.request.contextPath }/error.html">123</a>
+            <a onclick="change(this)" href="javascript:" rel="${ pageContext.request.contextPath }/student_getAllCourse.action">查看课程 action</a>
         </li>
     </ul>
 
     <div id="container" class="container">
+        <iframe id="content" ></iframe>
         <table id="table1" border="1">
             <tr>
                 <th>课程id</th>

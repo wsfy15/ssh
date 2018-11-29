@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/struts-tags" prefix="s" %>
+
 <%@   page   import= "entity.*"%>
 <%@   page   import= "java.util.Set"%>
 <html lang="en">
@@ -42,19 +44,21 @@
                 <th>教师</th>
                 <th>小组情况</th>
             </tr>
-            <c:forEach items="${courses}" var="course">
+
+            <s:iterator value="courseList" var="course">
                 <tr>
-                    <th id="cid">${course.co_id}</th>
-                    <th id="cname">${course.co_name}</th>
-                    <th id="cintro">${course.co_describe}</th>
-                    <th id="cteach"> ${course}.getTeacher().getName() </th>
+                    <th id="cid"> <s:property value="#course.co_id" /> </th>
+                    <th id="cname"> <s:property value="#course.co_name" /> </th>
+                    <th id="cintro"> <s:property value="#course.co_describe" /> </th>
+                    <th id="cteach"> <s:property value="#course. getTeacher().getName()" /> </th>
                     <th id="cgroup">???</th>
                 </tr>
-            </c:forEach>
-
-
+            </s:iterator>
         </table>
+
+        <!--<s:debug></s:debug>-->
     </div>
+
     <!--<script>-->
 
         <!--$(function () {-->

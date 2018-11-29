@@ -9,6 +9,11 @@
     <constant name="struts.multipart.saveDir" value="/home/sf/Desktop/ssh/files" />
 
     <package name="demo1" extends="struts-default" namespace="/">
+
+        <interceptors>
+            <interceptor name="teacherInterceptor" class="interceptor.TeacherInterceptor" />
+        </interceptors>
+
         <global-results>
             <result name="login">/index.jsp</result>
             <result name="success">/success.html</result>
@@ -29,7 +34,12 @@
         </action>
 
         <action name="teacher_*" class="teacherAction" method="{1}">
+            <interceptor-ref name="teacherInterceptor">
 
+                <!-- 配置不需要该拦截器去拦截的方法 -->
+                <!--<param name="excludeMethods">login</param>-->
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack" />
         </action>
 
         <action name="student_*" class="studentAction" method="{1}">

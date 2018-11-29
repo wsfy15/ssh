@@ -22,6 +22,7 @@ import utils.MD5utils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -67,5 +68,15 @@ public class StudentServiceImpl implements StudentService {
             jsonArray.add(jsonObject);
         }
         return jsonArray;
+    }
+
+    @Override
+    public List<Course> findCourseList(String id) {
+
+        Student student = studentDao.findById(id);
+        System.out.println(student.getCourses().size());
+
+        Set<Course> courses = student.getCourses();
+        return new ArrayList<>(courses);
     }
 }
