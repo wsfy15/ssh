@@ -26,6 +26,30 @@
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="configLocations" value="classpath:hibernate.cfg.xml" />
+
+        <!-- 不使用hibernate.cfg.xml -->
+    <!--     <property name="hibernateProperties">
+            <props>
+                <prop key="show_sql">true</prop>
+                <prop key="format_sql">true</prop>
+                <prop key="hbm2ddl.auto">update</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="connection.useUnicode">true</prop>
+                <prop key="connection.characterEncoding">utf8</prop>
+            </props>
+        </property>
+
+        <property name="mappingResources">
+            <list>
+                <value>classpath:entity/Course.hbm.xml</value>
+                <value>classpath:entity/Assignment.hbm.xml</value>
+                <value>classpath:entity/Homework.hbm.xml</value>
+                <value>classpath:entity/Student.hbm.xml</value>
+                <value>classpath:entity/Teacher.hbm.xml</value>
+                <value>classpath:entity/Admin.hbm.xml</value>
+            </list>
+        </property> -->
+
     </bean>
 
     <!-- 事务管理器 -->

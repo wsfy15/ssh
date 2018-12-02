@@ -8,23 +8,26 @@
          version="3.0">
   <display-name>Archetype Created Web Application</display-name>
 
-
+  <!--监听器-->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:applicationContext.xml</param-value>
   </context-param>
 
-  <!--struts2过滤器-->
+  <!-- 解决延迟加载，放在struts2过滤器前，请求就会先经过该过滤器，处理完之后，后经过该过滤器 -->
   <filter>
-    <filter-name>struts2</filter-name>
-    <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+    <filter-name>OpenSessionInViewFilter</filter-name>
+    <filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
   </filter>
-
   <filter-mapping>
-    <filter-name>struts2</filter-name>
+    <filter-name>OpenSessionInViewFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+  <!--
   <filter>
     <filter-name>hibernateFilter</filter-name>
     <filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
@@ -33,11 +36,18 @@
       <param-value>false</param-value>
     </init-param>
   </filter>
+  -->
 
-  <!--监听器-->
-  <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
+  <!-- struts2过滤器 -->
+  <filter>
+    <filter-name>struts2</filter-name>
+    <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>struts2</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
 
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

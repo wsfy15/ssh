@@ -11,7 +11,7 @@
         <property name="co_date" type="date" column="co_date" />
         <property name="co_describe" column="co_describe" />
 
-        <many-to-one name="teacher" class="entity.Teacher" column="co_teacher" lazy="false"/>
+        <many-to-one name="teacher" class="entity.Teacher" column="co_teacher"/>
 
         <set name="students" table="student_course" inverse="true">
             <key column="co_id" />
