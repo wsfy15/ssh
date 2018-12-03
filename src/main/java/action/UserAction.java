@@ -3,6 +3,7 @@ package action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.opensymphony.xwork2.util.ValueStack;
 import entity.Admin;
 import entity.Student;
 import entity.Teacher;
@@ -58,20 +59,41 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
     }
 
 
-
+    /**
+     * 登陆成功后，将用户对象压到值栈（root栈）
+     * @return
+     */
     public String login(){
-//        System.out.println(user.getPassword());
-        String res = userService.login(user);
-//        System.out.println("res: " + res);
-        if(res != null){
-            Map<String, Object> session = ActionContext.getContext().getSession();
-            session.put("id", user.getId());
-            session.put("role", res);
-            return res;
-        }
+        ValueStack valueStack = ActionContext.getContext().getValueStack();
+        Map<String, Object> session = ActionContext.getContext().getSession();
 
+        String id = user.getId();
+        String password = user.getPassword();
+
+        if(id.startsWith("1010")){
+            Teacher teacher = userService.teacherLogin(id, password);
+            if(teacher != null){
+                valueStack.set("user", teacher);
+                session.put("user", teacher);
+                return "teacher";
+            }
+        }
+        else if(id.startsWith("1000") ){
+            Admin admin = userService.adminLogin(id, password);
+            if(admin != null){
+                valueStack.set("user", admin);
+                session.put("user", admin);
+                return "admin";
+            }
+        }else {
+            Student student = userService.studentLogin(id, password);
+            if(student != null){
+                valueStack.set("user", student);
+                session.put("user", student);
+                return "student";
+            }
+        }
         return ERROR;
     }
-
 
 }

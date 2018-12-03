@@ -9,7 +9,7 @@ import java.util.Set;
 
 public interface StudentService {
 
-    JSONArray findCourse(String id);
+//    JSONArray findCourse(String id);
     List<Course> findCourseList(String id);
 
 }

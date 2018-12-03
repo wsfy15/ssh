@@ -43,7 +43,7 @@
         </action>
 
         <action name="student_*" class="studentAction" method="{1}">
-            <result name="course">/student/course.jsp</result>
+            <result name="course">/student/course-list.jsp</result>
         </action>
 
     </package>

@@ -71,5 +71,32 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    public Student studentLogin(String id, String password) {
+        Student student = studentDao.findById(id);
+        if(student != null && student.getPassword().equals(password)){
+            return student;
+        }
+        return null;
+    }
+
+    @Override
+    public Teacher teacherLogin(String id, String password) {
+        Teacher teacher = teacherDao.findById(id);
+        if(teacher != null && teacher.getPassword().equals(password)){
+            return teacher;
+        }
+        return null;
+    }
+
+    @Override
+    public Admin adminLogin(String id, String password) {
+        Admin admin = adminDao.findById(id);
+        if(admin != null && admin.getPassword().equals(password)){
+            return admin;
+        }
+        return null;
+    }
+
 
 }

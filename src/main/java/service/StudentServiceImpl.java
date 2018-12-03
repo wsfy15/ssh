@@ -49,30 +49,28 @@ public class StudentServiceImpl implements StudentService {
         this.courseDao = courseDao;
     }
 
-
-    @Override
-    public JSONArray findCourse(String id) {
-
-        Student student = studentDao.findById(id);
-        System.out.println(student.getCourses().size());
-
-        Set<Course> courses = student.getCourses();
-        JSONArray jsonArray = new JSONArray();
-
-        for(Course c : courses){
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("co_id", c.getCo_id());
-            jsonObject.put("co_name", c.getCo_name());
-            jsonObject.put("co_describe", c.getCo_describe());
-            jsonObject.put("teacher_name", c.getTeacher().getName());
-            jsonArray.add(jsonObject);
-        }
-        return jsonArray;
-    }
+    
+//    public JSONArray findCourse(String id) {
+//
+//        Student student = studentDao.findById(id);
+//        System.out.println(student.getCourses().size());
+//
+//        Set<Course> courses = student.getCourses();
+//        JSONArray jsonArray = new JSONArray();
+//
+//        for(Course c : courses){
+//            JSONObject jsonObject = new JSONObject();
+//            jsonObject.put("co_id", c.getCo_id());
+//            jsonObject.put("co_name", c.getCo_name());
+//            jsonObject.put("co_describe", c.getCo_describe());
+//            jsonObject.put("teacher_name", c.getTeacher().getName());
+//            jsonArray.add(jsonObject);
+//        }
+//        return jsonArray;
+//    }
 
     @Override
     public List<Course> findCourseList(String id) {
-
         Student student = studentDao.findById(id);
         System.out.println(student.getCourses().size());
 

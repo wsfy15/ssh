@@ -10,8 +10,10 @@ import entity.Student;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
 import service.StudentService;
 import utils.FastJsonUtil;
+import utils.LogUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +29,8 @@ import java.util.Set;
  * @Version 1.0
  **/
 public class StudentAction extends ActionSupport implements ModelDriven<Student> {
+    private static Logger logger = LogUtils.getLogger();
+
     private Student student = new Student();
     private StudentService studentService;
 
@@ -37,25 +41,14 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
 
     public String getAllCourse(){
         Map<String, Object> session = ActionContext.getContext().getSession();
-        HttpServletRequest request = ServletActionContext.getRequest();
-        String id = (String) session.get("id");
-//        String id = student.getId();  //json
-        System.out.println(id);
-        JSONArray courses = studentService.findCourse(id);
+        Student student = (Student) session.get("user");
 
+        logger.debug(student.getId());
 
         ValueStack valueStack = ActionContext.getContext().getValueStack();
-        List<Course> courseList = studentService.findCourseList(id);
+        List<Course> courseList = studentService.findCourseList(student.getId());
         valueStack.set("courseList", courseList);
         return "course";
-
-        // 使用fastjson，把list转换成json字符串
-//        String jsonString = FastJsonUtil.toJSONString(courses);
-//        // 把json字符串写到浏览器
-//        HttpServletResponse response = ServletActionContext.getResponse();
-//        // 输出
-//        FastJsonUtil.writeJson(response, jsonString);
-//        return NONE;
     }
 
     public StudentService getStudentService() {
