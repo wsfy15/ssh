@@ -54,19 +54,19 @@
         </a>
         <ul class="sub-menu">
           <li>
-            <a _href="${ pageContext.request.contextPath }/admin_.action">
+            <a _href="./student-add.jsp">
               <i class="iconfont">&#xe6a7;</i>
               <cite>添加学生</cite>
             </a>
           </li >
           <li>
-            <a _href="${ pageContext.request.contextPath }/admin_.action">
+            <a _href="./teacher-add.jsp">
               <i class="iconfont">&#xe6a7;</i>
               <cite>添加教师</cite>
             </a>
           </li >
           <li>
-            <a _href="${ pageContext.request.contextPath }/admin_.action">
+            <a _href="./admin-add.jsp">
               <i class="iconfont">&#xe6a7;</i>
               <cite>添加管理员</cite>
             </a>
