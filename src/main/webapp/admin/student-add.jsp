@@ -71,6 +71,7 @@
               <span id="fileName"></span>
             </td>
             <td>
+              <%--<button class="layui-btn" lay-submit >提交</button>--%>
               <input type="submit" class="layui-btn layui-btn-normal"/>
             </td>
           </tr>
@@ -88,38 +89,47 @@
   <fieldset class="layui-elem-field">
     <legend>手动添加</legend>
     <div class="layui-field-box">
-      <form action="${pageContext.request.contextPath}/admin_add.action" target="_parent" method="post">
-        <table class="layui-table">
-          <tbody>
-          <tr>
-            <th>姓名</th>
-            <td><input class="layui-input" placeholder="姓名" name="name" id="name" type="text" maxlength="20" required></td>
-          </tr>
-          <tr>
-            <th>班级</th>
-            <td><input class="layui-input" placeholder="班级" name="class" id="class" type="number" required
-                       oninput="if(value.length>10)value=value.slice(0,10)"></td>
-          </tr>
-          <tr>
-            <th>密码</th>
-            <td><input class="layui-input" name="password" id="password" type="password" maxlength="30"></td>
-          </tr>
-          <tr>
-            <th></th>
-            <th>
-              <input type="submit" class="layui-btn layui-btn-normal"/>
-              <%--<button class="layui-btn" onclick=""><i class="iconfont">&#xe6ad;</i>添加</button>--%>
-            </th>
-          </tr>
-          <tr hidden>
-            <th>
-              <p name="role">student</p>
-            </th>
-          </tr>
-          </tbody>
-        </table>
-      </form>
+      <div style="position: relative; left:30%;">
+        <form class="layui-form layui-form-pane" action="${pageContext.request.contextPath}/admin_add.action"
+              target="_parent" method="post">
 
+          <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-inline">
+              <input type="text" name="name" lay-verify="required" placeholder="请输入姓名"
+                     maxlength="20" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-inline">
+              <input type="password" name="password" placeholder="请输入密码"
+                     maxlength="30" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">班级</label>
+            <div class="layui-input-inline">
+              <input type="text" name="class" lay-verify="required|number" placeholder="请输入班级"
+                     maxlength="10" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <div class="layui-input-block">
+              <button class="layui-btn" lay-submit>立即提交</button>
+              <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+          </div>
+
+          <div class="layui-form-item" hidden>
+            <p name="role">student</p>
+          </div>
+
+        </form>
+      </div>
     </div>
   </fieldset>
 </div>
