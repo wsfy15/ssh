@@ -21,6 +21,7 @@
                 alert("用户名或密码不能为空");
                 return false;
             }
+            console.log(hex_md5($("[name=password]").val()));
             // set password
             $("[name=password]").val(hex_md5($("[name=password]").val()));
             return true;

@@ -2,6 +2,7 @@ package interceptor;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
+import entity.User;
 import org.apache.struts2.ServletActionContext;
 
 /**
@@ -14,7 +15,8 @@ import org.apache.struts2.ServletActionContext;
 public class TeacherInterceptor extends MethodFilterInterceptor {
     @Override
     protected String doIntercept(ActionInvocation actionInvocation) throws Exception {
-        String id = (String) ServletActionContext.getRequest().getSession().getAttribute("id");
+        User user = (User) ServletActionContext.getRequest().getSession().getAttribute("user");
+        String id = user.getId();
         if(id == null){
             return "login";
         }

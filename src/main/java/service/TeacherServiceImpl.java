@@ -17,7 +17,9 @@ import utils.MD5utils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 public class TeacherServiceImpl implements TeacherService {
@@ -143,6 +145,15 @@ public class TeacherServiceImpl implements TeacherService {
 
     public void setTeacherDao(TeacherDao teacherDao) {
         this.teacherDao = teacherDao;
+    }
+
+    @Override
+    public List<Course> findCourseList(String id) {
+       Teacher teacher = teacherDao.findById(id);
+        System.out.println(teacher.getCourses().size());
+
+        Set<Course> courses = teacher.getCourses();
+        return new ArrayList<>(courses);
     }
 
 }
