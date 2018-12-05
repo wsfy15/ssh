@@ -9,8 +9,10 @@ import entity.User;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
+import com.opensymphony.xwork2.util.ValueStack;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.slf4j.Logger;
 import service.TeacherService;
 import utils.ExcelUtils;
@@ -35,6 +37,8 @@ import java.util.Map;
 public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>{
     private static Logger logger = LogUtils.getLogger();
     private TeacherService teacherService;
+    private Course course1;//老师修改数据上传到此course
+
 
     public TeacherService getTeacherService() {
         return teacherService;
@@ -52,6 +56,11 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
     public Teacher getModel() {
         return teacher;
     }
+    //修改课程数据
+//    public String updatecourse(){
+//
+//        return "ok";
+//    }
 
     public String saveCourse(){
         Course course = new Course();
@@ -126,5 +135,25 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
         }
 
         return ERROR;
+    }
+    public String showcourse(){
+
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        Teacher teacher = (Teacher) session.get("user");
+        System.out.println(teacher.getId());
+        logger.debug(teacher.getId());
+
+        ValueStack valueStack = ActionContext.getContext().getValueStack();
+        List<Course> courseList = teacherService.findCourseList(teacher.getId());
+        valueStack.set("courseList", courseList);
+        return "course";
+    }
+
+    public Course getCourse1() {
+        return course1;
+    }
+
+    public void setCourse1(Course course1) {
+        this.course1 = course1;
     }
 }

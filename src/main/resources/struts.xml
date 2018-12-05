@@ -42,9 +42,10 @@
         <action name="teacher_*" class="teacherAction" method="{1}">
             <interceptor-ref name="teacherInterceptor">
                 <!-- 配置不需要该拦截器去拦截的方法 -->
-                <!--<param name="excludeMethods">login</param>-->
+                <param name="excludeMethods">login</param>
             </interceptor-ref>
             <interceptor-ref name="defaultStack" />
+            <result name="course">/teacher/groupconfig.jsp</result>
         </action>
 
         <action name="student_*" class="studentAction" method="{1}">

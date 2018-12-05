@@ -116,7 +116,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                      <a _href="${ pageContext.request.contextPath }/teacher_.action">
+                      <a _href="${ pageContext.request.contextPath }/teacher_showcourse.action">
                           <i class="iconfont">&#xe6a7;</i>
                           <cite>设置作业</cite>
                       </a>

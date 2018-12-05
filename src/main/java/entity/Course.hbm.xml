@@ -10,7 +10,10 @@
         <property name="co_ro_num" column="co_ro_num" />
         <property name="co_date" type="date" column="co_date" />
         <property name="co_describe" column="co_describe" />
-
+        <property name="co_gr_max" column="co_gr_max" />
+        <property name="co_gr_min" column="co_gr_min" />
+        <property name="co_gr_preyear" column="co_gr_preyear" />
+        <property name="co_gr_preclass" column="co_gr_preclass" />
         <many-to-one name="teacher" class="entity.Teacher" column="co_teacher"/>
 
         <set name="students" table="student_course" inverse="true">
