@@ -1,3 +1,7 @@
+
+TODO: 数据库每个表添加一个字段，表示是否有效
+
+
 目录结构
 
 src/main/java： 存放java类
@@ -55,4 +59,3 @@ classpath:指向java文件编译部署后的class所在的路径，即target/cla
 maven导入异常：到这里下载jar包 http://maven.aliyun.com/mvn/search
 更改已有依赖版本后不更新：找到仓库目录，删除已有依赖，再reimport
 
-TODO: 为用户绑定session、访问页面前判断是否已登录，及权限是否正确，否则跳转到登陆页面

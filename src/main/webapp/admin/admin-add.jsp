@@ -49,13 +49,13 @@
   <fieldset class="layui-elem-field">
     <legend>上传文件</legend>
     <div class="layui-field-box">
-      <form action="${pageContext.request.contextPath}/admin_addByExcel.action" target="_parent" method="post"
+      <form action="${pageContext.request.contextPath}/admin_addByExcel.action" target="_self" method="post"
             enctype="multipart/form-data">
         <table class="layui-table" lay-skin="line">
           <tbody>
           <tr>
             <td>
-              <a class="x-a" href="/" target="_blank">
+              <a class="x-a" href="javascript:;" >
                 excel文件格式：每位管理员一行，必须有姓名，可以没有密码（则默认与生成的教工号相同）
               </a>
             </td>
@@ -76,7 +76,7 @@
           </tr>
           <tr hidden>
             <th>
-              <p name="role">admin</p>
+              <input type="text" name="role" value="admin" />
             </th>
           </tr>
           </tbody>
@@ -90,7 +90,7 @@
     <div class="layui-field-box">
       <div style="position: relative; left:30%;">
         <form class="layui-form layui-form-pane" action="${pageContext.request.contextPath}/admin_add.action"
-              target="_parent" method="post">
+              target="_self" method="post">
 
           <div class="layui-form-item">
             <label class="layui-form-label">姓名</label>
@@ -116,7 +116,7 @@
           </div>
 
           <div class="layui-form-item" hidden>
-            <p name="role">admin</p>
+            <input type="text" name="role" value="admin" />
           </div>
 
         </form>

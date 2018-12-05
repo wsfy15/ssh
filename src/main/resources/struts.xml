@@ -12,6 +12,7 @@
 
         <interceptors>
             <interceptor name="teacherInterceptor" class="interceptor.TeacherInterceptor" />
+            <interceptor name="adminInterceptor" class="interceptor.AdminInterceptor" />
         </interceptors>
 
         <global-results>
@@ -29,13 +30,17 @@
             <!--<allowed-methods>login,save</allowed-methods>-->
         </action>
 
-        <action name="course_*" class="courseAction">
-
+        <action name="admin_*" class="adminAction" method="{1}">
+            <interceptor-ref name="adminInterceptor">
+                <!-- 配置不需要该拦截器去拦截的方法 -->
+                <param name="excludeMethods">login</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack" />
+            <result name="add">/admin/addSuccess.jsp</result>
         </action>
 
         <action name="teacher_*" class="teacherAction" method="{1}">
             <interceptor-ref name="teacherInterceptor">
-
                 <!-- 配置不需要该拦截器去拦截的方法 -->
                 <!--<param name="excludeMethods">login</param>-->
             </interceptor-ref>

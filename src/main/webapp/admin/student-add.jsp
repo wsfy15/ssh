@@ -16,9 +16,17 @@
   <script type="text/javascript" src="../lib/jquery-3.3.1.min.js"></script>
   <script src="../lib/layui/layui.js" charset="utf-8"></script>
   <script type="text/javascript" src="../lib/xadmin.js"></script>
-
   <script>
       $(function () {
+          // 发送ajax请求获得班级
+          var url = "${ pageContext.request.contextPath }/admin_getAllClass.action";
+          $.post(url, function(data){
+              console.log(data);
+              $(data).each(function (i, n) {
+                  $("#class").append("<option value='" + n + "'>" + n + "</option>");
+              });
+          }, "json");
+
           $('#pseudo_upload').click(function () {
               $('#upload').click();
           });
@@ -27,6 +35,9 @@
               var name = e.currentTarget.files[0].name;
               $('#fileName').text(name);
           });
+
+
+
       })
 
   </script>
@@ -49,13 +60,13 @@
   <fieldset class="layui-elem-field">
     <legend>上传文件</legend>
     <div class="layui-field-box">
-      <form action="${pageContext.request.contextPath}/admin_addByExcel.action" target="_parent" method="post"
-            enctype="multipart/form-data">
+      <form action="${pageContext.request.contextPath}/admin_addByExcel.action" target="_self" method="post"
+            enctype="multipart/form-data" >
         <table class="layui-table" lay-skin="line">
           <tbody>
           <tr>
             <td>
-              <a class="x-a" href="/" target="_blank">
+              <a class="x-a" href="javascript:;">
                 excel文件格式：每位学生一行，必须有姓名、班级，可以没有密码（则默认与生成的学号相同）
               </a>
             </td>
@@ -77,7 +88,7 @@
           </tr>
           <tr hidden>
             <th>
-              <p name="role">student</p>
+              <input type="text" name="role" value="student" />
             </th>
           </tr>
           </tbody>
@@ -91,7 +102,7 @@
     <div class="layui-field-box">
       <div style="position: relative; left:30%;">
         <form class="layui-form layui-form-pane" action="${pageContext.request.contextPath}/admin_add.action"
-              target="_parent" method="post">
+              target="_self" method="post" >
 
           <div class="layui-form-item">
             <label class="layui-form-label">姓名</label>
@@ -112,8 +123,9 @@
           <div class="layui-form-item">
             <label class="layui-form-label">班级</label>
             <div class="layui-input-inline">
-              <input type="text" name="class" lay-verify="required|number" placeholder="请输入班级"
-                     maxlength="10" autocomplete="off" class="layui-input">
+              <select name="class" id="class" lay-verify="required">
+                <option value="">请选择班级</option>
+              </select>
             </div>
           </div>
 
@@ -125,7 +137,7 @@
           </div>
 
           <div class="layui-form-item" hidden>
-            <p name="role">student</p>
+            <input type="text" name="role" value="student" />
           </div>
 
         </form>
@@ -133,6 +145,7 @@
     </div>
   </fieldset>
 </div>
+
 
 </body>
 </html>

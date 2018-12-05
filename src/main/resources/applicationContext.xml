@@ -76,6 +76,9 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
+    <bean id="classDao" class="dao.ClassDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
 
     <bean id="userService" class="service.UserServiceImpl" >
         <property name="teacherDao" ref="teacherDao" />
@@ -105,6 +108,17 @@
 
     <bean id="studentAction" class="action.StudentAction">
         <property name="studentService" ref="studentService" />
+    </bean>
+
+    <bean id="adminService" class="service.AdminServiceImpl">
+        <property name="adminDao" ref="adminDao" />
+        <property name="studentDao" ref="studentDao" />
+        <property name="teacherDao" ref="teacherDao" />
+        <property name="classDao" ref="classDao" />
+    </bean>
+
+    <bean id="adminAction" class="action.AdminAction">
+        <property name="adminService" ref="adminService" />
     </bean>
 
 
