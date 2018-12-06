@@ -46,6 +46,7 @@
             </interceptor-ref>
             <interceptor-ref name="defaultStack" />
             <result name="course">/teacher/groupconfig.jsp</result>
+
         </action>
 
         <action name="student_*" class="studentAction" method="{1}">

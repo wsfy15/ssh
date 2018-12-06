@@ -97,4 +97,19 @@ public class Course {
     public void setStudents(Set<Student> students) {
         this.students = students;
     }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "co_id='" + co_id + '\'' +
+                ", co_name='" + co_name + '\'' +
+                ", co_ro_num=" + co_ro_num +
+                ", co_date=" + co_date +
+                ", co_describe='" + co_describe + '\'' +
+                ", co_gr_max=" + co_gr_max +
+                ", co_gr_min=" + co_gr_min +
+                ", co_gr_preyear=" + co_gr_preyear +
+                ", co_gr_preclass=" + co_gr_preclass +
+                '}';
+    }
 }

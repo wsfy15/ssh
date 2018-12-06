@@ -1,5 +1,6 @@
 package action;
 
+import com.mysql.fabric.Response;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -38,6 +39,16 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
     private static Logger logger = LogUtils.getLogger();
     private TeacherService teacherService;
     private Course course1;//老师修改数据上传到此course
+
+    public static void setLogger(Logger logger) {
+        TeacherAction.logger = logger;
+    }
+
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
 
 
     public TeacherService getTeacherService() {
@@ -149,6 +160,11 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
         return "course";
     }
 
+    public  String data(){
+
+        System.out.println(course1.toString());
+        return SUCCESS;
+    }
     public Course getCourse1() {
         return course1;
     }

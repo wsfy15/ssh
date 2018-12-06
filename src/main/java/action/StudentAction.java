@@ -51,6 +51,7 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
         return "course";
     }
 
+
     public StudentService getStudentService() {
         return studentService;
     }
