@@ -9,14 +9,19 @@ import entity.Class;
 import entity.Student;
 import entity.Teacher;
 import entity.User;
+import org.slf4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
+import utils.LogUtils;
 import utils.MD5utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Transactional
 public class AdminServiceImpl implements AdminService {
+    private static Logger logger = LogUtils.getLogger();
 
     /**
      *
@@ -67,6 +72,140 @@ public class AdminServiceImpl implements AdminService {
             adminDao.save(admin);
             return admin.getId();
         }
+    }
+
+    @Override
+    public List<User> saveMulti(List<List<String[]>> userSheets, String role) {
+        List<User> users = new ArrayList<>();
+
+        switch (role){
+            case "student":
+                for(List<String[]> sheet : userSheets){
+                    if(sheet.size() == 0){
+                        continue;
+                    }
+
+                    // 检查表字段
+                    // 必须有名字和班级，可以没有密码，则默认与ID相同
+                    Map<String, Integer> fieldMap = getFields(sheet.get(0));
+
+                    // 不符合规范的用户不添加
+                    if(fieldMap.get("name") == null || fieldMap.get("class") == null){
+                        continue;
+                    }
+                    int nameIndex = fieldMap.get("name");
+                    int passwordIndex = fieldMap.get("password") == null ? -1 : fieldMap.get("password");
+                    int classIndex = fieldMap.get("class");
+
+                    for(int i = 1; i < sheet.size(); i++){
+                        String[] student = sheet.get(i);
+                        Student user = new Student();
+                        user.setId(StudentIDGenerator());
+                        logger.debug("student ID:{}", user.getId());
+
+                        user.setName(student[nameIndex]);
+
+                        if(passwordIndex == -1){
+                            user.setPassword(MD5utils.md5(user.getId()));
+                        }else{
+                            user.setPassword(MD5utils.md5(student[passwordIndex]));
+                        }
+
+                        user.setClassNo(student[classIndex]);
+                        studentDao.save(user);
+                        users.add(user);
+                    }
+                }
+                break;
+            case "teacher":
+                for(List<String[]> sheet : userSheets){
+                    if(sheet.size() == 0){
+                        continue;
+                    }
+
+                    // 检查表字段
+                    // 必须有名字，可以没有密码，则默认与ID相同
+                    Map<String, Integer> fieldMap = getFields(sheet.get(0));
+
+                    // 不符合规范的用户不添加
+                    if(fieldMap.get("name") == null){
+                        continue;
+                    }
+                    int nameIndex = fieldMap.get("name");
+                    int passwordIndex = fieldMap.get("password") == null ? -1 : fieldMap.get("password");
+
+                    for(int i = 1; i < sheet.size(); i++){
+                        String[] teacher = sheet.get(i);
+                        Teacher user = new Teacher();
+                        user.setName(teacher[nameIndex]);
+                        user.setId(TeacherIDGenerator());
+                        logger.debug("teacher ID:{}", user.getId());
+
+                        if(passwordIndex == -1){
+                            user.setPassword(MD5utils.md5(user.getId()));
+                        }else{
+                            user.setPassword(MD5utils.md5(teacher[passwordIndex]));
+                        }
+
+                        teacherDao.save(user);
+                        users.add(user);
+                    }
+                }
+                break;
+            case "admin":
+                for(List<String[]> sheet : userSheets){
+                    if(sheet.size() == 0){
+                        continue;
+                    }
+
+                    // 检查表字段
+                    // 必须有名字，可以没有密码，则默认与ID相同
+                    Map<String, Integer> fieldMap = getFields(sheet.get(0));
+
+                    // 不符合规范的用户不添加
+                    if(fieldMap.get("name") == null){
+                        continue;
+                    }
+                    int nameIndex = fieldMap.get("name");
+                    int passwordIndex = fieldMap.get("password") == null ? -1 : fieldMap.get("password");
+
+                    for(int i = 1; i < sheet.size(); i++){
+                        String[] admin = sheet.get(i);
+                        Admin user = new Admin();
+                        user.setName(admin[nameIndex]);
+                        user.setId(AdminIDGenerator());
+                        logger.debug("admin ID:{}", user.getId());
+
+                        if(passwordIndex == -1){
+                            user.setPassword(MD5utils.md5(user.getId()));
+                        }else{
+                            user.setPassword(MD5utils.md5(admin[passwordIndex]));
+                        }
+
+                        adminDao.save(user);
+                        users.add(user);
+                    }
+                }
+                break;
+            default:
+                return null;
+        }
+
+        return users;
+    }
+
+    /**
+     *
+     * @param row: 一般为表格的第一行
+     * @return
+     */
+    private Map<String, Integer> getFields(String[] row){
+        Map<String, Integer> map = new HashMap<>();
+        Integer index = 0;
+        for(String s : row){
+            map.put(s, index);
+        }
+        return map;
     }
 
     @Override

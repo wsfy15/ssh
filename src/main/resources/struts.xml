@@ -6,7 +6,7 @@
     <!-- 常量定义在struts-core/org/apache/struts2/default.properties -->
     <!-- 20MB -->
     <constant name="struts.multipart.maxSize" value="20971520" />
-    <constant name="struts.multipart.saveDir" value="/home/sf/Desktop/ssh/files" />
+    <constant name="struts.multipart.saveDir" value="E:\javaProject\files" />
 
     <package name="demo1" extends="struts-default" namespace="/">
 

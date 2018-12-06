@@ -106,6 +106,7 @@
               <input type="password" name="password" placeholder="请输入密码"
                      maxlength="30" autocomplete="off" class="layui-input">
             </div>
+            <div class="layui-form-mid layui-word-aux">若不输入密码，则默认密码与生成的ID相同</div>
           </div>
 
           <div class="layui-form-item">
