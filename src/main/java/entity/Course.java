@@ -21,6 +21,7 @@ public class Course {
     private Integer co_gr_min;  //小组最小人员数目
     private Integer co_gr_preyear; //授课年份
     private Integer co_gr_preclass;//授课班级号
+    private Integer valid;
 
     public Integer getCo_gr_max() { return co_gr_max; }
 
@@ -96,6 +97,14 @@ public class Course {
 
     public void setStudents(Set<Student> students) {
         this.students = students;
+    }
+
+    public Integer getValid() {
+        return valid;
+    }
+
+    public void setValid(Integer valid) {
+        this.valid = valid;
     }
 
     @Override

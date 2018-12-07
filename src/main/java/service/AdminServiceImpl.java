@@ -88,6 +88,9 @@ public class AdminServiceImpl implements AdminService {
                     // 检查表字段
                     // 必须有名字和班级，可以没有密码，则默认与ID相同
                     Map<String, Integer> fieldMap = getFields(sheet.get(0));
+                    for(String s: fieldMap.keySet()){
+                        logger.debug("{}:{}", s, fieldMap.get(s));
+                    }
 
                     // 不符合规范的用户不添加
                     if(fieldMap.get("name") == null || fieldMap.get("class") == null){
@@ -97,15 +100,19 @@ public class AdminServiceImpl implements AdminService {
                     int passwordIndex = fieldMap.get("password") == null ? -1 : fieldMap.get("password");
                     int classIndex = fieldMap.get("class");
 
+                    logger.debug("name index: {}", nameIndex);
+                    logger.debug("class index: {}", classIndex);
+
                     for(int i = 1; i < sheet.size(); i++){
                         String[] student = sheet.get(i);
                         Student user = new Student();
+                        user.setValid(1);
                         user.setId(StudentIDGenerator());
                         logger.debug("student ID:{}", user.getId());
 
                         user.setName(student[nameIndex]);
 
-                        if(passwordIndex == -1){
+                        if(passwordIndex == -1 || "".equals(student[passwordIndex])){
                             user.setPassword(MD5utils.md5(user.getId()));
                         }else{
                             user.setPassword(MD5utils.md5(student[passwordIndex]));
@@ -137,11 +144,12 @@ public class AdminServiceImpl implements AdminService {
                     for(int i = 1; i < sheet.size(); i++){
                         String[] teacher = sheet.get(i);
                         Teacher user = new Teacher();
+                        user.setValid(1);
                         user.setName(teacher[nameIndex]);
                         user.setId(TeacherIDGenerator());
                         logger.debug("teacher ID:{}", user.getId());
 
-                        if(passwordIndex == -1){
+                        if(passwordIndex == -1 || "".equals(teacher[passwordIndex])){
                             user.setPassword(MD5utils.md5(user.getId()));
                         }else{
                             user.setPassword(MD5utils.md5(teacher[passwordIndex]));
@@ -163,7 +171,7 @@ public class AdminServiceImpl implements AdminService {
                     Map<String, Integer> fieldMap = getFields(sheet.get(0));
 
                     // 不符合规范的用户不添加
-                    if(fieldMap.get("name") == null){
+                    if(fieldMap.get("name") == null ){
                         continue;
                     }
                     int nameIndex = fieldMap.get("name");
@@ -171,12 +179,19 @@ public class AdminServiceImpl implements AdminService {
 
                     for(int i = 1; i < sheet.size(); i++){
                         String[] admin = sheet.get(i);
+                        for(String s : admin){
+                            logger.debug(s);
+                        }
+                        if(admin[nameIndex].length() == 0){
+                            continue;
+                        }
                         Admin user = new Admin();
+                        user.setValid(1);
                         user.setName(admin[nameIndex]);
                         user.setId(AdminIDGenerator());
                         logger.debug("admin ID:{}", user.getId());
 
-                        if(passwordIndex == -1){
+                        if(passwordIndex == -1 || "".equals(admin[passwordIndex])){
                             user.setPassword(MD5utils.md5(user.getId()));
                         }else{
                             user.setPassword(MD5utils.md5(admin[passwordIndex]));
@@ -204,6 +219,7 @@ public class AdminServiceImpl implements AdminService {
         Integer index = 0;
         for(String s : row){
             map.put(s, index);
+            index++;
         }
         return map;
     }
@@ -217,6 +233,18 @@ public class AdminServiceImpl implements AdminService {
         }
 
         return list;
+    }
+
+    @Override
+    public String createClass(final String year) {
+        List<Class> classes = classDao.findAll();
+        Integer count = 0;
+        for(Class c : classes){
+            if(c.getId().startsWith(year)){
+                count++;
+            }
+        }
+        return year.concat(String.format("%06d", count));
     }
 
     public String TeacherIDGenerator(){

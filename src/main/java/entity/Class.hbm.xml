@@ -6,5 +6,7 @@
     <class name="entity.Class" table="class">
         <id name="id" column="cl_id" />
 
+        <property name="valid" column="cl_valid" />
+
     </class>
 </hibernate-mapping>

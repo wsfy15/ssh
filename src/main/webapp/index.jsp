@@ -10,14 +10,14 @@
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <link rel="stylesheet" href="./css/font.css">
-	<link rel="stylesheet" href="./css/xadmin.css">
+	  <link rel="stylesheet" href="./css/xadmin.css">
     <script type="text/javascript" src="./lib/jquery-3.3.1.min.js"></script>
     <script src="./lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="./lib/xadmin.js"></script>
     <script type="text/javascript" src="./js/md5.js"></script>
     <script >
         function checkInput() {
-            if($("input[name='password']").val() == '' ||$("input[name='username']").val() == '' ){
+            if($("input[name='password']").val() == '' ||$("input[name='id']").val() == '' ){
                 alert("用户名或密码不能为空");
                 return false;
             }

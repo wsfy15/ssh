@@ -49,6 +49,10 @@ public class ExcelUtils {
                 int lastRowNum = sheet.getLastRowNum();
                 logger.info("first row:{} last row: {}", firstRowNum, lastRowNum);
 
+                //获得表头的 开始列 和 列数
+                int firstCellNum = sheet.getRow(firstRowNum).getFirstCellNum();
+                int cellCount = sheet.getRow(firstRowNum).getPhysicalNumberOfCells();
+
                 //循环所有行，第一行表示字段名
                 for(int rowNum = firstRowNum;rowNum <= lastRowNum; rowNum++){
                     //获得当前行
@@ -57,15 +61,14 @@ public class ExcelUtils {
                         continue;
                     }
 
-                    //获得当前行的 开始列 和 列数
-                    int firstCellNum = row.getFirstCellNum();
-                    int cellCount = row.getPhysicalNumberOfCells();
                     logger.info("first col:{} last col: {}", firstCellNum, cellCount + firstCellNum);
                     //循环当前行的每一列
                     String[] cells = new String[cellCount];
                     for(int cellNum = 0; cellNum < cellCount; cellNum++){
                         Cell cell = row.getCell(cellNum + firstCellNum);
-                        cells[cellNum] = getCellValue(cell);
+                        String value = getCellValue(cell);
+                        cells[cellNum] = value.length() == 0 ? "" : value;
+                        logger.debug(cells[cellNum]);
                     }
                     list.add(cells);
                 }

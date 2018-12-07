@@ -10,7 +10,7 @@
             <key-property name="ho_gr_id" column="ho_gr_id"  type="string"/>
         </composite-id>
 
-
+        <property name="valid" column="ho_valid" />
         <property name="ho_time" column="ho_time" type="date" />
         <property name="ho_path" column="ho_path" />
         <property name="ho_name"  column="ho_name" />

@@ -37,6 +37,12 @@ public class TeacherServiceImpl implements TeacherService {
 //        studentDao.update(student);
 //    }
 
+
+    /**
+     * 添加学生到某节课的学生列表中
+     * @param studentSheets
+     * @return
+     */
     @Override
     public Boolean addStudentByExcel(List<List<String[]>> studentSheets){
         logger.debug("sheets size:{}", studentSheets.size());
@@ -86,6 +92,7 @@ public class TeacherServiceImpl implements TeacherService {
                 }
 
                 user.setClassNo(student[classIndex]);
+                user.setValid(1);
                 studentDao.save(user);
             }
         }
@@ -98,6 +105,7 @@ public class TeacherServiceImpl implements TeacherService {
         Teacher teacher = teacherDao.findById(teacher_id);
         String course_id = CourseIDGenerator();
         logger.debug("course id: {}", course_id);
+        course.setValid(1);
         course.setCo_id(course_id);
         course.setTeacher(teacher);
         teacher.getCourses().add(course);
@@ -155,7 +163,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<Course> findCourseList(String id) {
        Teacher teacher = teacherDao.findById(id);
-        System.out.println(teacher.getCourses().size());
+        logger.debug("course count: {}", teacher.getCourses().size());
 
         Set<Course> courses = teacher.getCourses();
         return new ArrayList<>(courses);

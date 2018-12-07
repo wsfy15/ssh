@@ -6,6 +6,7 @@
     <class name="entity.Assignment" table="Assignment">
         <id name="as_id" column="as_id" />
 
+        <property name="valid" column="as_valid" />
         <property name="as_name" column="as_name" />
         <property name="as_describe" column="as_describe" />
         <property name="as_ddl" type="date" column="as_ddl" />

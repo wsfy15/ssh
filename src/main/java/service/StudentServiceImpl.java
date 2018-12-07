@@ -72,7 +72,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Course> findCourseList(String id) {
         Student student = studentDao.findById(id);
-        System.out.println(student.getCourses().size());
+        logger.debug("course count: {}", student.getCourses().size());
 
         Set<Course> courses = student.getCourses();
         return new ArrayList<>(courses);

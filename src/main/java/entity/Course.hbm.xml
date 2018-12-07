@@ -6,6 +6,7 @@
     <class name="entity.Course" table="Course">
         <id name="co_id" column="co_id" />
 
+        <property name="valid" column="co_valid" />
         <property name="co_name" column="co_name" />
         <property name="co_ro_num" column="co_ro_num" />
         <property name="co_date" type="date" column="co_date" />

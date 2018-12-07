@@ -123,10 +123,10 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
         // 做文件的上传，说明用户选择了上传的文件了
         if(uploadFileName != null){
             // 打印
-            System.out.println("文件类型：" + uploadContentType);
+            logger.debug("文件类型：{}", uploadContentType);
 
             String path = "/home/sf/Desktop/ssh/files/" + uploadFileName;
-            System.out.println(path);
+            logger.debug(path);
             // 创建file对象
             File file = new File(path);
             if(file.exists()){
@@ -151,8 +151,7 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
 
         Map<String, Object> session = ActionContext.getContext().getSession();
         Teacher teacher = (Teacher) session.get("user");
-        System.out.println(teacher.getId());
-        logger.debug(teacher.getId());
+        logger.debug("teacher ID: {}", teacher.getId());
 
         ValueStack valueStack = ActionContext.getContext().getValueStack();
         List<Course> courseList = teacherService.findCourseList(teacher.getId());
@@ -161,9 +160,7 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
     }
 
     public  String data1(){
-
-        System.out.println(course1.toString());
-
+        logger.debug("course: {}", course1);
 
         return "chenggong";
     }

@@ -6,6 +6,7 @@
     <class name="entity.Admin" table="Admin">
         <id name="id" column="ad_id" />
 
+        <property name="valid" column="ad_valid" />
         <property name="name" column="ad_name" />
         <property name="password" column="ad_password" />
 

@@ -125,7 +125,6 @@ $(function () {
                 $(this).siblings().removeClass('open');
             }
         }else{
-
             var url = $(this).children('a').attr('_href');
             var title = $(this).find('cite').html();
             var index  = $('.left-nav #nav li').index($(this));

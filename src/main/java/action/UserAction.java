@@ -33,6 +33,9 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
         this.userService = userService;
     }
 
+    public String none(){
+        return NONE;
+    }
 
     // 该功能将被遗弃
     public String save(){

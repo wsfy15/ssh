@@ -88,10 +88,21 @@ public class AdminAction extends ActionSupport implements ModelDriven<User> {
         return "add";
     }
 
+    public String createClass(){
+        HttpServletRequest request = ServletActionContext.getRequest();
+        Map<String, String[]> params = request.getParameterMap();
+
+        String year = (String) params.get("year")[0];
+        String classNo = adminService.createClass(year);
+        ValueStack valueStack = ActionContext.getContext().getValueStack();
+        valueStack.set("class", classNo);
+        return NONE;
+    }
+
     public String addByExcel(){
         if(uploadFileName != null){
             // 打印
-            System.out.println("文件类型：" + uploadContentType);
+            logger.debug("文件类型：{}", uploadContentType);
 
             String path = "E:\\javaProject\\files\\" + uploadFileName;
             logger.debug("save path: {}", path);
@@ -108,6 +119,7 @@ public class AdminAction extends ActionSupport implements ModelDriven<User> {
                 String role = (String) params.get("role")[0];
 
                 List<List<String[]>> userSheets = ExcelUtils.readExcel(path);
+
                 List<User> users = adminService.saveMulti(userSheets, role);
                 if(users == null){
                     return ERROR;

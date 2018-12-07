@@ -6,6 +6,7 @@
     <class name="entity.Teacher" table="Teacher">
         <id name="id" column="te_id" />
 
+        <property name="valid" column="te_valid" />
         <property name="name" column="te_name" />
         <property name="password" column="te_password" />
 

@@ -73,8 +73,8 @@
               laypage.render({
                   elem: 'pageDemo' //分页容器的id
                   , count: users.length //总页数
-                  , limit: 2
-                  , limits: [1, 2, 3]
+                  , limit: 10
+                  // , limits: [5, 10, 15]
                   , skin: '#1E9FFF' //自定义选中色值
                   , skip: true //开启跳页
                   , jump: function (obj, first) {
@@ -108,14 +108,7 @@
           <th>姓名</th>
         </tr>
         </thead>
-        <tbody id="userTable">
-        <%--<s:iterator value="newUser" var="user">--%>
-        <%--<tr>--%>
-        <%--<td><s:property value="#user.id"/></td>--%>
-        <%--<td><s:property value="#user.name"/></td>--%>
-        <%--</tr>--%>
-        <%--</s:iterator>--%>
-        </tbody>
+        <tbody id="userTable"></tbody>
       </table>
       <div id="pageDemo"></div>
       <input type="button" class="layui-btn" name="Submit" onclick="self.location=document.referrer;" value="返回上一页">

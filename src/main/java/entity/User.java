@@ -10,7 +10,7 @@ public class User {
     private String id;      // 学号/教工号
     private String name;    // 姓名
     private String password;  // 密码
-
+    private Integer valid;  //有效位，1位有效，0为被删除
 
     public String getId() {
         return id;
@@ -36,7 +36,13 @@ public class User {
         this.password = password;
     }
 
+    public Integer getValid() {
+        return valid;
+    }
 
+    public void setValid(Integer valid) {
+        this.valid = valid;
+    }
 
     @Override
     public String toString(){

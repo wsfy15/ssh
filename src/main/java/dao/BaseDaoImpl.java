@@ -62,7 +62,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
     public long count() {
         DetachedCriteria detachedCriteria = DetachedCriteria.forClass(clazz);
         detachedCriteria.setProjection(Projections.rowCount());
-        System.out.println(clazz.getSimpleName());
+
         List<T> ts = (List<T>) this.getHibernateTemplate().find("from " + clazz.getSimpleName());
         return ts.size();
         //List<Number> list = (List<Number> )this.getHibernateTemplate().findByCriteria(detachedCriteria);

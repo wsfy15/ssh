@@ -17,7 +17,7 @@ public class Homework {
     private String ho_path;     // 作业存放的地址
     private String ho_name;     // 作业名称
     private String ho_us_id;    // 提交人id
-
+    private Integer valid;
 
     public HomeworkPK getHomeworkPK() {
         return homeworkPK;
@@ -59,4 +59,11 @@ public class Homework {
         this.ho_us_id = ho_us_id;
     }
 
+    public Integer getValid() {
+        return valid;
+    }
+
+    public void setValid(Integer valid) {
+        this.valid = valid;
+    }
 }
