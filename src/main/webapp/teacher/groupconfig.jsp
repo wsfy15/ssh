@@ -16,6 +16,8 @@
         <th rowspan="2">课程id</th>
         <th rowspan="2">课名</th>
         <th rowspan="2">课程简介</th>
+        <th rowspan="2">点名次数</th>
+        <th rowspan="2">课程日期</th>
         <th colspan="2">前缀</th>
         <th rowspan="2">小组最小人数</th>
         <th rowspan="2">小组最大人数</th>
@@ -30,6 +32,8 @@
             <th id="cid" > <s:property value="#course.co_id" /> </th>
             <th id="cname"> <s:property value="#course.co_name" /> </th>
             <th id="cintro"> <s:property value="#course.co_describe" /> </th>
+            <th id="cronum"> <s:property value="#course.co_ro_num" /> </th>
+            <th id="codate"> <s:property value="#course.co_date" /> </th>
             <th id="cpreyear"> <s:property value="#course.co_gr_preyear " /> </th>
             <th id="cpreclass"> <s:property value="#course.co_gr_preclass " /> </th>
             <th id="cgroupmin"><s:property value="#course.co_gr_min " /></th>
@@ -50,11 +54,13 @@
             var value0=td[0].innerHTML;
             var value1=td[1].innerHTML;
             var value2=td[2].innerHTML;
-            var value3=td[3].getElementsByTagName("input")[0].value;
-            var value4=td[4].getElementsByTagName("input")[0].value;
+            var value3=td[3].innerHTML;
+            var value4=td[4].innerHTML;
             var value5=td[5].getElementsByTagName("input")[0].value;
             var value6=td[6].getElementsByTagName("input")[0].value;
-            if(value5>value6){
+            var value7=td[7].getElementsByTagName("input")[0].value;
+            var value8=td[8].getElementsByTagName("input")[0].value;
+            if(value7>value8){
                 alert("小组最小值必须小于等于最大值!");
                 location.reload();
             }
@@ -65,24 +71,42 @@
                 //     "groupmax":value6};
                 //  alert(jsonobj.id);
                 //  alert(jsonobj.preclass);
-               $.ajax({
-                    type: "post",
-                    url: "${pageContext.request.contextPath}/teacher_data.action",
-                    data: {
-                           "course1.course.co_id":value0,
-                        "course1.course.co_name":value0,
-                        "course1.co_describe":value0,
-                        "course1.co_gr_preyear":value0,
-                        "course1.co_gr_preclass":value0,
-                        "course1.co_gr_min":value0,
-                        "course1.co_gr_max":value0
-                    },
-                    success: function(result){
-
-                        alert (result);
-                    }
+                var params = {
+                    "course1.co_id":value0,
+                    "course1.co_name":value1,
+                    "course1.co_describe":value2,
+                    "course1.co_ro_num":value3.trim(),
+                    // "course1.co_ro_num":value3,
+                    "course1.co_date":value4,
+                    "course1.co_gr_preyear":value5,
+                    "course1.co_gr_preclass":value6,
+                    "course1.co_gr_min":value7,
+                    "course1.co_gr_max":value8
+                };
+                console.dir(params);
+                $.post("${ pageContext.request.contextPath }/teacher_data1.action", params, function(data){
+                    console.log("1");
                 });
-               alert("123");
+                <%--var url = "${ pageContext.request.contextPath } /teacher_data1.action"--%>
+               <%--$.ajax({--%>
+                    <%--type: "post",--%>
+                    <%--url: url,--%>
+                    <%--data: {--%>
+                    //        "course1.co_id":value0,
+                    //     "course1.co_name":value1,
+                    //     "course1.co_describe":value2,
+                    //     "course1.co_ro_num":value3,
+                    //     "course1.co_date":value4,
+                    //     "course1.co_gr_preyear":value5,
+                    //     "course1.co_gr_preclass":value6,
+                    //     "course1.co_gr_min":value7,
+                    //     "course1.co_gr_max":value8
+                    <%--},--%>
+                    <%--success: function(result){--%>
+
+
+                    <%--}--%>
+                <%--});--%>
             }
 
 
@@ -95,34 +119,34 @@
             obj.setAttribute("min", '2008');
             obj.setAttribute("max", '2058');
             obj.setAttribute("value", '+td[3].innerText+');
-            td[3].appendChild(obj);
+            td[5].appendChild(obj);
             obj = document.createElement("input");
             obj.setAttribute("size", '2');
             obj.setAttribute("type", 'number');
             obj.setAttribute("min", '0');
             obj.setAttribute("max", '99');
             obj.setAttribute("value", '+td[4].innerText+');
-            td[4].appendChild(obj);
+            td[6].appendChild(obj);
             obj = document.createElement("input");
             obj.setAttribute("size", '1');
             obj.setAttribute("type", 'number');
             obj.setAttribute("min", '1');
             obj.setAttribute("max", '9');
             obj.setAttribute("value", '+td[5].innerText+');
-            td[5].appendChild(obj);
+            td[7].appendChild(obj);
             obj = document.createElement("input");
             obj.setAttribute("size", '1');
             obj.setAttribute("type", 'number');
             obj.setAttribute("min", '1');
             obj.setAttribute("max", '9');
             obj.setAttribute("value", '+td[6].innerText+');
-            td[6].appendChild(obj);
+            td[8].appendChild(obj);
             // td[3].append("<input size='4'type='number'min='2008' max='2058' value='"+td[3].innerText+"'/>");
             // td[3].innerHTML="<input size='4'type='number'min='2008' max='2058' value='"+td[3].innerText+"'/>";
             // td[4].innerHTML="<input size='2'type='number'min='0' max='99' value='"+td[4].innerText+"'/>";
             // td[5].innerHTML="<input size='1'type='number'min='1' max='9' value='"+td[5].innerText+"'/>";
             // td[6].innerHTML="<input size='1'type='number'min='1' max='9'value='"+td[6].innerText+"'/>";
-            td[7].innerHTML="<input type='button' id='save' value='保存' onclick='save(this)' ><input type='button' id='save' value='取消' onclick='cancel(this)' >"
+            td[9].innerHTML="<input type='button' id='save' value='保存' onclick='save(this)' ><input type='button' id='save' value='取消' onclick='cancel(this)' >"
             // alert(td[1].innerHTML);
         }
     </script>

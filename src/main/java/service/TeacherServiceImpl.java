@@ -104,6 +104,11 @@ public class TeacherServiceImpl implements TeacherService {
         courseDao.save(course);
     }
 
+    @Override
+    public void updateCourse(String course_id, Course course) {
+        courseDao.update(course_id,course);
+    }
+
     public  String TeacherIDGenerator(){
         long count = this.teacherDao.count();
         String id = "1010".concat(String.format("%06d", count));

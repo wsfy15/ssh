@@ -160,10 +160,12 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
         return "course";
     }
 
-    public  String data(){
+    public  String data1(){
 
         System.out.println(course1.toString());
-        return SUCCESS;
+
+
+        return "chenggong";
     }
     public Course getCourse1() {
         return course1;

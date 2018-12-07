@@ -1,6 +1,8 @@
 package dao;
 
 import entity.Course;
+import jdk.nashorn.internal.runtime.regexp.JoniRegExp;
+import org.hibernate.Session;
 
 /**
  * @ClassName CourseDaoImpl
@@ -11,4 +13,8 @@ import entity.Course;
  **/
 public class CourseDaoImpl extends BaseDaoImpl<Course> implements CourseDao {
 
+    @Override
+    public void update(String id, Course course) {
+
+    }
 }

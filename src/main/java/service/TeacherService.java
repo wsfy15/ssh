@@ -12,5 +12,6 @@ public interface TeacherService {
     List<Course> findCourseList(String id);
 
     void saveCourse(String teacher_id, Course course);
+    void updateCourse(String course_id,Course course);
 
 }
