@@ -8,6 +8,7 @@ import entity.Student;
 import entity.Teacher;
 import entity.User;
 import org.springframework.transaction.annotation.Transactional;
+import utils.MD5utils;
 
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -54,23 +55,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(User s){
-        String id = s.getId();
-        String password = s.getPassword();
-
-        if(id.startsWith("1010") && teacherDao.login(id, password)){
-            return "teacher";
-        }
-        else if(id.startsWith("1000") && adminDao.login(id, password)){
-            return "admin";
-        }else if(studentDao.login(id, password)){
-                return "student";
-        }
-
-        return null;
-    }
-
-    @Override
     public Student studentLogin(String id, String password) {
         Student student = studentDao.findById(id);
         if(student != null && student.getPassword().equals(password)){
@@ -92,6 +76,39 @@ public class UserServiceImpl implements UserService {
     public Admin adminLogin(String id, String password) {
         Admin admin = adminDao.findById(id);
         if(admin != null && admin.getPassword().equals(password)){
+            return admin;
+        }
+        return null;
+    }
+
+    @Override
+    public Teacher teacherLoginAndModifyPassword(String id, String oldPassword, String newPassword) {
+        Teacher teacher = teacherDao.findById(id);
+        if(teacher != null && teacher.getPassword().equals(MD5utils.md5(oldPassword))){
+            teacher.setPassword(MD5utils.md5(newPassword));
+            teacherDao.update(teacher);
+            return teacher;
+        }
+        return null;
+    }
+
+    @Override
+    public Student studentLoginAndModifyPassword(String id, String oldPassword, String newPassword) {
+        Student student = studentDao.findById(id);
+        if(student != null && student.getPassword().equals(MD5utils.md5(oldPassword))){
+            student.setPassword(MD5utils.md5(newPassword));
+            studentDao.update(student);
+            return student;
+        }
+        return null;
+    }
+
+    @Override
+    public Admin adminLoginAndModifyPassword(String id, String oldPassword, String newPassword) {
+        Admin admin = adminDao.findById(id);
+        if(admin != null && admin.getPassword().equals(MD5utils.md5(oldPassword))){
+            admin.setPassword(MD5utils.md5(newPassword));
+            adminDao.update(admin);
             return admin;
         }
         return null;

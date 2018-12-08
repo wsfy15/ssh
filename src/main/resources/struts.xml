@@ -25,7 +25,7 @@
             <result name="admin">/admin/index.jsp</result>
             <result name="teacher">/teacher/index.jsp</result>
             <result name="student">/student/index.jsp</result>
-
+            <result name="firstLogin">/modifyPassword.jsp</result>
             <!-- struts2.3不需要配置allowed-methods -->
             <!--<allowed-methods>login,save</allowed-methods>-->
         </action>

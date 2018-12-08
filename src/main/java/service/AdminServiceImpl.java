@@ -36,7 +36,7 @@ public class AdminServiceImpl implements AdminService {
             student.setName(list.get(0));
             student.setId(StudentIDGenerator());
             student.setClassNo(list.get(2));
-            if(list.get(1) == null){
+            if(list.get(1) == null || list.get(1).trim().length() == 0){
                 student.setPassword(MD5utils.md5(student.getId()));
             }
             else{
@@ -49,7 +49,7 @@ public class AdminServiceImpl implements AdminService {
             Teacher teacher = new Teacher();
             teacher.setName(list.get(0));
             teacher.setId(TeacherIDGenerator());
-            if(list.get(1) == null){
+            if(list.get(1) == null || list.get(1).trim().length() == 0){
                 teacher.setPassword(MD5utils.md5(teacher.getId()));
             }
             else{
@@ -62,10 +62,12 @@ public class AdminServiceImpl implements AdminService {
             Admin admin = new Admin();
             admin.setName(list.get(0));
             admin.setId(AdminIDGenerator());
-            if(list.get(1) == null){
+            if(list.get(1) == null || list.get(1).trim().length() == 0){
+                logger.debug("set password as ID : {}", admin.getId());
                 admin.setPassword(MD5utils.md5(admin.getId()));
             }
             else{
+                logger.debug("set password: {}", list.get(1));
                 admin.setPassword(MD5utils.md5(list.get(1)));
             }
 

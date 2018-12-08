@@ -8,9 +8,13 @@ import entity.Admin;
 import entity.Student;
 import entity.Teacher;
 import entity.User;
+import org.apache.struts2.ServletActionContext;
 import service.UserService;
 import utils.MD5utils;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 
 
@@ -37,31 +41,6 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 //        return NONE;
 //    }
 
-    // 该功能将被遗弃
-    public String save(){
-
-        Student s = new Student();
-        s.setId("2015211003");
-        s.setClassNo("2015211002");
-        s.setName("小黑");
-        s.setPassword(MD5utils.md5("123456"));
-        this.userService.save(s);
-
-        Admin s1 = new Admin();
-        s1.setId("1000000000");
-        s1.setName("小白");
-        s1.setPassword(MD5utils.md5("123456"));
-        this.userService.save(s1);
-
-        Teacher s2 = new Teacher();
-        s2.setId("1010000000");
-        s2.setName("小王");
-        s2.setPassword(MD5utils.md5("123456"));
-        this.userService.save(s2);
-        return SUCCESS;
-    }
-
-
     /**
      * 登陆成功后，将用户对象压到值栈（root栈）
      * @return
@@ -71,21 +50,28 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
         Map<String, Object> session = ActionContext.getContext().getSession();
 
         String id = user.getId();
-        String password = user.getPassword();
+        String password = MD5utils.md5(user.getPassword());
 
         if(id.startsWith("1010")){
             Teacher teacher = userService.teacherLogin(id, password);
             if(teacher != null){
                 valueStack.set("user", teacher);
                 session.put("user", teacher);
+                if(user.getPassword().equals(id)){
+                    // 首次登陆，默认密码与ID相同
+                    return "firstLogin";
+                }
                 return "teacher";
             }
-        }
-        else if(id.startsWith("1000") ){
+        } else if(id.startsWith("1000") ){
             Admin admin = userService.adminLogin(id, password);
             if(admin != null){
                 valueStack.set("user", admin);
                 session.put("user", admin);
+                if(user.getPassword().equals(id)){
+                    // 首次登陆，默认密码与ID相同
+                    return "firstLogin";
+                }
                 return "admin";
             }
         }else {
@@ -93,10 +79,44 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
             if(student != null){
                 valueStack.set("user", student);
                 session.put("user", student);
+                if(user.getPassword().equals(id)){
+                    // 首次登陆，默认密码与ID相同
+                    return "firstLogin";
+                }
                 return "student";
             }
         }
         return ERROR;
     }
 
+    public String modifyPassword(){
+        // 成功返回登陆页面，重新登陆
+        //失败保存在修改页面
+        HttpServletRequest request = ServletActionContext.getRequest();
+        Map<String, String[]> params = request.getParameterMap();
+
+        String id = (String) params.get("id")[0];
+        String password = (String) params.get("password")[0];
+        String newPassword = (String) params.get("newPassword")[0];
+        if(id.startsWith("1010")){
+            user = userService.teacherLoginAndModifyPassword(id, password, newPassword);
+        }else if(id.startsWith("1000") ){
+            user = userService.adminLoginAndModifyPassword(id, password, newPassword);
+        }else{
+            user = userService.studentLoginAndModifyPassword(id, password, newPassword);
+        }
+
+        try(PrintWriter writer = ServletActionContext.getResponse().getWriter()){
+            if(user != null){
+                writer.print("success");
+                ActionContext.getContext().getSession().clear();
+            }else{
+                writer.print("fail");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return NONE;
+    }
 }
