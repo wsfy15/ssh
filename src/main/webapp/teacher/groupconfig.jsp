@@ -49,6 +49,17 @@
 
                 location.reload();
         }
+        function test1(t,n) {
+            var k=parseInt(t.value.trim());
+            console.log(k);
+            if(k>n){
+               t.value=n;
+            }
+            if(k<1){
+                alert("未输入正确数据,请重新操作");
+                location.reload();
+            }
+        }
         function save(t) {
             var td=t.parentNode.parentNode.getElementsByTagName("th");
             var value0=td[0].innerHTML;
@@ -60,53 +71,30 @@
             var value6=td[6].getElementsByTagName("input")[0].value;
             var value7=td[7].getElementsByTagName("input")[0].value;
             var value8=td[8].getElementsByTagName("input")[0].value;
-            if(value7>value8){
+            var a=parseInt(value7);
+            var b=parseInt(value8)
+            if(a>b){
                 alert("小组最小值必须小于等于最大值!");
                 location.reload();
             }
             else{
-                // var jsonobj={
-                //     "id":value0,"name":value1,
-                //     "intro":value2,"preyear":value3,"preclass":value4,"groupmin":value5,
-                //     "groupmax":value6};
-                //  alert(jsonobj.id);
-                //  alert(jsonobj.preclass);
                 var params = {
-                    "course1.co_id":value0,
-                    "course1.co_name":value1,
-                    "course1.co_describe":value2,
+                    "course1.co_id":value0.trim(),
+                    "course1.co_name":value1.trim(),
+                    "course1.co_describe":value2.trim(),
                     "course1.co_ro_num":value3.trim(),
-                    // "course1.co_ro_num":value3,
-                    "course1.co_date":value4,
-                    "course1.co_gr_preyear":value5,
-                    "course1.co_gr_preclass":value6,
-                    "course1.co_gr_min":value7,
-                    "course1.co_gr_max":value8
+                    "course1.co_date":value4.trim(),
+                    "course1.co_gr_preyear":value5.trim(),
+                    "course1.co_gr_preclass":value6.trim(),
+                    "course1.co_gr_min":value7.trim(),
+                    "course1.co_gr_max":value8.trim()
                 };
                 console.dir(params);
                 $.post("${ pageContext.request.contextPath }/teacher_data1.action", params, function(data){
-                    console.log("1");
+                    alert(data);
+                    location.reload();
                 });
-                <%--var url = "${ pageContext.request.contextPath } /teacher_data1.action"--%>
-               <%--$.ajax({--%>
-                    <%--type: "post",--%>
-                    <%--url: url,--%>
-                    <%--data: {--%>
-                    //        "course1.co_id":value0,
-                    //     "course1.co_name":value1,
-                    //     "course1.co_describe":value2,
-                    //     "course1.co_ro_num":value3,
-                    //     "course1.co_date":value4,
-                    //     "course1.co_gr_preyear":value5,
-                    //     "course1.co_gr_preclass":value6,
-                    //     "course1.co_gr_min":value7,
-                    //     "course1.co_gr_max":value8
-                    <%--},--%>
-                    <%--success: function(result){--%>
 
-
-                    <%--}--%>
-                <%--});--%>
             }
 
 
@@ -119,6 +107,7 @@
             obj.setAttribute("min", '2008');
             obj.setAttribute("max", '2058');
             obj.setAttribute("value", '+td[3].innerText+');
+            obj.setAttribute("onblur", 'test1(this,2058)');
             td[5].appendChild(obj);
             obj = document.createElement("input");
             obj.setAttribute("size", '2');
@@ -126,6 +115,7 @@
             obj.setAttribute("min", '0');
             obj.setAttribute("max", '99');
             obj.setAttribute("value", '+td[4].innerText+');
+            obj.setAttribute("onblur", 'test1(this,99)');
             td[6].appendChild(obj);
             obj = document.createElement("input");
             obj.setAttribute("size", '1');
@@ -133,6 +123,7 @@
             obj.setAttribute("min", '1');
             obj.setAttribute("max", '9');
             obj.setAttribute("value", '+td[5].innerText+');
+            obj.setAttribute("onblur", 'test1(this,9)');
             td[7].appendChild(obj);
             obj = document.createElement("input");
             obj.setAttribute("size", '1');
@@ -140,6 +131,7 @@
             obj.setAttribute("min", '1');
             obj.setAttribute("max", '9');
             obj.setAttribute("value", '+td[6].innerText+');
+            obj.setAttribute("onblur", 'test1(this,9)');
             td[8].appendChild(obj);
             // td[3].append("<input size='4'type='number'min='2008' max='2058' value='"+td[3].innerText+"'/>");
             // td[3].innerHTML="<input size='4'type='number'min='2008' max='2058' value='"+td[3].innerText+"'/>";

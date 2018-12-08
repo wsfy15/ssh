@@ -4,6 +4,7 @@ import com.mysql.fabric.Response;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import dao.CourseDao;
 import entity.Course;
 import entity.Teacher;
 import entity.User;
@@ -20,8 +21,11 @@ import utils.ExcelUtils;
 import utils.LogUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Date;
@@ -39,6 +43,15 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
     private static Logger logger = LogUtils.getLogger();
     private TeacherService teacherService;
     private Course course1;//老师修改数据上传到此course
+
+
+    private InputStream inputStream;//返回的数据
+
+
+    public InputStream getInputStream() {
+        return inputStream;
+    }
+
 
     public static void setLogger(Logger logger) {
         TeacherAction.logger = logger;
@@ -159,10 +172,21 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
         return "course";
     }
 
-    public  String data1(){
+    public  String data1() throws IOException {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        Teacher teacher = (Teacher) session.get("user");
+        logger.debug("teacher ID: {}", teacher.getId());
+        course1.setTeacher(teacher);
+        course1.setValid(1);
         logger.debug("course: {}", course1);
-
-        return "chenggong";
+        teacherService.updateCourse(course1);
+        HttpServletResponse response = ServletActionContext.getResponse();
+        try {
+            response.getWriter().print("ok");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return NONE;
     }
     public Course getCourse1() {
         return course1;
