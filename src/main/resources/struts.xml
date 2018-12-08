@@ -43,10 +43,12 @@
             <interceptor-ref name="teacherInterceptor">
                 <!-- 配置不需要该拦截器去拦截的方法 -->
                 <param name="excludeMethods">login</param>
+                <param name="inputName">inputStream</param>
             </interceptor-ref>
             <interceptor-ref name="defaultStack" />
             <result name="course">/teacher/groupconfig.jsp</result>
             <result name="chenggong">/teacher/groupconfig.jsp</result>
+            <param name="inputName">inputStream</param>
 
         </action>
 

@@ -113,8 +113,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void updateCourse(String course_id, Course course) {
-        courseDao.update(course_id,course);
+    public void updateCourse( Course course) {
+        courseDao.update(course);
     }
 
     public  String TeacherIDGenerator(){

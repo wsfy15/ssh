@@ -13,8 +13,4 @@ import org.hibernate.Session;
  **/
 public class CourseDaoImpl extends BaseDaoImpl<Course> implements CourseDao {
 
-    @Override
-    public void update(String id, Course course) {
-
-    }
 }
