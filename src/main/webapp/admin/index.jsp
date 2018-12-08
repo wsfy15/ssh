@@ -18,27 +18,32 @@
   <script src="../lib/layui/layui.js" charset="utf-8"></script>
   <script type="text/javascript" src="../lib/xadmin.js"></script>
   <script>
-    function createClass(){
-        layui.use('layer', function(layer){
-           layer.prompt({formType: 0,
-               value: '请输入年份',
-               area: ['300px', '200px']
-           }, function(value, index, elem){
-               let reg = new RegExp("\d{4}");
-               if(!reg.test(value) || value.length != 4){
-                   layer.msg("请输入合法年份");
-               }else{
-                   let params = {'year': value};
-                   let url = "${ pageContext.request.contextPath }/admin_createClass.action";
-                   $.post(url, params, function (data) {
-                       layer.msg("新建的班级为" + data);
-                       layer.close(index);
-                   }, "json");
-               }
-            }
-           )
-        });
-    }
+    $(function () {
+        $('#createClass').click(function (event) {
+            layui.use('layer', function(layer){
+                layer.prompt({formType: 0,
+                        value: '请输入年份',
+                        area: ['300px', '200px']
+                    }, function(value, index, elem){
+                        let reg = new RegExp("\\d{4}");
+                        if(!reg.test(value) || value.length != 4){
+                            console.log("len: " + value.length);
+                            layer.msg("请输入合法年份");
+                        }else{
+                            let params = {'year': value};
+                            let url = "${ pageContext.request.contextPath }/admin_createClass.action";
+                            $.post(url, params, function (data) {
+                                layer.msg("新建的班级为" + data);
+                                layer.close(index);
+                            });
+                        }
+                    }
+                )
+            });
+
+            event.stopPropagation();
+        })
+    })
 
   </script>
 </head>
@@ -96,8 +101,8 @@
             </a>
           </li >
           <li>
-            <a onclick="createClass()" _href="${ pageContext.request.contextPath }/user_none.action">
-              <i class="iconfont">&#xe6a7;</i>
+              <a id="createClass">
+                <i class="iconfont">&#xe6a7;</i>
               <cite>添加班级</cite>
             </a>
           </li >

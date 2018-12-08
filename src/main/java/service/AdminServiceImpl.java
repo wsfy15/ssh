@@ -238,13 +238,17 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public String createClass(final String year) {
         List<Class> classes = classDao.findAll();
-        Integer count = 0;
+        Integer count = 1;
         for(Class c : classes){
             if(c.getId().startsWith(year)){
                 count++;
             }
         }
-        return year.concat(String.format("%06d", count));
+        Class c = new Class();
+        c.setValid(1);
+        c.setId(year.concat(String.format("%06d", count)));
+        classDao.save(c);
+        return c.getId();
     }
 
     public String TeacherIDGenerator(){

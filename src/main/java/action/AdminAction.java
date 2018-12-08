@@ -93,9 +93,15 @@ public class AdminAction extends ActionSupport implements ModelDriven<User> {
         Map<String, String[]> params = request.getParameterMap();
 
         String year = (String) params.get("year")[0];
+        logger.debug("year: {}", year);
         String classNo = adminService.createClass(year);
-        ValueStack valueStack = ActionContext.getContext().getValueStack();
-        valueStack.set("class", classNo);
+        HttpServletResponse response = ServletActionContext.getResponse();
+        try {
+            response.getWriter().print(classNo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return NONE;
     }
 
