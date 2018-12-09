@@ -1,5 +1,5 @@
 
-TODO: 用户的信息修改
+TODO: 非首次登陆的修改密码 使用弹出框、
 删除用户时，如果有外键依赖，可能会失败，需要先解除外键依赖，现在还没考虑这个问题
 
 目录结构
@@ -14,9 +14,7 @@ src/main/webapp/WEB-INF：
 但内部servlet（getResource、getResourceAsStream方法）是可以进行调用的。
 所以很多mvc框架（如：springmvc）提倡，将jsp文件放在WEB-INF目录下进行保护，所有的jsp访问都通过servlet进行跳转。
 
-src/main/webapp/WEB-INF/classes： will contain all compiled java classes and resources
-src/main/webapp/WEB-INF/tags：
-src/main/webapp/WEB-INF/views：
+target/classes： will contain all compiled java classes and resources
 
 classpath:指向java文件编译部署后的class所在的路径，即target/classes目录
 对与maven项目，找到pom.xml的<build>节点，添加以下代码，

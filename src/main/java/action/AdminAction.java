@@ -207,6 +207,20 @@ public class AdminAction extends ActionSupport implements ModelDriven<User> {
         return NONE;
     }
 
+    public String modify(){
+        try(PrintWriter writer = ServletActionContext.getResponse().getWriter()){
+            Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+            if(adminService.update(params)){
+                writer.print("success");
+            }else{
+                writer.print("fail");
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return NONE;
+    }
+
     private User user = new User();
     @Override
     public User getModel() {

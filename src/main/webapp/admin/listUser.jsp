@@ -47,6 +47,7 @@
           }
           for (let i = start; i < end; i++) {
               let tr = document.createElement("tr");
+              tr.setAttribute("name", users[i].id)
 
               let checkbox = document.createElement("td");
               let checkboxIcon = checkboxNode.cloneNode(true);
@@ -72,12 +73,15 @@
               }
 
               let manage = document.createElement("td");
+
               let editClone = editNode.cloneNode(true);
+              editClone.setAttribute("onclick", "showModify('" + users[i].id + "', '修改', '/admin/modifyAll.jsp', 800, 600)");
+              manage.appendChild(editClone);
+
               let deleteClone = deleteNode.cloneNode(true);
               deleteClone.setAttribute("onclick", "user_del(this,'" + users[i].id + "')")
-
-              manage.appendChild(editClone);
               manage.appendChild(deleteClone);
+
               tr.appendChild(manage);
 
               document.getElementById("userTable").appendChild(tr);
@@ -143,6 +147,42 @@
           return false;
       }
 
+      function showModify(id, title,url,w,h){
+          if (id == null || id == '') {
+              layer.msg("未知ID");
+          };
+          if (title == null || title == '') {
+              title=false;
+          };
+          if (url == null || url == '') {
+              url="error.html";
+          };
+          if (w == null || w == '') {
+              w=($(window).width()*0.9);
+          };
+          if (h == null || h == '') {
+              h=($(window).height() - 50);
+          };
+
+          var children = $("[name='"+ id + "']").children();
+          var name = children[2].innerText;
+          var classNo = children[3].innerText;
+
+          window.localStorage.setItem("id", id);
+          window.localStorage.setItem("name", name);
+          window.localStorage.setItem("class", classNo);
+          layer.open({
+              type: 2,
+              area: [w+'px', h +'px'],
+              fix: false, //不固定
+              maxmin: true,
+              shadeClose: true,
+              shade:0.4,
+              title: title,
+              content: url
+          });
+      }
+
       $(function () {
           editNode = document.getElementById("edit");
           deleteNode = document.getElementById("delete");
@@ -201,10 +241,7 @@
     <button class="layui-btn layui-btn-danger" onclick="delAll()">
       <i class="layui-icon"></i>批量删除
     </button>
-    <button class="layui-btn" onclick="x_admin_show('添加用户','./admin-add.html')">
-      <i class="layui-icon"></i>添加
-    </button>
-    <span class="x-right" style="line-height:40px">共有数据：<s:property value=""/> 条</span>
+    <span class="x-right" style="line-height:40px">共有数据：<s:property value="count"/> 条</span>
   </xblock>
 
   <table class="layui-table">
@@ -236,10 +273,10 @@
     <i class="layui-icon">&#xe605;</i>
   </div>
 
-  <a id="edit" title="编辑" onclick="x_admin_show('编辑','admin-edit.html')" href="javascript:;">
+  <a id="edit" title="修改" href="javascript:;">
     <i class="layui-icon">&#xe642;</i>
   </a>
-  <a id="delete" title="删除" onclick="user_del(this,'要删除的id')" href="javascript:;">
+  <a id="delete" title="删除" href="javascript:;">
     <i class="layui-icon">&#xe640;</i>
   </a>
 </div>

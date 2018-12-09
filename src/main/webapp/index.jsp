@@ -16,7 +16,8 @@
     <script type="text/javascript" src="./lib/xadmin.js"></script>
     <script type="text/javascript" src="./js/md5.js"></script>
     <script >
-        function checkInput() {
+        var url = '${pageContext.request.contextPath}/user_login.action';
+        function login() {
             if($("input[name='password']").val() == '' ||$("input[name='id']").val() == '' ){
                 alert("用户名或密码不能为空");
                 return false;
@@ -24,7 +25,29 @@
             // console.log(hex_md5($("[name=password]").val()));
             // set password
             // $("[name=password]").val(hex_md5($("[name=password]").val()));
-            return true;
+            var id = $("input[name='id']").val();
+            var password = $("input[name='password']").val();
+            var params = {
+                "id": id,
+                "password": password
+            };
+            console.log(params)
+            $.post(url, params, function (data) {
+                if(data === "success"){
+                    if(id.indexOf("1000") === 0){
+                        window.location.href = "/admin/index.jsp";
+                    } else if(id.indexOf("1010") === 0){
+                        window.location.href = "/teacher/index.jsp";
+                    } else{
+                        window.location.href = "/student/index.jsp";
+                    }
+                } else if(data === "firstLogin"){
+                    window.location.href = "/modifyPassword.jsp";
+                } else{
+                    layer.msg('ID或密码错误', {icon: 5, time: 1000});
+                }
+            });
+            return false;
         }
     </script>
 
@@ -34,7 +57,7 @@
         <div class="message">学生作业系统-登录</div>
         <div id="darkbannerwrap"></div>
         
-        <form class="layui-form" action="${pageContext.request.contextPath}/user_login.action" onsubmit="return checkInput()" method="post" >
+        <form class="layui-form" action="" onsubmit="return login()" method="post" >
             <input name="id" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
             <hr class="hr15">
             <input name="password" placeholder="密码"  type="password" lay-verify="required" class="layui-input">

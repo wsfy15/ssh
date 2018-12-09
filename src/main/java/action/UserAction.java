@@ -9,7 +9,9 @@ import entity.Student;
 import entity.Teacher;
 import entity.User;
 import org.apache.struts2.ServletActionContext;
+import org.slf4j.Logger;
 import service.UserService;
+import utils.LogUtils;
 import utils.MD5utils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +26,7 @@ import java.util.Map;
 
 
 public class UserAction extends ActionSupport implements ModelDriven<User> {
+    private static Logger logger = LogUtils.getLogger();
     private static final long serialVersionUID = -6398052356842807636L;
     private UserService userService;
     private User user = new User();
@@ -52,41 +55,55 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
         String id = user.getId();
         String password = MD5utils.md5(user.getPassword());
 
-        if(id.startsWith("1010")){
-            Teacher teacher = userService.teacherLogin(id, password);
-            if(teacher != null){
-                valueStack.set("user", teacher);
-                session.put("user", teacher);
-                if(user.getPassword().equals(id)){
-                    // 首次登陆，默认密码与ID相同
-                    return "firstLogin";
+        try(PrintWriter writer = ServletActionContext.getResponse().getWriter()){
+            if(id.startsWith("1010")){
+                Teacher teacher = userService.teacherLogin(id, password);
+                if(teacher != null){
+                    valueStack.set("user", teacher);
+                    session.put("user", teacher);
+                    if(user.getPassword().equals(id)){
+                        // 首次登陆，默认密码与ID相同
+                        writer.print("firstLogin");
+                    }else{
+                        writer.print("success");
+                    }
+                }else{
+                    writer.print("fail");
                 }
-                return "teacher";
-            }
-        } else if(id.startsWith("1000") ){
-            Admin admin = userService.adminLogin(id, password);
-            if(admin != null){
-                valueStack.set("user", admin);
-                session.put("user", admin);
-                if(user.getPassword().equals(id)){
-                    // 首次登陆，默认密码与ID相同
-                    return "firstLogin";
+            } else if(id.startsWith("1000") ){
+                Admin admin = userService.adminLogin(id, password);
+                if(admin != null){
+                    valueStack.set("user", admin);
+                    session.put("user", admin);
+                    if(user.getPassword().equals(id)){
+                        // 首次登陆，默认密码与ID相同
+                        writer.print("firstLogin");
+                    }else{
+                        writer.print("success");
+                    }
+                }else{
+                    writer.print("fail");
                 }
-                return "admin";
-            }
-        }else {
-            Student student = userService.studentLogin(id, password);
-            if(student != null){
-                valueStack.set("user", student);
-                session.put("user", student);
-                if(user.getPassword().equals(id)){
-                    // 首次登陆，默认密码与ID相同
-                    return "firstLogin";
+            }else {
+                Student student = userService.studentLogin(id, password);
+                if(student != null){
+                    valueStack.set("user", student);
+                    session.put("user", student);
+                    if(user.getPassword().equals(id)){
+                        // 首次登陆，默认密码与ID相同
+                        writer.print("firstLogin");
+                    }else{
+                        writer.print("success");
+                    }
+                }else{
+                    writer.print("fail");
                 }
-                return "student";
             }
+        }catch (IOException e){
+            e.printStackTrace();
         }
-        return ERROR;
+
+        return NONE;
     }
 
     public String modifyPassword(){

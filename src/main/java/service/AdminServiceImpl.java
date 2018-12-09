@@ -322,6 +322,51 @@ public class AdminServiceImpl implements AdminService {
         return true;
     }
 
+    @Override
+    public Boolean update(Map<String, String[]> params) {
+        String id = params.get("id")[0];
+        String name = params.get("name")[0];
+        String password = params.get("password")[0];
+
+        if(id.startsWith("1000")){
+            Admin admin = adminDao.findById(id);
+            if(admin == null){
+                return false;
+            }
+
+            admin.setName(name);
+            if(password.trim().length() != 0){
+                admin.setPassword(MD5utils.md5(password));
+            }
+            adminDao.update(admin);
+        }else if(id.startsWith("1010")){
+            Teacher teacher = teacherDao.findById(id);
+            if(teacher == null){
+                return false;
+            }
+
+            teacher.setName(name);
+            if(password.trim().length() != 0){
+                teacher.setPassword(MD5utils.md5(password));
+            }
+            teacherDao.update(teacher);
+        }else{
+            String classNo = params.get("class")[0];
+            Student student = studentDao.findById(id);
+            if(student == null){
+                return false;
+            }
+
+            student.setName(name);
+            student.setClassNo(classNo);
+            if(password.trim().length() != 0){
+                student.setPassword(MD5utils.md5(password));
+            }
+            studentDao.update(student);
+        }
+        return true;
+    }
+
     public String TeacherIDGenerator(){
         long count = this.teacherDao.count();
         String id = "1010".concat(String.format("%06d", count));
