@@ -33,10 +33,11 @@ public class AdminServiceImpl implements AdminService {
     public String save(List<String> list, Integer role) {
         if(role == User.STUDENT){
             Student student = new Student();
+            student.setValid(1);
             student.setName(list.get(0));
             student.setId(StudentIDGenerator());
             student.setClassNo(list.get(2));
-            if(list.get(1) == null){
+            if(list.get(1) == null || list.get(1).trim().length() == 0){
                 student.setPassword(MD5utils.md5(student.getId()));
             }
             else{
@@ -47,9 +48,10 @@ public class AdminServiceImpl implements AdminService {
             return student.getId();
         }else if(role == User.TEACHER){
             Teacher teacher = new Teacher();
+            teacher.setValid(1);
             teacher.setName(list.get(0));
             teacher.setId(TeacherIDGenerator());
-            if(list.get(1) == null){
+            if(list.get(1) == null || list.get(1).trim().length() == 0){
                 teacher.setPassword(MD5utils.md5(teacher.getId()));
             }
             else{
@@ -60,12 +62,15 @@ public class AdminServiceImpl implements AdminService {
             return teacher.getId();
         }else{
             Admin admin = new Admin();
+            admin.setValid(1);
             admin.setName(list.get(0));
             admin.setId(AdminIDGenerator());
-            if(list.get(1) == null){
+            if(list.get(1) == null || list.get(1).trim().length() == 0){
+                logger.debug("set password as ID : {}", admin.getId());
                 admin.setPassword(MD5utils.md5(admin.getId()));
             }
             else{
+                logger.debug("set password: {}", list.get(1));
                 admin.setPassword(MD5utils.md5(list.get(1)));
             }
 
