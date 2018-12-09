@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Transactional
 public class AdminServiceImpl implements AdminService {
@@ -254,6 +255,71 @@ public class AdminServiceImpl implements AdminService {
         c.setId(year.concat(String.format("%06d", count)));
         classDao.save(c);
         return c.getId();
+    }
+
+    @Override
+    public List<Student> listStudent() {
+        List<Student> list = studentDao.findAll();
+        List<Student> validStudents = list.stream().filter(user -> user.getValid() != 0).collect(Collectors.toList());
+        return validStudents;
+    }
+
+    @Override
+    public List<Teacher> listTeacher() {
+        List<Teacher> list = teacherDao.findAll();
+        List<Teacher> validTeachers = list.stream().filter(user -> user.getValid() != 0).collect(Collectors.toList());
+        return validTeachers;
+    }
+
+    @Override
+    public List<Admin> listAdmin() {
+        List<Admin> list = adminDao.findAll();
+        List<Admin> validAdmins = list.stream().filter(user -> user.getValid() != 0).collect(Collectors.toList());
+        return validAdmins;
+    }
+
+    @Override
+    public Boolean deleteUser(String[] ids, String role) {
+        switch(role){
+            case "student":
+                for(String id : ids){
+                    Student student = studentDao.findById(id);
+                    if(student == null){
+                        return false;
+                    }
+
+                    student.setValid(0);
+                    studentDao.update(student);
+                }
+
+                break;
+            case "teacher":
+                for(String id : ids) {
+                    Teacher teacher = teacherDao.findById(id);
+                    if (teacher == null) {
+                        return false;
+                    }
+
+                    teacher.setValid(0);
+                    teacherDao.update(teacher);
+                }
+                break;
+            case "admin":
+                for(String id : ids) {
+                    Admin admin = adminDao.findById(id);
+                    if (admin == null) {
+                        return false;
+                    }
+
+                    admin.setValid(0);
+                    adminDao.update(admin);
+                }
+                break;
+            default:
+                return false;
+        }
+
+        return true;
     }
 
     public String TeacherIDGenerator(){

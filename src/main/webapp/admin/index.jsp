@@ -117,19 +117,19 @@
         </a>
         <ul class="sub-menu">
           <li>
-            <a _href="${ pageContext.request.contextPath }/admin_.action">
+            <a _href="${ pageContext.request.contextPath }/admin_listUser.action?role=student">
               <i class="iconfont">&#xe6a7;</i>
               <cite>查看学生</cite>
             </a>
           </li>
           <li>
-            <a _href="${ pageContext.request.contextPath }/admin_.action">
+            <a _href="${ pageContext.request.contextPath }/admin_listUser.action?role=teacher">
               <i class="iconfont">&#xe6a7;</i>
               <cite>查看教师</cite>
             </a>
           </li>
           <li>
-            <a _href="${ pageContext.request.contextPath }/admin_.action">
+            <a _href="${ pageContext.request.contextPath }/admin_listUser.action?role=admin">
               <i class="iconfont">&#xe6a7;</i>
               <cite>查看管理员</cite>
             </a>

@@ -5,6 +5,9 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.util.ValueStack;
+import entity.Admin;
+import entity.Student;
+import entity.Teacher;
 import entity.User;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
@@ -18,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -141,6 +145,66 @@ public class AdminAction extends ActionSupport implements ModelDriven<User> {
             }
         }
         return ERROR;
+    }
+
+    public String listUser(){
+        ValueStack valueStack = ActionContext.getContext().getValueStack();
+
+        HttpServletRequest request = ServletActionContext.getRequest();
+        Map<String, String[]> params = request.getParameterMap();
+        String role = params.get("role")[0];
+        logger.debug("list {}", role);
+        switch (role){
+            case "student":
+                List<Student> studentlist = adminService.listStudent();
+                valueStack.set("cite", "学生列表");
+                valueStack.set("role", "student");
+                valueStack.set("count", studentlist.size());
+//                logger.debug("lsit: {}", JSONArray.toJSONString(studentlist));
+                ServletActionContext.getRequest().setAttribute("users", JSONArray.toJSONString(studentlist));
+                break;
+            case "teacher":
+                List<Teacher> teacherlist = adminService.listTeacher();
+                valueStack.set("cite", "教师列表");
+                valueStack.set("role", "teacher");
+                valueStack.set("count", teacherlist.size());
+                ServletActionContext.getRequest().setAttribute("users", JSONArray.toJSONString(teacherlist));
+                break;
+            case "admin":
+                List<Admin> adminlist = adminService.listAdmin();
+                valueStack.set("cite", "管理员列表");
+                valueStack.set("role", "admin");
+                valueStack.set("count", adminlist.size());
+                ServletActionContext.getRequest().setAttribute("users", JSONArray.toJSONString(adminlist));
+                break;
+            default:
+                break;
+        }
+
+        return "listUser";
+    }
+
+    public String deleteUser(){
+        Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        String role = params.get("role")[0];
+        String[] ids = params.get("ids");
+        for(String id : ids){
+            logger.debug("id: {}", id);
+        }
+
+        try( PrintWriter writer = ServletActionContext.getResponse().getWriter() ){
+            if(adminService.deleteUser(ids, role)){
+                logger.debug("delete successfully");
+                writer.print("success");
+            }
+            else{
+                writer.print("fail");
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return NONE;
     }
 
     private User user = new User();

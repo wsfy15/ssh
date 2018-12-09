@@ -37,6 +37,7 @@
             </interceptor-ref>
             <interceptor-ref name="defaultStack" />
             <result name="add">/admin/addSuccess.jsp</result>
+            <result name="listUser">/admin/listUser.jsp</result>
         </action>
 
         <action name="teacher_*" class="teacherAction" method="{1}">
