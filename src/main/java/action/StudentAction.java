@@ -1,5 +1,6 @@
 package action;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -49,6 +50,21 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
         List<Course> courseList = studentService.findCourseList(student.getId());
         valueStack.set("courseList", courseList);
         return "course";
+    }
+    public  String courselist(){
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        Student student = (Student) session.get("user");
+
+        logger.debug(student.getId());
+
+        //ValueStack valueStack = ActionContext.getContext().getValueStack();
+        //List<Course> courseList = studentService.findCourseList(student.getId());
+        //valueStack.set("courseList", courseList);
+        JSONArray jsonArray = new JSONArray();
+        jsonArray=studentService.findCourse(student.getId());
+        logger.debug((jsonArray.toString()));
+        return NONE;
+
     }
 
 

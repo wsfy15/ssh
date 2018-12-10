@@ -22,7 +22,26 @@
   <script>
       $(function () {
           // 加载该学生的课，显示在左侧选择框中
+          var k=document.getElementById("courseselect");
+          //ajax获取数据
+          $.ajax({
+              type:"POST",
+              url:"${ pageContext.request.contextPath }/student_courselist.action",
+              dataType:"json",
+              success:function (data) {
+                  var dataObj = eval("("+data+")");
+                 $. each(dataObj,function (key,value1) {
+                     var obj=document.createElement("option");
+                     obj.setAttribute("value",value1);
+                     k.append(obj);
+                 });
+              }
 
+          });
+
+          var z;
+          z.setAttribute("")
+          k.append();
 
 
       })
@@ -64,7 +83,7 @@
 <div class="left-nav">
   <div class="layui-form-item">
     <div class="layui-input-inline" style="transform: translateX(10px);">
-      <select onchange="onClassChange(this.options[this.options.selectedIndex].value)">
+      <select id="courseselect" onchange="onClassChange(this.options[this.options.selectedIndex].value)">
         <option value="">请选择课程</option>
       </select>
     </div>
@@ -103,7 +122,7 @@
             </a>
           </li>
           <li>
-            <a _href="${ pageContext.request.contextPath }/student_.action">
+            <a _href="${ pageContext.request.contextPath }/student_creategroup.html">
               <i class="iconfont">&#xe6a7;</i>
               <cite>创建小组</cite>
             </a>
