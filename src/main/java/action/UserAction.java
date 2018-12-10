@@ -49,7 +49,7 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
      * @return
      */
     public String login(){
-        ValueStack valueStack = ActionContext.getContext().getValueStack();
+//        ValueStack valueStack = ActionContext.getContext().getValueStack();
         Map<String, Object> session = ActionContext.getContext().getSession();
 
         String id = user.getId();
@@ -133,5 +133,5 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
 
         return NONE;
     }
-    
+
 }

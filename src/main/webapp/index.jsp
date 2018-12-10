@@ -22,6 +22,7 @@
           if (id.trim().length == 10) {
               let password = '${user.password}';
               if (hex_md5(id) == password) {
+                  window.sessionStorage.setItem("fromIndex", '1');
                   window.location.href = "/modifyPassword.jsp";
               } else if (id.indexOf("1000") === 0) {
                   window.location.href = "/admin/index.jsp";
@@ -49,7 +50,7 @@
               "id": id,
               "password": password
           };
-          console.log(params)
+
           $.post(url, params, function (data) {
               if (data === "success") {
                   if (id.indexOf("1000") === 0) {
@@ -60,6 +61,7 @@
                       window.location.href = "/student/index.jsp";
                   }
               } else if (data === "firstLogin") {
+                  window.sessionStorage.setItem("fromIndex", '1');
                   window.location.href = "/modifyPassword.jsp";
               } else {
                   layer.msg('ID或密码错误', {icon: 5, time: 1000});

@@ -99,7 +99,7 @@
         form.on('submit(add)', function (data) {
             let url = "${pageContext.request.contextPath}/user_modifyPassword.action";
             let params = {
-              "id": '<s:property value="user.id"/>',
+              "id": '${user.id}',
               "password": $('[name=password]').val(),
               "newPassword":  $('[name=newPassword]').val()
             };
@@ -107,7 +107,17 @@
             $.post(url, params, function (data) {
                 if("success" === data){
                     layer.msg("修改成功");
-                    window.location.href = "/index.jsp";
+                    let from = window.sessionStorage.getItem("fromIndex");
+                    window.sessionStorage.setItem("fromIndex", '0');
+                    if(from == '1'){
+                        window.location.href = "/index.jsp";
+                    } else{
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        self.parent.location.href = "/index.jsp";
+                        parent.layer.close(index);
+                    }
+                    layer.msg("修改成功");
                 }else{
                     layer.msg("原密码错误");
                 }

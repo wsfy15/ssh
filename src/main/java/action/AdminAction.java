@@ -87,8 +87,6 @@ public class AdminAction extends ActionSupport implements ModelDriven<User> {
         newUser.add(user);
 
         ServletActionContext.getRequest().setAttribute("newUser", JSONArray.toJSONString(newUser));
-//        ValueStack valueStack = ActionContext.getContext().getValueStack();
-//        valueStack.set("newUser", newUser);
         return "add";
     }
 
@@ -137,8 +135,6 @@ public class AdminAction extends ActionSupport implements ModelDriven<User> {
 //                for(User u : users){ System.out.println(u); }
 
                 ServletActionContext.getRequest().setAttribute("newUser", JSONArray.toJSONString(users));
-//                ValueStack valueStack = ActionContext.getContext().getValueStack();
-//                valueStack.set("newUser", users);
                 return "add";
             } catch (IOException e) {
                 e.printStackTrace();

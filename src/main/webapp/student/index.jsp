@@ -68,12 +68,11 @@
     <li class="layui-nav-item">
       <a href="javascript:;"> ${user.name} </a>
       <dl class="layui-nav-child"> <!-- 二级菜单 -->
-        <dd><a onclick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a></dd>
-        <dd><a onclick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
-        <dd><a href="${pageContext.request.contextPath}/logout.jsp">退出</a></dd>
+        <dd><a onclick="x_admin_show('个人信息','')">个人信息</a></dd>
+        <dd><a onclick="x_admin_show('更改密码','/modifyPassword.jsp', 800, 400)">修改密码</a></dd>
+        <dd><a href="${pageContext.request.contextPath}/logout.jsp">切换帐号</a></dd>
       </dl>
     </li>
-    <li class="layui-nav-item to-index"><a href="/">前台首页</a></li>
   </ul>
 
 </div>
