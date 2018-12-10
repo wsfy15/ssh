@@ -16,6 +16,22 @@
     <script type="text/javascript" src="./lib/xadmin.js"></script>
     <script type="text/javascript" src="./js/md5.js"></script>
     <script >
+        $(function () {
+            let id = '${user.id}';
+            if(id.trim().length == 10){
+                let password = '${user.password}';
+                if(hex_md5(id) == password){
+                    window.location.href = "/modifyPassword.jsp";
+                } else if(id.indexOf("1000") === 0){
+                    window.location.href = "/admin/index.jsp";
+                } else if(id.indexOf("1010") === 0){
+                    window.location.href = "/teacher/index.jsp";
+                } else{
+                    window.location.href = "/student/index.jsp";
+                }
+            }
+        })
+
         var url = '${pageContext.request.contextPath}/user_login.action';
         function login() {
             if($("input[name='password']").val() == '' ||$("input[name='id']").val() == '' ){

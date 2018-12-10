@@ -30,18 +30,18 @@
               dataType:"json",
               success:function (data) {
                   var dataObj = eval("("+data+")");
-                 $. each(dataObj,function (key,value1) {
+                  $.each(dataObj,function (key,value1) {
                      var obj=document.createElement("option");
                      obj.setAttribute("value",value1);
                      k.append(obj);
-                 });
+                  });
               }
 
           });
 
-          var z;
-          z.setAttribute("")
-          k.append();
+          // var z;
+          // z.setAttribute("")
+          // k.append();
 
 
       })
@@ -66,7 +66,7 @@
 
   <ul class="layui-nav right" lay-filter="">
     <li class="layui-nav-item">
-      <a href="javascript:;"> <s:property value="user.name"/> </a>
+      <a href="javascript:;"> ${user.name} </a>
       <dl class="layui-nav-child"> <!-- 二级菜单 -->
         <dd><a onclick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a></dd>
         <dd><a onclick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd>

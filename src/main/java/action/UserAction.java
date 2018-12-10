@@ -59,7 +59,6 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
             if(id.startsWith("1010")){
                 Teacher teacher = userService.teacherLogin(id, password);
                 if(teacher != null){
-                    valueStack.set("user", teacher);
                     session.put("user", teacher);
                     if(user.getPassword().equals(id)){
                         // 首次登陆，默认密码与ID相同
@@ -73,7 +72,6 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
             } else if(id.startsWith("1000") ){
                 Admin admin = userService.adminLogin(id, password);
                 if(admin != null){
-                    valueStack.set("user", admin);
                     session.put("user", admin);
                     if(user.getPassword().equals(id)){
                         // 首次登陆，默认密码与ID相同
@@ -87,7 +85,6 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
             }else {
                 Student student = userService.studentLogin(id, password);
                 if(student != null){
-                    valueStack.set("user", student);
                     session.put("user", student);
                     if(user.getPassword().equals(id)){
                         // 首次登陆，默认密码与ID相同
