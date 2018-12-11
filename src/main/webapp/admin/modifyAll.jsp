@@ -35,12 +35,17 @@
         if(id.indexOf("1000") === -1 && id.indexOf("1010") === -1){
             var classNo = window.localStorage.getItem("class");
             $("#class").val(classNo);
+
+            var url = "${ pageContext.request.contextPath }/admin_getAllClass.action";
+            $.post(url, function(data){
+                console.log(data);
+                $(data).each(function (i, n) {
+                    $("#class").append("<option value='" + n + "'>" + n + "</option>");
+                });
+            }, "json");
         }else{
             $("#classDiv").hide();
         }
-
-
-
     })
   </script>
 </head>
@@ -72,7 +77,9 @@
         <span class="x-red">*</span>班级
       </label>
       <div class="layui-input-inline">
-        <input type="text" id="class" name="class" required autocomplete="off" class="layui-input">
+        <select name="class" id="class" lay-verify="required">
+          <option value="">请选择班级</option>
+        </select>
       </div>
     </div>
 
