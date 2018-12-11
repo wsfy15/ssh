@@ -20,17 +20,44 @@
   <script>
     $(function () {
         // 加载该教师的课，显示在左侧选择框中
-
-
+        let id = '${user.id}';
+        let parrams = {
+            'id': id
+        };
+        var url = "${ pageContext.request.contextPath }/teacher_getCourse.action";
+        $.post(url, parrams, function(data){
+            console.log(data);
+            $(data).each(function (i, n) {
+                $("#course").append("<option value='" + n.co_id + "'>" + n.co_name + "</option>");
+            });
+        }, "json");
 
     })
 
-    function onClassChange(name){
-        if(name == "create"){
-            // 设置课程
-          $("#createClass").click();
+    function onCourseChange(){
+        if(window.sessionStorage.getItem("co_id") != ''){
+            window.sessionStorage.setItem("co_id", '');
         }
 
+        let choice = $('#course').val();
+        if(choice != ''){
+            if($('#course').val() == "create"){
+                // 设置课程
+                window.sessionStorage.setItem("co_id", '');
+                $("#createCourse").click();
+            }else{
+                console.log(choice);
+                window.sessionStorage.setItem("co_id", choice);
+                document.getElementById('showCourse').click();
+
+                <%--$('#showCourse').attr('_href', "${ pageContext.request.contextPath }/teacher/teacher_showCourse.action?courseId=" + choice);--%>
+                <%--$('#addStudent').attr('_href', "${ pageContext.request.contextPath }/teacher/teacher_addStudent.action?courseId=" + choice);--%>
+                <%--$('#showStudent').attr('_href', "${ pageContext.request.contextPath }/teacher/teacher_showStudent.action?courseId=" + choice);--%>
+                <%--$('#createHW').attr('_href', "${ pageContext.request.contextPath }/teacher/teacher_createHW.action?courseId=" + choice);--%>
+                <%--$('#checkHW').attr('_href', "${ pageContext.request.contextPath }/teacher/teacher_checkHW.action?courseId=" + choice);--%>
+                <%--$('#setGrade').attr('_href', "${ pageContext.request.contextPath }/teacher/teacher_setGrade.action?courseId=" + choice);--%>
+            }
+        }
     }
   </script>
 </head>
@@ -61,7 +88,7 @@
     <div class="left-nav">
       <div class="layui-form-item">
         <div class="layui-input-inline" style="transform: translateX(10px);">
-          <select onchange="onClassChange(this.options[this.options.selectedIndex].value)">
+          <select id="course" onchange="onCourseChange()">
             <option value="">请选择课程</option>
             <option value="create">创建课程</option>
           </select>
@@ -78,9 +105,17 @@
               </a>
               <ul class="sub-menu">
                 <li>
-                  <a id="createClass" _href="${ pageContext.request.contextPath }/teacher/setCourse.jsp">
+                  <a id="createCourse" _href="${ pageContext.request.contextPath }/teacher/createCourse.jsp">
                     <i class="iconfont">&#xe6a7;</i>
-                    <cite>添加课程</cite>
+                    <cite>创建课程</cite>
+                  </a>
+                </li >
+              </ul>
+              <ul class="sub-menu">
+                <li>
+                  <a id="showCourse" _href="${ pageContext.request.contextPath }/teacher/showCourse.jsp">
+                    <i class="iconfont">&#xe6a7;</i>
+                    <cite>课程信息</cite>
                   </a>
                 </li >
               </ul>
@@ -94,13 +129,13 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                      <a _href="${ pageContext.request.contextPath }/teacher/setStudent.html">
+                      <a id="addStudent" _href="${ pageContext.request.contextPath }/teacher/setStudent.html">
                           <i class="iconfont">&#xe6a7;</i>
                           <cite>添加学生</cite>
                       </a>
                     </li >
                     <li>
-                      <a _href="${ pageContext.request.contextPath }/teacher_.action">
+                      <a id="showStudent" _href="${ pageContext.request.contextPath }/teacher_.action">
                         <i class="iconfont">&#xe6a7;</i>
                         <cite>查看学生</cite>
                       </a>
@@ -115,19 +150,19 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                      <a _href="${ pageContext.request.contextPath }/teacher_showcourse.action">
+                      <a id="createHW" _href="${ pageContext.request.contextPath }/teacher_showcourse.action">
                           <i class="iconfont">&#xe6a7;</i>
                           <cite>设置作业</cite>
                       </a>
                     </li >
                     <li>
-                      <a _href="${ pageContext.request.contextPath }/teacher_.action">
+                      <a id="checkHW" _href="${ pageContext.request.contextPath }/teacher_.action">
                         <i class="iconfont">&#xe6a7;</i>
                         <cite>检查作业</cite>
                       </a>
                     </li >
                     <li>
-                      <a _href="${ pageContext.request.contextPath }/teacher_.action">
+                      <a id="setGrade"  _href="${ pageContext.request.contextPath }/teacher_.action">
                         <i class="iconfont">&#xe6a7;</i>
                         <cite>计算成绩</cite>
                       </a>

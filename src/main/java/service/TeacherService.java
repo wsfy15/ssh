@@ -14,4 +14,6 @@ public interface TeacherService {
     void saveCourse(String teacher_id, Course course);
     void updateCourse(Course course);
 
+    Course getCourse(String courseId);
+
 }

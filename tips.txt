@@ -63,3 +63,6 @@ maven导入异常：到这里下载jar包 http://maven.aliyun.com/mvn/search
 更改已有依赖版本后不更新：找到仓库目录，删除已有依赖，再reimport
 
 使用chrome访问index.jsp，会请求一个css文件？
+
+java日期转换中: MM表示月份，mm表示分钟
+

@@ -1,5 +1,7 @@
 package entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,6 +13,7 @@ import java.util.Set;
  * @Version 1.0
  **/
 public class Teacher extends User{
+    @JSONField(serialize=false)
     private Set<Course> courses = new HashSet<>();
 
     public Set<Course> getCourses() {

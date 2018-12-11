@@ -117,6 +117,12 @@ public class TeacherServiceImpl implements TeacherService {
         courseDao.update(course);
     }
 
+    @Override
+    public Course getCourse(String courseId) {
+        Course course = courseDao.findById(courseId);
+        return course;
+    }
+
     public  String TeacherIDGenerator(){
         long count = this.teacherDao.count();
         String id = "1010".concat(String.format("%06d", count));
