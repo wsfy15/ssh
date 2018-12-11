@@ -22,6 +22,9 @@ public class Course {
     private Integer co_gr_preyear; //授课年份
     private Integer co_gr_preclass;//授课班级号
     private Integer valid;
+    private Teacher teacher;       // 课程教师编号
+
+    private Set<Student> students = new HashSet<>();
 
     public Integer getCo_gr_max() { return co_gr_max; }
 
@@ -39,9 +42,7 @@ public class Course {
 
     public void setCo_gr_preclass(Integer co_gr_preclass) { this.co_gr_preclass = co_gr_preclass; }
 
-    private Teacher teacher;       // 课程教师编号
 
-    private Set<Student> students = new HashSet<>();
 
     public String getCo_id() {
         return co_id;

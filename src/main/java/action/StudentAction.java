@@ -18,6 +18,7 @@ import utils.LogUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -63,6 +64,15 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
         JSONArray jsonArray = new JSONArray();
         jsonArray=studentService.findCourse(student.getId());
         logger.debug((jsonArray.toString()));
+
+        HttpServletResponse response = ServletActionContext.getResponse();
+        response.setContentType("text/javascript;charset=UTF-8");
+        try {
+                response.getWriter().print(jsonArray);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         return NONE;
 
     }

@@ -15,7 +15,7 @@
         <property name="co_gr_min" column="co_gr_min" />
         <property name="co_gr_preyear" column="co_gr_preyear" />
         <property name="co_gr_preclass" column="co_gr_preclass" />
-        <many-to-one name="teacher" class="entity.Teacher" column="co_teacher"/>
+        <many-to-one name="teacher" class="entity.Teacher" column="co_teacher" lazy="false"/>
 
         <set name="students" table="student_course" inverse="true">
             <key column="co_id" />

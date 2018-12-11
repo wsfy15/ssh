@@ -11,7 +11,7 @@
         <property name="classNo" column="st_class" />
         <property name="password" column="st_password" />
 
-        <set name="courses" table="student_course" cascade="save-update">
+        <set name="courses" table="student_course" cascade="save-update" lazy="false">
             <key column="id" />
             <many-to-many class="entity.Course" column="co_id" />
         </set>

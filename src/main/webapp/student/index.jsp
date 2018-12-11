@@ -28,13 +28,11 @@
               type:"POST",
               url:"${ pageContext.request.contextPath }/student_courselist.action",
               dataType:"json",
+              contentType: "application/x-www-form-urlencoded; charset=utf-8",
               success:function (data) {
-                  var dataObj = eval("("+data+")");
-                  $.each(dataObj,function (key,value1) {
-                     var obj=document.createElement("option");
-                     obj.setAttribute("value",value1);
-                     k.append(obj);
-                  });
+                  console.log(data[0].co_name);
+                  var opp = new Option(data[0].co_name,data[0].co_name);
+                  k.add(opp);
               }
 
           });
