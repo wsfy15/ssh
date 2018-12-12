@@ -129,13 +129,13 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                      <a id="addStudent" _href="${ pageContext.request.contextPath }/teacher/setStudent.html">
+                      <a id="addStudent" _href="${ pageContext.request.contextPath }/teacher/student-add.jsp">
                           <i class="iconfont">&#xe6a7;</i>
                           <cite>添加学生</cite>
                       </a>
                     </li >
                     <li>
-                      <a id="showStudent" _href="${ pageContext.request.contextPath }/teacher_.action">
+                      <a id="showStudent" _href="${ pageContext.request.contextPath }/teacher/listStudent.jsp">
                         <i class="iconfont">&#xe6a7;</i>
                         <cite>查看学生</cite>
                       </a>

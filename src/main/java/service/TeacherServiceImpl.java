@@ -123,6 +123,29 @@ public class TeacherServiceImpl implements TeacherService {
         return course;
     }
 
+    @Override
+    public boolean addSingleStudent(String student_id, String co_id) {
+        Student student = studentDao.findById(student_id);
+        Course course = courseDao.findById(co_id);
+        if(student == null || course == null) {
+            return false;
+        }
+
+        student.getCourses().add(course);
+        studentDao.update(student);
+        return true;
+    }
+
+    @Override
+    public List<Student> getStudents(String co_id) {
+        Course course = courseDao.findById(co_id);
+        if(course == null) {
+            return null;
+        }
+
+        return new ArrayList<Student>(course.getStudents());
+    }
+
     public  String TeacherIDGenerator(){
         long count = this.teacherDao.count();
         String id = "1010".concat(String.format("%06d", count));

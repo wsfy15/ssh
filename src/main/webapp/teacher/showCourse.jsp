@@ -16,6 +16,7 @@
   <script type="text/javascript" src="../lib/jquery-3.3.1.min.js"></script>
   <script src="../lib/layui/layui.js" charset="utf-8"></script>
   <script type="text/javascript" src="../lib/xadmin.js"></script>
+  <script type="text/javascript" src="../js/utils.js"></script>
 
   <script>
       $(function () {
@@ -35,15 +36,7 @@
           }, "json");
       })
 
-      function formatDate(date){
-          var y = date.getFullYear();
-          var m = date.getMonth() + 1;
-          m = m < 10 ? ('0' + m) : m;
-          var d = date.getDate();
-          d = d < 10 ? ('0' + d) : d;
-          let str = y + '年' + m + '月' + d + '日';
-          return str;
-      }
+
 
   </script>
 </head>
@@ -53,7 +46,7 @@
       <span class="layui-breadcrumb">
         <a href="">首页</a>
         <a>
-          <cite>创建课程</cite></a>
+          <cite>课程信息</cite></a>
       </span>
   <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
      href="javascript:location.replace(location.href);" title="刷新">
@@ -62,7 +55,7 @@
 
 <div class="x-body">
   <fieldset class="layui-elem-field">
-    <legend>创建课程</legend>
+    <legend>课程信息</legend>
     <div class="layui-field-box">
       <div style="position: relative; left:30%;">
         <form class="layui-form layui-form-pane" action=""

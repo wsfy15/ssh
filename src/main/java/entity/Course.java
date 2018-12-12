@@ -1,5 +1,7 @@
 package entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +26,7 @@ public class Course {
     private Integer valid;
     private Teacher teacher;       // 课程教师编号
 
+    @JSONField(serialize=false)
     private Set<Student> students = new HashSet<>();
 
     public Integer getCo_gr_max() { return co_gr_max; }

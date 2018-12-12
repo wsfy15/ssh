@@ -1,11 +1,13 @@
 package action;
 
+import com.alibaba.fastjson.JSONArray;
 import com.mysql.fabric.Response;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import dao.CourseDao;
 import entity.Course;
+import entity.Student;
 import entity.Teacher;
 import entity.User;
 import org.apache.commons.beanutils.BeanUtils;
@@ -120,7 +122,7 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
         this.uploadContentType = uploadContentType;
     }
 
-    public String uploadStudents() {
+    public String addByExcel() {
         // 做文件的上传，说明用户选择了上传的文件了
         if (uploadFileName != null) {
             // 打印
@@ -147,6 +149,26 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
         }
 
         return ERROR;
+    }
+
+    /**
+     * 添加成功后跳转到学生名单页面
+     * @return
+     */
+    public String add(){
+        Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        String co_id = params.get("co_id")[0];
+        String student_id = params.get("student_id")[0];
+        if(teacherService.addSingleStudent(student_id, co_id)){
+            List<Student> studentlist = teacherService.getStudents(co_id);
+
+            ValueStack valueStack = ActionContext.getContext().getValueStack();
+            valueStack.set("count", studentlist.size());
+
+            return "students";
+        } else{
+            return ERROR;
+        }
     }
 
     /**
@@ -180,5 +202,20 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
         return NONE;
     }
 
+    public String getStudent(){
+        // 得到课程名，查数据库
+        HttpServletRequest request = ServletActionContext.getRequest();
+        String co_id = request.getParameter("co_id");
+        logger.debug("co_id: {}", co_id);
+        List<Student> studentlist = teacherService.getStudents(co_id);
+        FastJsonUtil.writeJson(ServletActionContext.getResponse(), FastJsonUtil.toJSONString(studentlist));
 
+//        if(studentlist != null){ }
+    //    request .setAttribute("users", JSONArray.toJSONString(studentlist));
+
+   //     ValueStack valueStack = ActionContext.getContext().getValueStack();
+     //   valueStack.set("count", studentlist.size());
+
+        return NONE;
+    }
 }

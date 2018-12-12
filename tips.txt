@@ -1,6 +1,6 @@
 
-TODO: 选择课程后，修改所有<a>的_href，添加课程ID参数
-    创建课程（课程名称+日期（获取系统时间）+课程简要描述+教师名称）、导入学生、查看学生名单
+TODO:
+    从课程中删除学生
     设置作业
     设置小组
     检查作业
@@ -65,4 +65,6 @@ maven导入异常：到这里下载jar包 http://maven.aliyun.com/mvn/search
 使用chrome访问index.jsp，会请求一个css文件？
 
 java日期转换中: MM表示月份，mm表示分钟
+
+教师/学生  选择课程后，不修改所有<a>的_href，而是将课程ID添加到storage中
 
