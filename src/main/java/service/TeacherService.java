@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TeacherService {
 
-    Boolean addStudentByExcel(List<List<String[]>> studentSheets);
+
     String TeacherIDGenerator();
     String CourseIDGenerator();
     List<Course> findCourseList(String id);
@@ -18,6 +18,7 @@ public interface TeacherService {
     Course getCourse(String courseId);
 
     boolean addSingleStudent(String student_id, String co_id);
+    int addStudentByExcel(List<List<String[]>> studentSheets, String co_id);
 
     List<Student> getStudents(String co_id);
 

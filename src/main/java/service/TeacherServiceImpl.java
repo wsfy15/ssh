@@ -44,60 +44,32 @@ public class TeacherServiceImpl implements TeacherService {
      * @return
      */
     @Override
-    public Boolean addStudentByExcel(List<List<String[]>> studentSheets){
-        logger.debug("sheets size:{}", studentSheets.size());
-        for(List<String[]> sheet : studentSheets){
-            if(sheet.size() == 0){
-                continue;
-            }
-
-            // 检查表字段
-            // 必须有名字和班级，可以没有密码，则默认与ID相同
-            int nameIndex = -1;
-            int passwordIndex = -1;
-            int classIndex = -1;
-            String[] fieldName = sheet.get(0);
-            for(int i = 0; i < fieldName.length; i++){
-                switch (fieldName[i]){
-                    case "name":
-                        nameIndex = i;
-                        break;
-                    case "password":
-                        passwordIndex = i;
-                        break;
-                    case "class":
-                        classIndex = i;
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            if(nameIndex == -1 || classIndex == -1){
-                return false;
-            }
-
-            for(int i = 1; i < sheet.size(); i++){
-                String[] student = sheet.get(i);
-                Student user = new Student();
-                user.setId(StudentIDGenerator());
-                logger.debug("student ID:{}", user.getId());
-
-                user.setName(student[nameIndex]);
-
-                if(passwordIndex == -1){
-                    user.setPassword(MD5utils.md5(user.getId()));
-                }else{
-                    user.setPassword(MD5utils.md5(student[passwordIndex]));
-                }
-
-                user.setClassNo(student[classIndex]);
-                user.setValid(1);
-                studentDao.save(user);
-            }
+    public int addStudentByExcel(List<List<String[]>> studentSheets, String co_id){
+        Course course = courseDao.findById(co_id);
+        if(course == null){
+            return -1;
         }
 
-        return true;
+        logger.debug("sheets size:{}", studentSheets.size());
+        int success = 0, total = 0;
+        for(List<String[]> sheet : studentSheets){
+            for(int i = 0; i < sheet.size(); i++){
+                String student_id = sheet.get(i)[0];
+                if(student_id.trim().length() == 0){
+                    continue;
+                }
+
+                Student student = studentDao.findById(student_id);
+                logger.debug("student ID:{}", student_id);
+                if(student != null && student.getValid() == 1){
+                    student.getCourses().add(course);
+                    success += 1;
+                    studentDao.update(student);
+                }
+                total += 1;
+            }
+        }
+        return success == total ? 0 : 1;
     }
 
     @Override

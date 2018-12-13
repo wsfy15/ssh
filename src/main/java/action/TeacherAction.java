@@ -123,12 +123,12 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
     }
 
     public String addByExcel() {
-        // 做文件的上传，说明用户选择了上传的文件了
-        if (uploadFileName != null) {
+        String co_id = ServletActionContext.getRequest().getParameterMap().get("co_id")[0];
+        if (uploadFileName != null && co_id != null) {
             // 打印
-            logger.debug("文件类型：{}", uploadContentType);
+            logger.debug("文件名：{}", uploadFileName);
 
-            String path = "/home/sf/Desktop/ssh/files/" + uploadFileName;
+            String path = "E:\\javaProject\\files\\" + uploadFileName;
             logger.debug(path);
             // 创建file对象
             File file = new File(path);
@@ -136,44 +136,63 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
                 file.delete();
             }
 
-            try {
+            try(PrintWriter writer = ServletActionContext.getResponse().getWriter()) {
                 FileUtils.copyFile(upload, file);
-
                 List<List<String[]>> studentSheets = ExcelUtils.readExcel(path);
-                if (teacherService.addStudentByExcel(studentSheets)) {
-                    return SUCCESS;
+                for(List<String[]> ls : studentSheets){
+                    for(String[] ss:ls){
+                        for(String s:ss){
+                            System.out.print(s);
+                        }
+                        System.out.println();
+                    }
+                }
+
+                int status = teacherService.addStudentByExcel(studentSheets, co_id);
+                logger.debug("debug: {}", status);
+                switch (status){
+                    case 0:
+                        writer.print("success");
+                        break;
+                    case 1:
+                        writer.print("partial");
+                        break;
+                    case -1:
+                        writer.print("fail");
+                        break;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-        return ERROR;
+        return NONE;
     }
 
-    /**
-     * 添加成功后跳转到学生名单页面
-     * @return
-     */
     public String add(){
         Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
         String co_id = params.get("co_id")[0];
         String student_id = params.get("student_id")[0];
-        if(teacherService.addSingleStudent(student_id, co_id)){
-            List<Student> studentlist = teacherService.getStudents(co_id);
 
-            ValueStack valueStack = ActionContext.getContext().getValueStack();
-            valueStack.set("count", studentlist.size());
 
-            return "students";
-        } else{
-            return ERROR;
+        try(PrintWriter writer = ServletActionContext.getResponse().getWriter()){
+            if(co_id.trim().length() == 0 || student_id.trim().length() == 0){
+                writer.print("fail");
+            } else{
+                if(teacherService.addSingleStudent(student_id, co_id)){
+                    writer.print("success");
+                } else{
+                    writer.print("fail");
+                }
+            }
+        } catch (IOException e){
+            e.printStackTrace();
         }
+
+        return NONE;
     }
 
     /**
-     * 所有该老师创建的课程
-     *
+     * 获取所有该老师创建的课程
      * @return
      */
     public String getCourse() {
@@ -195,8 +214,6 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
     public String getCourseDetail() {
         Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
         Course course = teacherService.getCourse(params.get("co_id")[0]);
-
-        logger.debug("course: {}:{}", course.getCo_name(), course.getCo_id());
         FastJsonUtil.writeJson(ServletActionContext.getResponse(),  FastJsonUtil.toJSONString(course));
 
         return NONE;

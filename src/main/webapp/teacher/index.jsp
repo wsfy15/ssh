@@ -19,6 +19,10 @@
 
   <script>
     $(function () {
+       if(window.sessionStorage.getItem("co_id") !== undefined && window.sessionStorage.getItem("co_id") !== ''){
+           window.sessionStorage.setItem("co_id", '');
+       }
+
         // 加载该教师的课，显示在左侧选择框中
         let id = '${user.id}';
         let parrams = {
@@ -26,22 +30,36 @@
         };
         var url = "${ pageContext.request.contextPath }/teacher_getCourse.action";
         $.post(url, parrams, function(data){
-            console.log(data);
             $(data).each(function (i, n) {
                 $("#course").append("<option value='" + n.co_id + "'>" + n.co_name + "</option>");
             });
         }, "json");
 
-    })
+    });
 
     function onCourseChange(){
-        if(window.sessionStorage.getItem("co_id") != ''){
+        if(window.sessionStorage.getItem("co_id") !== ''){
             window.sessionStorage.setItem("co_id", '');
         }
 
+        // 关闭所有tabs
+        layui.use('element', function(element){
+            let tabs = $('.layui-tab-title li');
+            tabs.each(function(i, e){
+                let id = e.getAttribute("lay-id");
+                if(id !== undefined){
+                    element.tabDelete('xbs_tab', id);
+                    console.log(id);
+                }
+            });
+        });
+
         let choice = $('#course').val();
-        if(choice != ''){
-            if($('#course').val() == "create"){
+        if(choice !== ''){
+
+
+
+            if($('#course').val() === "create"){
                 // 设置课程
                 window.sessionStorage.setItem("co_id", '');
                 $("#createCourse").click();

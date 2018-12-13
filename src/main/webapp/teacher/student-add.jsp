@@ -35,59 +35,45 @@
                   id: [/(\d+){10}$/, '学号必须为10位数字']
               });
 
-              form.on('submit(addByExcel)', function(data){
-                  console.log(data);
-                  return false;
-                  $.post("${pageContext.request.contextPath}/teacher_addByExcel.action", data.field, function (data) {
-                      if(data === "success"){
-                          layer.alert("全部添加成功", {icon: 6},function () {
-                              // 获得frame索引
-                              var index = parent.layer.getFrameIndex(window.name);
-                              //关闭当前frame
-                              self.parent.location.reload();
-                              parent.layer.close(index);
-                          });
-                      }else if(data === "partial"){
-                          layer.alert("部分添加成功，见学生名单", {icon: 5},function () {
-                              // 获得frame索引
-                              var index = parent.layer.getFrameIndex(window.name);
-                              //关闭当前frame
-                              parent.layer.close(index);
-                          });
-                      } else{
-                          layer.alert("全部添加失败", {icon: 5},function () {
-                              // 获得frame索引
-                              var index = parent.layer.getFrameIndex(window.name);
-                              //关闭当前frame
-                              parent.layer.close(index);
-                          });
-                      }
+              form.on('submit(addByExcel)', function (data) {
+                  var fileName = $('#upload').val();
+                  if(fileName === ''){
+                      layer.msg("没有选择文件", {icon: 5, time:1000});
+                      return false;
+                  }
 
-                  })
+                  var form = new FormData(document.getElementById("uploadFile"));
+                  $.ajax({
+                      url: "${pageContext.request.contextPath}/teacher_addByExcel.action",
+                      type: "post",
+                      data: form,
+                      processData: false,
+                      contentType: false,
+                      success: function(data){
+                          console.log(data);
+                          if (data === "success") {
+                              layer.alert("全部添加成功", {icon: 6});
+                          } else if (data === "partial") {
+                              layer.alert("部分添加成功，详情见学生名单", {icon: 5});
+                          } else {
+                              layer.alert("全部添加失败", {icon: 5});
+                          }
+                      },
+                      error: function(e){
+                          alert("上传失败！");
+                      }
+                  });
+
                   return false;
               });
 
-              form.on('submit(add)', function(data){
-                  console.log(data);
-                  return false;
-                  $.post("${pageContext.request.contextPath}/teacher_addByExcel.action", data.field, function (data) {
-                      if(data === "success"){
-                          layer.alert("添加成功", {icon: 6},function () {
-                              // 获得frame索引
-                              var index = parent.layer.getFrameIndex(window.name);
-                              //关闭当前frame
-                              self.parent.location.reload();
-                              parent.layer.close(index);
-                          });
-                      } else{
-                          layer.alert("添加失败", {icon: 5},function () {
-                              // 获得frame索引
-                              var index = parent.layer.getFrameIndex(window.name);
-                              //关闭当前frame
-                              parent.layer.close(index);
-                          });
+              form.on('submit(add)', function (data) {
+                  $.post("${pageContext.request.contextPath}/teacher_add.action", data.field, function (data) {
+                      if (data === "success") {
+                          layer.alert("添加成功", {icon: 6});
+                      } else {
+                          layer.alert("添加失败", {icon: 5});
                       }
-
                   })
                   return false;
               });
@@ -114,40 +100,39 @@
   <fieldset class="layui-elem-field">
     <legend>上传文件</legend>
     <div class="layui-field-box">
-      <form action="" target="_self" method="post"
-            enctype="multipart/form-data" >
-        <table class="layui-table" lay-skin="line">
-          <tbody>
-          <tr>
-            <td>
-              <a class="x-a" href="javascript:;">
-                excel文件格式：每位学生一行，必须有学号
-              </a>
-            </td>
-            <td>
-              <button class="layui-btn" type="button" id="pseudo_upload">
-                <i class="layui-icon">&#xe67c;</i>上传文件
-              </button>
-              <div hidden>
-                <input class="layui-btn" name="upload" id="upload" type="file">
-              </div>
-            </td>
-            <td>
-              <span id="fileName"></span>
-            </td>
-            <td>
-              <%--<button class="layui-btn" lay-submit >提交</button>--%>
-              <input type="submit" class="layui-btn layui-btn-normal"  lay-filter="addByExcel" />
-            </td>
-          </tr>
+      <form id="uploadFile" action="" target="_self" method="post" enctype="multipart/form-data">
+        <div class="layui-form-item">
+          <table class="layui-table" lay-skin="line">
+            <tbody>
+            <tr>
+              <td>
+                <a class="x-a" href="javascript:;">
+                  excel文件格式：每位学生一行，必须有学号，不需要表头
+                </a>
+              </td>
+              <td>
+                <button class="layui-btn" type="button" id="pseudo_upload">
+                  <i class="layui-icon">&#xe67c;</i>上传文件
+                </button>
+                <div hidden>
+                  <input class="layui-btn" name="upload" id="upload" type="file">
+                  <input type="text" name="co_id"/>
+                </div>
+              </td>
+              <td>
+                <span id="fileName"></span>
+              </td>
+              <td>
+                <button class="layui-btn layui-btn-normal" lay-filter="addByExcel" lay-submit>提交</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
 
-          <tr hidden>
-            <th>
-              <input type="text" name="co_id" />
-            </th>
-          </tr>
-          </tbody>
-        </table>
+        <%--<div class="layui-form-item" hidden>--%>
+          <%--<input type="text" name="co_id"/>--%>
+        <%--</div>--%>
       </form>
     </div>
   </fieldset>
@@ -156,8 +141,7 @@
     <legend>手动添加</legend>
     <div class="layui-field-box">
       <div style="position: relative; left:30%;">
-        <form class="layui-form layui-form-pane" action="${pageContext.request.contextPath}/teacher_add.action"
-              target="_self" method="post" >
+        <form class="layui-form layui-form-pane" action="" target="_self" method="post">
 
           <div class="layui-form-item">
             <label class="layui-form-label">学号</label>
@@ -168,7 +152,7 @@
           </div>
 
           <div class="layui-form-item" hidden>
-            <input type="text" name="co_id" />
+            <input type="text" name="co_id"/>
           </div>
 
           <div class="layui-form-item">
