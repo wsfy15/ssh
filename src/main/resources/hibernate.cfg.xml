@@ -17,5 +17,7 @@
         <mapping resource="classpath:entity/Teacher.hbm.xml" />
         <mapping resource="classpath:entity/Admin.hbm.xml" />
         <mapping resource="classpath:entity/Class.hbm.xml" />
+        <mapping resource="classpath:entity/Group.hbm.xml"/>
+        <mapping resource="classpath:entity/GroupMember.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

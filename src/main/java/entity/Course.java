@@ -28,6 +28,8 @@ public class Course {
 
     @JSONField(serialize=false)
     private Set<Student> students = new HashSet<>();
+    private  Set<Group> groups=new HashSet<>();
+
 
     public Integer getCo_gr_max() { return co_gr_max; }
 
@@ -91,9 +93,12 @@ public class Course {
         return teacher;
     }
 
+
+
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
+
 
     public Set<Student> getStudents() {
         return students;
@@ -101,6 +106,14 @@ public class Course {
 
     public void setStudents(Set<Student> students) {
         this.students = students;
+    }
+
+    public Set<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
     }
 
     public Integer getValid() {

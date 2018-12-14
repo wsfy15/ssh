@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="entity.Group" table="Groupp   ">
+        <id name="gr_id" column="gr_id" />
+
+        <property name="valid" column="valid" />
+        <property name="gr_cheif" column="gr_cheif" />
+        <property name="gr_email" column="gr_email" />
+        <property name="gr_qq" type="date" column="gr_qq" />
+        <property name="gr_phone" column="gr_phone" />
+        <property name="gr_num" column="gr_num" />
+        <many-to-one name="course" class="entity.Course" column="gr_co_id" lazy="false"/>
+        <set name="groupMembers">
+            <key column="gm_gr_id"></key>
+            <one-to-many class="entity.GroupMember"></one-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

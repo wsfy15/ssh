@@ -85,6 +85,14 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
+    <bean id="groupDao" class="dao.GroupDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="groupMemberDao" class="dao.GroupMemberDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
     <bean id="userService" class="service.UserServiceImpl" >
         <property name="teacherDao" ref="teacherDao" />
         <property name="adminDao" ref="adminDao" />

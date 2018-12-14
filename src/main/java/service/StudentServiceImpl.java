@@ -64,6 +64,13 @@ public class StudentServiceImpl implements StudentService {
             jsonObject.put("co_name", c.getCo_name());
             jsonObject.put("co_describe", c.getCo_describe());
             jsonObject.put("teacher_name", c.getTeacher().getName());
+            jsonObject.put("co_ro_num",c.getCo_ro_num());
+            jsonObject.put("co_date",c.getCo_date());
+            jsonObject.put("co_gr_max",c.getCo_gr_max());
+            jsonObject.put("co_gr_min",c.getCo_gr_min());
+            jsonObject.put("co_gr_preyear",c.getCo_gr_preyear());
+            jsonObject.put("co_gr_preclass",c.getCo_gr_preclass());
+            jsonObject.put("co_te_id",c.getTeacher().getId());
             jsonArray.add(jsonObject);
         }
         return jsonArray;
