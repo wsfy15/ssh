@@ -21,8 +21,7 @@ public class Course {
     private String co_describe; // 课程描述
     private Integer co_gr_max;  //小组最大人员数目
     private Integer co_gr_min;  //小组最小人员数目
-    private Integer co_gr_preyear; //授课年份
-    private Integer co_gr_preclass;//授课班级号
+    private String co_gr_prefix;    // 小组编号前缀
     private Integer valid;
     private Teacher teacher;       // 课程教师编号
 
@@ -38,16 +37,6 @@ public class Course {
     public Integer getCo_gr_min() { return co_gr_min; }
 
     public void setCo_gr_min(Integer co_gr_min) { this.co_gr_min = co_gr_min; }
-
-    public Integer getCo_gr_preyear() { return co_gr_preyear; }
-
-    public void setCo_gr_preyear(Integer co_gr_preyear) { this.co_gr_preyear = co_gr_preyear; }
-
-    public Integer getCo_gr_preclass() { return co_gr_preclass; }
-
-    public void setCo_gr_preclass(Integer co_gr_preclass) { this.co_gr_preclass = co_gr_preclass; }
-
-
 
     public String getCo_id() {
         return co_id;
@@ -79,6 +68,14 @@ public class Course {
 
     public void setCo_date(Date co_date) {
         this.co_date = co_date;
+    }
+
+    public String getCo_gr_prefix() {
+        return co_gr_prefix;
+    }
+
+    public void setCo_gr_prefix(String co_gr_prefix) {
+        this.co_gr_prefix = co_gr_prefix;
     }
 
     public String getCo_describe() {
@@ -134,8 +131,9 @@ public class Course {
                 ", co_describe='" + co_describe + '\'' +
                 ", co_gr_max=" + co_gr_max +
                 ", co_gr_min=" + co_gr_min +
-                ", co_gr_preyear=" + co_gr_preyear +
-                ", co_gr_preclass=" + co_gr_preclass +
+                ", co_gr_prefix='" + co_gr_prefix + '\'' +
+                ", valid=" + valid +
+                ", teacher=" + teacher +
                 '}';
     }
 }

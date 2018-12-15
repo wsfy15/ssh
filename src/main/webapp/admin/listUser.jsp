@@ -148,21 +148,21 @@
       }
 
       function showModify(id, title,url,w,h){
-          if (id == null || id == '') {
+          if (id == null || id === '') {
               layer.msg("未知ID");
-          };
-          if (title == null || title == '') {
+          }
+          if (title == null || title === '') {
               title=false;
-          };
-          if (url == null || url == '') {
+          }
+          if (url == null || url === '') {
               url="error.html";
-          };
-          if (w == null || w == '') {
+          }
+          if (w == null || w === '') {
               w=($(window).width()*0.9);
-          };
-          if (h == null || h == '') {
+          }
+          if (h == null || h === '') {
               h=($(window).height() - 50);
-          };
+          }
 
           var children = $("[name='"+ id + "']").children();
           var name = children[2].innerText;

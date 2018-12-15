@@ -33,10 +33,11 @@
               $('[name=co_describe]').val(data.co_describe);
               $('[name=co_date]').val(date);
               $('[name=co_ro_num]').val(data.co_ro_num);
+              $('[name=co_gr_max]').val(data.co_gr_max);
+              $('[name=co_gr_min]').val(data.co_gr_min);
+              $('[name=co_gr_prefix]').val(data.co_gr_prefix);
           }, "json");
-      })
-
-
+      });
 
   </script>
 </head>
@@ -58,8 +59,7 @@
     <legend>课程信息</legend>
     <div class="layui-field-box">
       <div style="position: relative; left:30%;">
-        <form class="layui-form layui-form-pane" action=""
-              target="_self" method="post">
+        <form class="layui-form layui-form-pane" action="" target="_self" method="post">
           <div class="layui-form-item">
             <label class="layui-form-label">课程名</label>
             <div class="layui-input-inline">
@@ -88,12 +88,35 @@
             </div>
           </div>
 
-          <%--<div class="layui-form-item">--%>
-            <%--<div class="layui-input-block">--%>
-              <%--<button class="layui-btn" lay-submit lay-filter="add">立即提交</button>--%>
-              <%--<button type="reset" class="layui-btn layui-btn-primary">重置</button>--%>
-            <%--</div>--%>
-          <%--</div>--%>
+        </form>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset class="layui-elem-field">
+    <legend>小组配置</legend>
+    <div class="layui-field-box">
+      <div style="position: relative; left:30%;">
+        <form class="layui-form layui-form-pane" action="" target="_self" method="post">
+          <div class="layui-form-item">
+            <label class="layui-form-label">最少人数</label>
+            <div class="layui-input-inline">
+              <input type="text" name="co_gr_min" class="layui-input" disabled>
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">最大人数</label>
+            <div class="layui-input-inline">
+              <input type="text" name="co_gr_max" class="layui-input" disabled>
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">编号前缀</label>
+            <div class="layui-input-inline">
+              <input type="text" name="co_gr_prefix" class="layui-input" disabled>
+            </div>
+          </div>
 
         </form>
       </div>

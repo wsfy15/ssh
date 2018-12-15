@@ -227,12 +227,23 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
         List<Student> studentlist = teacherService.getStudents(co_id);
         FastJsonUtil.writeJson(ServletActionContext.getResponse(), FastJsonUtil.toJSONString(studentlist));
 
-//        if(studentlist != null){ }
-    //    request .setAttribute("users", JSONArray.toJSONString(studentlist));
+        return NONE;
+    }
 
-   //     ValueStack valueStack = ActionContext.getContext().getValueStack();
-     //   valueStack.set("count", studentlist.size());
+    public String deleteStudent(){
+        Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        String co_id = params.get("co_id")[0];
+        String[] ids = params.get("ids");
 
+        try(PrintWriter writer = ServletActionContext.getResponse().getWriter()){
+            if(co_id.trim().length() == 0 || ids == null || !teacherService.deleteStudent(ids, co_id)){
+                writer.print("fail");
+            } else{
+                writer.print("success");
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
         return NONE;
     }
 }
