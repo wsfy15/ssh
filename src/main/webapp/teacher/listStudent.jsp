@@ -83,7 +83,7 @@
           }
       }
 
-      /*用户-删除*/
+      /* 删除单个学生 */
       function user_del(obj, id) {
           var ids = [];
           ids[0] = id;
@@ -100,7 +100,6 @@
                       $(obj).parents("tr").remove();
                       layer.msg('已删除!', {icon: 1, time: 1000});
                       document.getElementById("refresh").click();
-                      // $('#refresh').click();   // 使用jquery模拟点击，只会触发事件，不会跳转
                   }
                   else{
                       layer.msg('删除失败!', {icon: 5, time: 1000});
@@ -109,7 +108,7 @@
           });
       }
 
-      /*  删除选中的所有用户 */
+      /*  删除选中的所有学生 */
       function delAll(argument) {
           var data = tableCheck.getData();
           var params = {
@@ -160,6 +159,7 @@
                   user.classNo = o.classNo;
                   users.push(user);
               });
+              $("#count").text("共有数据：" + users.length + "条");
 
               layui.use(['laypage'], function (laypage) {
                   //分页
@@ -206,7 +206,7 @@
     <button class="layui-btn layui-btn-danger" onclick="delAll()">
       <i class="layui-icon"></i>批量删除
     </button>
-    <span class="x-right" style="line-height:40px">共有数据：<s:property value="count"/> 条</span>
+    <span id="count" class="x-right" style="line-height:40px"></span>
   </xblock>
 
   <table class="layui-table">

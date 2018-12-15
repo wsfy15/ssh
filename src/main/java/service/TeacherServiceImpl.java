@@ -29,14 +29,6 @@ public class TeacherServiceImpl implements TeacherService {
     private TeacherDao teacherDao;
     private StudentDao studentDao;
 
-//    public void addCourseForStudent(){
-//        Student student = studentDao.findById("2015211003");
-//        Course course = courseDao.findById("000000");
-//
-//        student.getCourses().add(course);
-//        studentDao.update(student);
-//    }
-
 
     /**
      * 添加学生到某节课的学生列表中
@@ -116,6 +108,22 @@ public class TeacherServiceImpl implements TeacherService {
         }
 
         return new ArrayList<Student>(course.getStudents());
+    }
+
+    @Override
+    public boolean deleteStudent(String[] ids, String co_id) {
+        Course course = courseDao.findById(co_id);
+        if(course == null){
+            return false;
+        }
+
+        for(String id : ids){
+            Student student = studentDao.findById(id);
+            if(student != null && student.getCourses().contains(course)){
+                student.getCourses().remove(course);
+            }
+        }
+        return true;
     }
 
     public  String TeacherIDGenerator(){
