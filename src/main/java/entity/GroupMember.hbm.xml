@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="entity.GroupMember" table="GroupMember">
+        <!-- 主键 -->
+        <id name="id" column="groupmember_id"></id>
+
+        <many-to-one name="group" class="entity.Group" lazy="false">
+            <column name="gm_gr_id"></column>
+        </many-to-one>
+
+        <many-to-one name="student" class="entity.Student" lazy="false">
+            <column name="gm_st_id"></column>
+        </many-to-one>
+
+
+
+        <property name="valid" column="ho_valid" />
+
+    </class>
+</hibernate-mapping>

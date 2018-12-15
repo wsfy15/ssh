@@ -17,6 +17,11 @@
         <property name="co_gr_prefix" column="co_gr_prefix" />
         <many-to-one name="teacher" class="entity.Teacher" column="co_teacher" lazy="false"/>
 
+        <set name="groups"  inverse="true">
+            <key column="gr_co_id" />
+            <one-to-many class="entity.Group"/>
+        </set>
+
         <set name="students" table="student_course" inverse="true">
             <key column="co_id" />
             <many-to-many class="entity.Student" column="id" />

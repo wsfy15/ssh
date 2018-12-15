@@ -30,9 +30,14 @@
               dataType:"json",
               contentType: "application/x-www-form-urlencoded; charset=utf-8",
               success:function (data) {
-                  console.log(data[0].co_name);
-                  var opp = new Option(data[0].co_name,data[0].co_name);
-                  k.add(opp);
+                  var allcourse=JSON.stringify(data);
+                  window.sessionStorage.setItem("allcourse",allcourse);
+                  $.each(data,function(i,v){
+                      console.log("v:"+v.co_name);
+                      var opp = new Option(v.co_name,v.co_id);
+                      k.add(opp);
+                  });
+
               }
 
           });
@@ -45,9 +50,10 @@
       })
 
       function onClassChange(name){
-          if(name != ""){
+          if(name != "请选择课程"){
               // 显示该课的信息
-              $("#courseInfo").click();
+              alert(name);
+              window.sessionStorage.setItem('courseid',name);
           }
 
       }
@@ -119,7 +125,7 @@
             </a>
           </li>
           <li>
-            <a _href="${ pageContext.request.contextPath }/student_creategroup.html">
+            <a _href="${ pageContext.request.contextPath }/student/creategroup.jsp">
               <i class="iconfont">&#xe6a7;</i>
               <cite>创建小组</cite>
             </a>

@@ -76,7 +76,9 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
         return NONE;
 
     }
-
+    public String getallclassmate(){
+        return NONE;
+    }
 
     public StudentService getStudentService() {
         return studentService;
