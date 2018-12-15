@@ -73,6 +73,10 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
+    <bean id="assignmentDao" class="dao.AssignmentDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
     <bean id="studentDao" class="dao.StudentDaoImpl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
@@ -100,6 +104,7 @@
         <property name="courseDao" ref="courseDao" />
         <property name="teacherDao" ref="teacherDao" />
         <property name="studentDao" ref="studentDao" />
+        <property name="assignmentDao" ref="assignmentDao" />
     </bean>
 
     <bean id="teacherAction" class="action.TeacherAction">

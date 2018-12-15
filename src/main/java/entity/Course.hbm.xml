@@ -11,6 +11,7 @@
         <property name="co_ro_num" column="co_ro_num" />
         <property name="co_date" type="date" column="co_date" />
         <property name="co_describe" column="co_describe" />
+        <property name="co_peacetimeProportion" column="co_peacetimeProportion" />
         <property name="co_gr_max" column="co_gr_max" />
         <property name="co_gr_min" column="co_gr_min" />
         <property name="co_gr_prefix" column="co_gr_prefix" />
@@ -19,6 +20,11 @@
         <set name="students" table="student_course" inverse="true">
             <key column="co_id" />
             <many-to-many class="entity.Student" column="id" />
+        </set>
+
+        <set name="assignments" inverse="true">
+            <key column="co_id" />
+            <one-to-many class="entity.Assignment" />
         </set>
     </class>
 </hibernate-mapping>

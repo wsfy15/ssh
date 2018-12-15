@@ -15,9 +15,9 @@ public class Assignment {
     private String as_describe; // 作业简介
     private Date as_ddl; // 作业截至时间
     private Date as_assigntime;  // 作业布置时间
-    private String as_co_id;    // 相关课程的作业
-    private Integer as_proportion;  // 作业所占比例 1 ~ 100
+    private Integer as_weight;  // 作业权重
     private Integer valid;
+    private Course course;      // // 相关联的课程
 
     public String getAs_id() {
         return as_id;
@@ -59,20 +59,12 @@ public class Assignment {
         this.as_assigntime = as_assigntime;
     }
 
-    public String getAs_co_id() {
-        return as_co_id;
+    public Integer getAs_weight() {
+        return as_weight;
     }
 
-    public void setAs_co_id(String as_co_id) {
-        this.as_co_id = as_co_id;
-    }
-
-    public Integer getAs_proportion() {
-        return as_proportion;
-    }
-
-    public void setAs_proportion(Integer as_proportion) {
-        this.as_proportion = as_proportion;
+    public void setAs_weight(Integer as_weight) {
+        this.as_weight = as_weight;
     }
 
     public Integer getValid() {
@@ -81,5 +73,13 @@ public class Assignment {
 
     public void setValid(Integer valid) {
         this.valid = valid;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }

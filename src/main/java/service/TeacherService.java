@@ -1,5 +1,6 @@
 package service;
 
+import entity.Assignment;
 import entity.Course;
 import entity.Student;
 
@@ -7,13 +8,13 @@ import java.util.List;
 
 public interface TeacherService {
 
-
-    String TeacherIDGenerator();
+    String AssignmentIDGenerator();
     String CourseIDGenerator();
     List<Course> findCourseList(String id);
 
     void saveCourse(String teacher_id, Course course);
     void updateCourse(Course course);
+    void addAssignment(String co_id, Assignment assignment);
 
     Course getCourse(String courseId);
 

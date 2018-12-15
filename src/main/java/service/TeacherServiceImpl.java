@@ -1,8 +1,10 @@
 package service;
 
+import dao.AssignmentDao;
 import dao.CourseDao;
 import dao.StudentDao;
 import dao.TeacherDao;
+import entity.Assignment;
 import entity.Course;
 import entity.Student;
 import entity.Teacher;
@@ -28,7 +30,7 @@ public class TeacherServiceImpl implements TeacherService {
     private CourseDao courseDao;
     private TeacherDao teacherDao;
     private StudentDao studentDao;
-
+    private AssignmentDao assignmentDao;
 
     /**
      * 添加学生到某节课的学生列表中
@@ -82,6 +84,15 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public void addAssignment(String co_id, Assignment assignment) {
+        Course course = courseDao.findById(co_id);
+        assignment.setCourse(course);
+        assignment.setAs_id(AssignmentIDGenerator());
+        assignment.setValid(1);
+        assignmentDao.save(assignment);
+    }
+
+    @Override
     public Course getCourse(String courseId) {
         Course course = courseDao.findById(courseId);
         return course;
@@ -126,10 +137,19 @@ public class TeacherServiceImpl implements TeacherService {
         return true;
     }
 
-    public  String TeacherIDGenerator(){
-        long count = this.teacherDao.count();
-        String id = "1010".concat(String.format("%06d", count));
-        return id;
+    @Override
+    public List<Course> findCourseList(String id) {
+        Teacher teacher = teacherDao.findById(id);
+        logger.debug("course count: {}", teacher.getCourses().size());
+
+        Set<Course> courses = teacher.getCourses();
+        return new ArrayList<>(courses);
+    }
+
+
+    public String AssignmentIDGenerator(){
+        long count = this.assignmentDao.count();
+        return String.format("%06d", count);
     }
 
     public String StudentIDGenerator(){
@@ -169,13 +189,12 @@ public class TeacherServiceImpl implements TeacherService {
         this.teacherDao = teacherDao;
     }
 
-    @Override
-    public List<Course> findCourseList(String id) {
-       Teacher teacher = teacherDao.findById(id);
-        logger.debug("course count: {}", teacher.getCourses().size());
+    public AssignmentDao getAssignmentDao() {
+        return assignmentDao;
+    }
 
-        Set<Course> courses = teacher.getCourses();
-        return new ArrayList<>(courses);
+    public void setAssignmentDao(AssignmentDao assignmentDao) {
+        this.assignmentDao = assignmentDao;
     }
 
 }

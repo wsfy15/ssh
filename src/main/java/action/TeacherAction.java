@@ -6,10 +6,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import dao.CourseDao;
-import entity.Course;
-import entity.Student;
-import entity.Teacher;
-import entity.User;
+import entity.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
@@ -244,6 +241,38 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
         } catch (IOException e){
             e.printStackTrace();
         }
+        return NONE;
+    }
+
+    public String createAssignment(){
+        Assignment assignment = new Assignment();
+        assignment.setAs_assigntime(new Date());
+
+        Map<String, String[]> map = ServletActionContext.getRequest().getParameterMap();
+        String co_id = map.get("co_id")[0];
+
+        try (PrintWriter writer = ServletActionContext.getResponse().getWriter()) {
+            DateConverter converter = new DateConverter(null);
+            converter.setPattern("yyyy-MM-dd HH:mm:ss");
+            ConvertUtils.register(converter, Date.class);
+            BeanUtils.populate(assignment, map);
+            logger.debug("before saveAssignment");
+            teacherService.addAssignment(co_id, assignment);
+            logger.debug("saveAssignment success");
+            writer.print("success");
+
+            return NONE;
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+            try (PrintWriter writer = ServletActionContext.getResponse().getWriter()) {
+                writer.print("fail");
+            } catch (IOException ee) {
+                ee.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return NONE;
     }
 }

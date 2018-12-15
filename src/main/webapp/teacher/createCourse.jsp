@@ -90,7 +90,7 @@
           <div class="layui-form-item">
             <label class="layui-form-label">开课时间</label>
             <div class="layui-input-inline">
-              <input type="text" name="co_date" class="layui-input" id="date">
+              <input type="text" name="co_date" class="layui-input" id="date" autocomplete="off">
             </div>
           </div>
 

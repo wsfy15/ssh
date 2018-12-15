@@ -19,11 +19,15 @@ public class Course {
     private Integer co_ro_num;  // 本学期点名次数
     private Date co_date;       // 开课时间
     private String co_describe; // 课程描述
+    private Integer co_peacetimeProportion; // 平时作业所占比例
     private Integer co_gr_max;  //小组最大人员数目
     private Integer co_gr_min;  //小组最小人员数目
     private String co_gr_prefix;    // 小组编号前缀
     private Integer valid;
     private Teacher teacher;       // 课程教师编号
+
+    @JSONField(serialize=false)
+    private Set<Assignment> assignments = new HashSet<>();
 
     @JSONField(serialize=false)
     private Set<Student> students = new HashSet<>();
@@ -106,6 +110,22 @@ public class Course {
 
     public void setValid(Integer valid) {
         this.valid = valid;
+    }
+
+    public Integer getCo_peacetimeProportion() {
+        return co_peacetimeProportion;
+    }
+
+    public void setCo_peacetimeProportion(Integer co_peacetimeProportion) {
+        this.co_peacetimeProportion = co_peacetimeProportion;
+    }
+
+    public Set<Assignment> getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(Set<Assignment> assignments) {
+        this.assignments = assignments;
     }
 
     @Override
