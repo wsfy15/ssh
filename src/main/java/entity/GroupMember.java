@@ -3,11 +3,12 @@ package entity;
 public class GroupMember {
     private Integer valid;
 
-    GroupMemberPK groupMemberPK;
+    private  String id;// 复合的id
 
-    private  Group group;
 
-    private Student student;
+    private  Group group; //参考groupid
+
+    private Student student;//参考学生id
 
     public Group getGroup() {
         return group;
@@ -33,15 +34,11 @@ public class GroupMember {
         this.valid = valid;
     }
 
-
-
-    public GroupMemberPK getGroupMemberPK() {
-        return groupMemberPK;
+    public String getId() {
+        return id;
     }
 
-    public void setGroupMemberPK(GroupMemberPK groupMemberPK) {
-        this.groupMemberPK = groupMemberPK;
+    public void setId(String id) {
+        this.id = id;
     }
-
-
 }

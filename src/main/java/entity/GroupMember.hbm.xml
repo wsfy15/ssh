@@ -4,17 +4,14 @@
 
 <hibernate-mapping>
     <class name="entity.GroupMember" table="GroupMember">
-        <!-- 联合主键 -->
-        <composite-id name="groupMemberPK" class="entity.GroupMemberPK">
-            <key-property name="gm_gr_id" column="gm_gr_id"  type="string"/>
-            <key-property name="gm_st_id" column="gm_st_id"  type="string"/>
-        </composite-id>
+        <!-- 主键 -->
+        <id name="id" column="groupmember_id"></id>
 
-        <many-to-one name="groupMemberPK" class="entity.Group" lazy="false">
+        <many-to-one name="group" class="entity.Group" lazy="false">
             <column name="gm_gr_id"></column>
         </many-to-one>
 
-        <many-to-one name="groupMemberPK" class="entity.Group" lazy="false">
+        <many-to-one name="student" class="entity.Student" lazy="false">
             <column name="gm_st_id"></column>
         </many-to-one>
 
