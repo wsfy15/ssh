@@ -52,6 +52,7 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
         valueStack.set("courseList", courseList);
         return "course";
     }
+
     public  String courselist(){
         Map<String, Object> session = ActionContext.getContext().getSession();
         Student student = (Student) session.get("user");

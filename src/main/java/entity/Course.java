@@ -31,8 +31,9 @@ public class Course {
 
     @JSONField(serialize=false)
     private Set<Student> students = new HashSet<>();
-    private  Set<Group> groups=new HashSet<>();
 
+    @JSONField(serialize=false)
+    private  Set<Group> groups = new HashSet<>();
 
     public Integer getCo_gr_max() { return co_gr_max; }
 

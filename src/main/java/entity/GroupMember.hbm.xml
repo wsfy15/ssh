@@ -5,14 +5,14 @@
 <hibernate-mapping>
     <class name="entity.GroupMember" table="GroupMember">
         <!-- 主键 -->
-        <id name="id" column="groupmember_id"></id>
+        <id name="id" column="groupmember_id" />
 
         <many-to-one name="group" class="entity.Group" lazy="false">
-            <column name="gm_gr_id"></column>
+            <column name="gm_gr_id" />
         </many-to-one>
 
         <many-to-one name="student" class="entity.Student" lazy="false">
-            <column name="gm_st_id"></column>
+            <column name="gm_st_id" />
         </many-to-one>
 
 

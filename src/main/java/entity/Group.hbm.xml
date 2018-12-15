@@ -14,8 +14,8 @@
         <property name="gr_num" column="gr_num" />
         <many-to-one name="course" class="entity.Course" column="gr_co_id" lazy="false"/>
         <set name="groupMembers">
-            <key column="gm_gr_id"></key>
-            <one-to-many class="entity.GroupMember"></one-to-many>
+            <key column="gm_gr_id" />
+            <one-to-many class="entity.GroupMember" />
         </set>
     </class>
 </hibernate-mapping>

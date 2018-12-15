@@ -18,7 +18,7 @@ public class Group {
     private  Integer gr_num;//小组成员数量
     private  Integer valid;
     private  Course course;
-    Set<GroupMember> groupMembers=new HashSet<>();//一个小组对多个小组成员
+    private Set<GroupMember> groupMembers = new HashSet<>();//一个小组对多个小组成员
 
     public Set<GroupMember> getGroupMembers() {
         return groupMembers;

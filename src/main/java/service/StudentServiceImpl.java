@@ -68,8 +68,6 @@ public class StudentServiceImpl implements StudentService {
             jsonObject.put("co_date",c.getCo_date());
             jsonObject.put("co_gr_max",c.getCo_gr_max());
             jsonObject.put("co_gr_min",c.getCo_gr_min());
-            jsonObject.put("co_gr_preyear",c.getCo_gr_preyear());
-            jsonObject.put("co_gr_preclass",c.getCo_gr_preclass());
             jsonObject.put("co_te_id",c.getTeacher().getId());
             jsonArray.add(jsonObject);
         }
