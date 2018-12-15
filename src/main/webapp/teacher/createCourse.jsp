@@ -19,6 +19,8 @@
 
   <script>
       $(function () {
+          $(".layui-form-label").css("width", "150px");
+
           layui.use(['laydate', 'form'], function (laydate, form) {
               laydate.render({
                   elem: '#date',
@@ -26,7 +28,18 @@
               });
 
               form.verify({
-                  ro_num: [/^(\d+){1,2}$/, '范围：0 ~ 99']
+                  ro_num: [/^(\d+){1,2}$/, '范围：0 ~ 99'],
+                  num: [/^\d+$/,  '输入只能是正数'],
+                  groupConf: function (value) {
+                      let max = $('[name=co_gr_max]').val();
+                      let min = $('[name=co_gr_min]').val();
+                      console.log(parseInt(max));
+                      console.log(parseInt(min));
+                      if(parseInt(max) < parseInt(min)){
+                          return '最大人数 不能小于 最小人数';
+                      }
+                  },
+                  groupPrefix: [/^\d{7}$/,  '输入必须是7位数字'],
               });
 
               form.on('submit(add)', function(data){
@@ -44,8 +57,6 @@
               });
           });
       })
-
-
 
   </script>
 </head>
@@ -72,8 +83,7 @@
           <div class="layui-form-item">
             <label class="layui-form-label">课程名</label>
             <div class="layui-input-inline">
-              <input type="text" name="co_name" lay-verify="required" placeholder="请输入课程名"
-                     maxlength="20" autocomplete="off" class="layui-input">
+              <input type="text" name="co_name" lay-verify="required" maxlength="20" autocomplete="off" class="layui-input">
             </div>
           </div>
 
@@ -87,16 +97,40 @@
           <div class="layui-form-item">
             <label class="layui-form-label">课程描述</label>
             <div class="layui-input-inline">
-              <textarea name="co_describe" required lay-verify="required" placeholder="请输入课程描述"
-                        class="layui-textarea" maxlength="100" > </textarea>
+              <textarea name="co_describe" required lay-verify="required" class="layui-textarea" maxlength="100" > </textarea>
             </div>
           </div>
 
           <div class="layui-form-item">
             <label class="layui-form-label">点名次数</label>
             <div class="layui-input-inline">
-              <input type="text" name="co_ro_num" lay-verify="ro_num" placeholder="请输入点名次数"
-                     maxlength="2" autocomplete="off" class="layui-input">
+              <input type="text" name="co_ro_num" lay-verify="ro_num" maxlength="2" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label for="co_gr_min" class="layui-form-label">小组最少人数</label>
+            <div class="layui-input-inline">
+              <input type="text" id="co_gr_min" name="co_gr_min" lay-verify="num|groupConf" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label for="co_gr_max" class="layui-form-label">小组最大人数</label>
+            <div class="layui-input-inline">
+              <input type="text" id="co_gr_max" name="co_gr_max" lay-verify="num|groupConf" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+
+
+          <div class="layui-form-item">
+            <label for="co_gr_prefix" class="layui-form-label">小组编号前缀</label>
+            <div class="layui-input-inline">
+              <input type="text" id="co_gr_prefix" name="co_gr_prefix" lay-verify="groupPrefix"
+                     autocomplete="off" class="layui-input" maxlength="7">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+              <span class="x-red">*</span>小组编号共10位，请输入该课程小组的7位前缀
             </div>
           </div>
 

@@ -13,8 +13,7 @@
         <property name="co_describe" column="co_describe" />
         <property name="co_gr_max" column="co_gr_max" />
         <property name="co_gr_min" column="co_gr_min" />
-        <property name="co_gr_preyear" column="co_gr_preyear" />
-        <property name="co_gr_preclass" column="co_gr_preclass" />
+        <property name="co_gr_prefix" column="co_gr_prefix" />
         <many-to-one name="teacher" class="entity.Teacher" column="co_teacher" lazy="false"/>
 
         <set name="students" table="student_course" inverse="true">

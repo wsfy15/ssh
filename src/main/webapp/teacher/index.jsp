@@ -19,6 +19,14 @@
 
   <script>
     $(function () {
+        $('.checkCourseId li a').click(function(e){
+            let co_id = window.sessionStorage.getItem("co_id");
+            if(co_id === undefined || co_id.trim().length === 0){
+                alert("请先选择课程");
+                e.stopPropagation();
+            }
+        });
+
        if(window.sessionStorage.getItem("co_id") !== undefined && window.sessionStorage.getItem("co_id") !== ''){
            window.sessionStorage.setItem("co_id", '');
        }
@@ -56,9 +64,6 @@
 
         let choice = $('#course').val();
         if(choice !== ''){
-
-
-
             if($('#course').val() === "create"){
                 // 设置课程
                 window.sessionStorage.setItem("co_id", '');
@@ -67,13 +72,6 @@
                 console.log(choice);
                 window.sessionStorage.setItem("co_id", choice);
                 document.getElementById('showCourse').click();
-
-                <%--$('#showCourse').attr('_href', "${ pageContext.request.contextPath }/teacher/teacher_showCourse.action?courseId=" + choice);--%>
-                <%--$('#addStudent').attr('_href', "${ pageContext.request.contextPath }/teacher/teacher_addStudent.action?courseId=" + choice);--%>
-                <%--$('#showStudent').attr('_href', "${ pageContext.request.contextPath }/teacher/teacher_showStudent.action?courseId=" + choice);--%>
-                <%--$('#createHW').attr('_href', "${ pageContext.request.contextPath }/teacher/teacher_createHW.action?courseId=" + choice);--%>
-                <%--$('#checkHW').attr('_href', "${ pageContext.request.contextPath }/teacher/teacher_checkHW.action?courseId=" + choice);--%>
-                <%--$('#setGrade').attr('_href', "${ pageContext.request.contextPath }/teacher/teacher_setGrade.action?courseId=" + choice);--%>
             }
         }
     }
@@ -145,7 +143,7 @@
                     <cite>学生管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
-                <ul class="sub-menu">
+                <ul class="sub-menu checkCourseId">
                     <li>
                       <a id="addStudent" _href="${ pageContext.request.contextPath }/teacher/student-add.jsp">
                           <i class="iconfont">&#xe6a7;</i>
@@ -166,11 +164,17 @@
                     <cite>作业管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
-                <ul class="sub-menu">
+                <ul class="sub-menu checkCourseId">
+                  <li>
+                    <a id="createHW" _href="${ pageContext.request.contextPath }/teacher/createAssignment.jsp">
+                      <i class="iconfont">&#xe6a7;</i>
+                      <cite>设置作业</cite>
+                    </a>
+                  </li >
                     <li>
-                      <a id="createHW" _href="${ pageContext.request.contextPath }/teacher_showcourse.action">
+                      <a id="listHW" _href="${ pageContext.request.contextPath }/teacher/listAssignment.jsp">
                           <i class="iconfont">&#xe6a7;</i>
-                          <cite>设置作业</cite>
+                          <cite>查看作业</cite>
                       </a>
                     </li >
                     <li>
