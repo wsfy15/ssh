@@ -35,6 +35,10 @@
 
               form.on('submit(add)', function(data){
                   console.log(data.field);
+                  // let str = data.field.as_ddl;
+                  // str = str.replace(/-/g, "/");
+                  // let date = new Date(str);
+                  // data.field.as_ddl = Date.parse(date);
                   $.post("${pageContext.request.contextPath}/teacher_createAssignment.action", data.field, function (data) {
                       if(data === "success"){
                           layer.alert("设置成功", {icon: 6});
@@ -94,7 +98,7 @@
           <div class="layui-form-item">
             <label class="layui-form-label">提交时间</label>
             <div class="layui-input-inline">
-              <input type="text" name="as_ddl" class="layui-input" id="date" autocomplete="off">
+              <input type="text" name="ddl" class="layui-input" id="date" autocomplete="off">
             </div>
           </div>
 

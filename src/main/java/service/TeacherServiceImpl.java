@@ -90,6 +90,9 @@ public class TeacherServiceImpl implements TeacherService {
         assignment.setAs_id(AssignmentIDGenerator());
         assignment.setValid(1);
         assignmentDao.save(assignment);
+        course.getAssignments().add(assignment);
+        courseDao.update(course);
+        logger.debug("set size: {}", course.getAssignments().size());
     }
 
     @Override
@@ -134,6 +137,35 @@ public class TeacherServiceImpl implements TeacherService {
                 student.getCourses().remove(course);
             }
         }
+        return true;
+    }
+
+    @Override
+    public List<Assignment> getAssignment(String co_id) {
+        logger.debug("co_id: {}", co_id);
+        Course course = courseDao.findById(co_id);
+        if(course != null){
+            Set<Assignment> assignments = course.getAssignments();
+            return new ArrayList<>(assignments);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean modifyAssignment(Assignment assignment) {
+        Assignment assignment1 = assignmentDao.findById(assignment.getAs_id());
+        if(assignment1 == null){
+            return false;
+        }
+
+        if(assignment.getAs_ddl() != null){
+            assignment1.setAs_ddl(assignment.getAs_ddl());
+        }
+        if(assignment.getAs_weight() != null){
+            assignment1.setAs_weight(assignment.getAs_weight());
+        }
+        assignment1.setAs_describe(assignment.getAs_describe());
+        assignmentDao.update(assignment1);
         return true;
     }
 

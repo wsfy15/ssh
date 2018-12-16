@@ -1,5 +1,8 @@
 package entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -13,10 +16,12 @@ public class Assignment {
     private String as_id;
     private String as_name;     // 作业名称
     private String as_describe; // 作业简介
-    private Date as_ddl; // 作业截至时间
-    private Date as_assigntime;  // 作业布置时间
+    private Timestamp as_ddl; // 作业截至时间
+    private Timestamp as_assigntime;  // 作业布置时间
     private Integer as_weight;  // 作业权重
     private Integer valid;
+
+    @JSONField(serialize=false)
     private Course course;      // // 相关联的课程
 
     public String getAs_id() {
@@ -43,19 +48,19 @@ public class Assignment {
         this.as_describe = as_describe;
     }
 
-    public Date getAs_ddl() {
+    public Timestamp getAs_ddl() {
         return as_ddl;
     }
 
-    public void setAs_ddl(Date as_ddl) {
+    public void setAs_ddl(Timestamp as_ddl) {
         this.as_ddl = as_ddl;
     }
 
-    public Date getAs_assigntime() {
+    public Timestamp getAs_assigntime() {
         return as_assigntime;
     }
 
-    public void setAs_assigntime(Date as_assigntime) {
+    public void setAs_assigntime(Timestamp as_assigntime) {
         this.as_assigntime = as_assigntime;
     }
 

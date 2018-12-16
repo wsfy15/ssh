@@ -24,4 +24,8 @@ public interface TeacherService {
     List<Student> getStudents(String co_id);
 
     boolean deleteStudent(String[] ids, String co_id);
+
+    List<Assignment> getAssignment(String co_id);
+
+    boolean modifyAssignment(Assignment assignment);
 }

@@ -9,8 +9,8 @@
         <property name="valid" column="as_valid" />
         <property name="as_name" column="as_name" />
         <property name="as_describe" column="as_describe" />
-        <property name="as_ddl" type="date" column="as_ddl" />
-        <property name="as_assigntime" type="time" column="as_assigntime" />
+        <property name="as_ddl"  column="as_ddl" />
+        <property name="as_assigntime" column="as_assigntime" />
         <property name="as_weight" column="as_weight" />
 
         <many-to-one name="course" class="entity.Course" column="co_course" lazy="false"/>

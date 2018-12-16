@@ -28,8 +28,9 @@
         </set>
 
         <set name="assignments" inverse="true">
-            <key column="co_id" />
+            <key column="co_course" />
             <one-to-many class="entity.Assignment" />
         </set>
+
     </class>
 </hibernate-mapping>

@@ -7,22 +7,7 @@ TODO:
     需要后台返回合适的数据
     检查作业
     给成绩
-CREATE TABLE `assignment` (
-  `as_id` varchar(255) NOT NULL,
-  `as_valid` int(11) DEFAULT NULL,
-  `as_name` varchar(255) DEFAULT NULL,
-  `as_describe` varchar(255) DEFAULT NULL,
-  `as_ddl` date DEFAULT NULL,
-  `as_assigntime` time DEFAULT NULL,
-  `as_weight` int(11) DEFAULT NULL,
-  `co_course` varchar(255) DEFAULT NULL,
-  `co_id` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`as_id`),
-  KEY `FKtcd4v2cqpnv58bj3f6wt8ucc0` (`co_course`),
-  KEY `FKedb9re09t76y3yjopjo7p8e9j` (`co_id`),
-  CONSTRAINT `FKedb9re09t76y3yjopjo7p8e9j` FOREIGN KEY (`co_id`) REFERENCES `course` (`co_id`),
-  CONSTRAINT `FKtcd4v2cqpnv58bj3f6wt8ucc0` FOREIGN KEY (`co_course`) REFERENCES `course` (`co_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
 删除用户时，如果有外键依赖，可能会失败，需要先解除外键依赖，现在还没考虑这个问题
 
 目录结构

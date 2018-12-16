@@ -150,11 +150,15 @@ public class Course {
                 ", co_ro_num=" + co_ro_num +
                 ", co_date=" + co_date +
                 ", co_describe='" + co_describe + '\'' +
+                ", co_peacetimeProportion=" + co_peacetimeProportion +
                 ", co_gr_max=" + co_gr_max +
                 ", co_gr_min=" + co_gr_min +
                 ", co_gr_prefix='" + co_gr_prefix + '\'' +
                 ", valid=" + valid +
                 ", teacher=" + teacher +
+                ", assignments=" + assignments +
+                ", students=" + students +
+                ", groups=" + groups +
                 '}';
     }
 }

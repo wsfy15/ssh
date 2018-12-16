@@ -19,12 +19,15 @@ import service.TeacherService;
 import utils.ExcelUtils;
 import utils.FastJsonUtil;
 import utils.LogUtils;
+import utils.TimeUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -120,7 +123,7 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
     }
 
     public String addByExcel() {
-        String co_id = (String)ServletActionContext.getRequest().getParameterMap().get("co_id");
+        String co_id = (String)ServletActionContext.getRequest().getParameterMap().get("co_id")[0];
         if (uploadFileName != null && co_id != null) {
             // 打印
             logger.debug("文件名：{}", uploadFileName);
@@ -246,15 +249,16 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
 
     public String createAssignment(){
         Assignment assignment = new Assignment();
-        assignment.setAs_assigntime(new Date());
+        assignment.setAs_assigntime(new Timestamp(new Date().getTime()) );
 
         Map<String, String[]> map = ServletActionContext.getRequest().getParameterMap();
         String co_id = map.get("co_id")[0];
 
+        String ddl = map.get("ddl")[0];
+        Timestamp timestamp = TimeUtils.strToTimestamp(ddl, "yyyy-MM-dd HH:mm:ss");
+        assignment.setAs_ddl(timestamp);
+
         try (PrintWriter writer = ServletActionContext.getResponse().getWriter()) {
-            DateConverter converter = new DateConverter(null);
-            converter.setPattern("yyyy-MM-dd HH:mm:ss");
-            ConvertUtils.register(converter, Date.class);
             BeanUtils.populate(assignment, map);
             logger.debug("before saveAssignment");
             teacherService.addAssignment(co_id, assignment);
@@ -273,6 +277,42 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
             e.printStackTrace();
         }
 
+        return NONE;
+    }
+
+    public String getAssignment(){
+        String co_id = ServletActionContext.getRequest().getParameterMap().get("co_id")[0];
+        List<Assignment> assignments = teacherService.getAssignment(co_id);
+        FastJsonUtil.writeJson(ServletActionContext.getResponse(), FastJsonUtil.toJSONString(assignments));
+        return NONE;
+    }
+
+    public String modifyAssignment(){
+        Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        Assignment assignment = new Assignment();
+
+        String ddl = params.get("ddl")[0];
+        if(ddl.trim().length() != 0) {
+            Timestamp timestamp = TimeUtils.strToTimestamp(ddl, "yyyy-MM-dd HH:mm:ss");
+            assignment.setAs_ddl(timestamp);
+        }
+
+        String weight = params.get("weight")[0];
+        if(weight.trim().length() != 0){
+            assignment.setAs_weight(Integer.parseInt(weight));
+        }
+
+        assignment.setAs_describe(params.get("as_describe")[0]);
+        assignment.setAs_id(params.get("as_id")[0]);
+        try (PrintWriter writer = ServletActionContext.getResponse().getWriter()) {
+            if(teacherService.modifyAssignment(assignment)) {
+                writer.print("success");
+            }else{
+                writer.print("fail");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return NONE;
     }
 }

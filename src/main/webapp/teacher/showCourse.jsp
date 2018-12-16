@@ -15,8 +15,8 @@
   <link rel="stylesheet" href="../css/xadmin.css">
   <script type="text/javascript" src="../lib/jquery-3.3.1.min.js"></script>
   <script src="../lib/layui/layui.js" charset="utf-8"></script>
-  <script type="text/javascript" src="../lib/xadmin.js"></script>
-  <script type="text/javascript" src="../js/utils.js"></script>
+  <script charset="utf-8" src="../js/utils.js"></script>
+  <script charset="utf-8" src="../lib/xadmin.js"></script>
 
   <script>
       $(function () {
@@ -27,7 +27,7 @@
           let url = "${ pageContext.request.contextPath }/teacher/teacher_getCourseDetail.action";
           $.post(url, params, function (data) {
               console.log(data);
-              let date = formatDate(new Date(data.co_date));
+              let date = formatDateYMD(new Date(data.co_date));
 
               $('[name=co_name]').val(data.co_name);
               $('[name=co_describe]').val(data.co_describe);
