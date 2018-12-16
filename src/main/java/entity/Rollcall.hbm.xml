@@ -12,5 +12,6 @@
         <many-to-one name="course" class="entity.Course" column="ro_co_id" lazy="false"/>
         <property name="ro_date" column="ro_date" />
         <property name="valid" column="valid" />
+        <property name="count" column="count" />
     </class>
 </hibernate-mapping>

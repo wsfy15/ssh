@@ -184,11 +184,13 @@ public class TeacherServiceImpl implements TeacherService {
         }
 
         Timestamp timestamp = new Timestamp((new Date().getTime()));
+        Integer count = course.getCo_ro_num_complete() + 1;
         for(String id : ids){
             Rollcall rollcall = new Rollcall();
             rollcall.setValid(1);
             rollcall.setRo_date(timestamp);
             rollcall.setCourse(course);
+            rollcall.setCount(count);
 
             Student student = studentDao.findById(id);
             if(student != null){
@@ -200,7 +202,7 @@ public class TeacherServiceImpl implements TeacherService {
             rollcallDao.save(rollcall);
         }
 
-        course.setCo_ro_num_complete(course.getCo_ro_num_complete() + 1);
+        course.setCo_ro_num_complete(count);
         return true;
     }
 

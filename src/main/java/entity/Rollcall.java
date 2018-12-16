@@ -8,6 +8,7 @@ public class Rollcall {
     private Course course;
     private Timestamp ro_date;
     private Integer valid;
+    private Integer count;  // 第几次点名
 
     public String getId() {
         return id;
@@ -47,5 +48,13 @@ public class Rollcall {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }
