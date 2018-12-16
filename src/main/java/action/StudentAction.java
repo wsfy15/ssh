@@ -77,6 +77,13 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
         return NONE;
 
     }
+
+    public String searchmember(){
+        HttpServletRequest  request = ServletActionContext.getRequest();
+        String getvalue=request.getParameter("name");
+        System.out.println(getvalue);
+        return NONE;
+    }
     public String getallclassmate(){
         return NONE;
     }

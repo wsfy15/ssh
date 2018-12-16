@@ -11,16 +11,8 @@
 
 
     <meta charset="UTF-8">
-    <%--下面是一个chosen的库的CSS--%>
-        <link rel="stylesheet" href="../css/style1.css">
-        <link rel="stylesheet" href="../css/prism.css">
-        <link rel="stylesheet" href="../css/chosen.css">
-        <link rel="stylesheet" href="../css/chosen.min.css">
         <script src="../lib/jquery-3.3.1.min.js" type="text/javascript"></script>
-        <script src="../lib/jquery-3.2.1.min.js" type="text/javascript"></script>
-        <script src="../js/chosen.jquery.js" type="text/javascript"></script>
-
-    <title>创建小组</title>
+     <title>创建小组</title>
     <script>
         var count=0;
         var courseid=window.sessionStorage.getItem("courseid");
@@ -81,60 +73,39 @@
                 <td id="max">123</td>
             </tr>
         </table>
-
-        <form>
-            <select data-placeholder='请选择小组同学' name='depart-" + pid + "-" + id + "' class='chosen-select' multiple style='width:250px;' tabindex='4'id="select1">
-            <option></option>
-        </select>
+            <input type="text" id="search" >
+        <form action="">
+            <select id="select1">
+            </select>
         </form>
-        <script>
+<script>
 
-        </script>
-
-<%--对select的设置以及加入学生的表单--%>
-        <script >
-            $(function() {
-                $("#courseid").html(course.co_id) ;
-                $("#coursename").html (course.co_name) ;
-                $("#coursedesicribe").html ( course.co_describe);
-                $("#rollnum").html(course.co_ro_num)  ;
-                $("#date").html(course.co_date)  ;
-                $("#prefix").html(prefix) ;
-                $("#min").html( course.co_gr_min);
-                $("#max").html(course.co_gr_max)  ;
-            });
-            $(function() {
-
-                var config = {
-                    '.chosen-select': {},
-                    '.chosen-select-deselect': {allow_single_deselect: true},
-                    '.chosen-select-no-single': {disable_search_threshold: 10},
-                    '.chosen-select-no-results': {no_results_text: 'Oops, nothing found!'},
-                    '.chosen-select-width': {width: "95%"}
-                }
-                for (var selector in config) {
-                    $(selector).chosen(config[selector]);
-                }
-                //动态加载数据
-                $.ajax({
-                    type: "POST",
-                    url: "${pageContext.request.contentType}/student/student_getclassmate.action",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (data) {
-                        $("#select1").html('');
-                        $.each(data, function (idx, obj) {
-                            $("#select1").append('<option value="' + obj.name + '">' + obj.name + '</option>');
+    var timeoutId = 0;
+    $('#search').off('keyup').on('keyup', function () {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(function () {
+            var inp= $("#search").val();//获取输入的值
+            $.ajax({
+                type:"POST",
+                url:"${ pageContext.request.contextPath }/student_searchmember.action",
+                data: {"name":inp},
+                dataType:"json",
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                success:function (data) {
+                    $.each(data,function(i,v){
+                        $.each(v,function (key,val) {
+                            var opp = new Option(val.studentname,v.studentname);
+                            $("#select1").add(opp);
                         });
-                        $("#select1").trigger("liszt:updated");
-                        $("#select1").chosen({ width: "95%" });
-                    },
-                    error: function (data) {
-                        console.log(data);
-                    }
-                });
 
+                    });
+                }
             });
-        </script>
+        }, 1000);
+    });
+
+
+</script>
+
 </body>
 </html>
