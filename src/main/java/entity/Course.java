@@ -17,6 +17,7 @@ public class Course {
     private String co_id;       // 课程id
     private String co_name;     // 完整课程名
     private Integer co_ro_num;  // 本学期点名次数
+    private Integer co_ro_num_complete; // 已点名次数
     private Date co_date;       // 开课时间
     private String co_describe; // 课程描述
     private Integer co_peacetimeProportion; // 平时作业所占比例
@@ -34,6 +35,25 @@ public class Course {
 
     @JSONField(serialize=false)
     private  Set<Group> groups = new HashSet<>();
+
+    @JSONField(serialize=false)
+    private Set<Rollcall> rollcalls = new HashSet<>();
+
+    public Set<Rollcall> getRollcalls() {
+        return rollcalls;
+    }
+
+    public void setRollcalls(Set<Rollcall> rollcalls) {
+        this.rollcalls = rollcalls;
+    }
+
+    public Integer getCo_ro_num_complete() {
+        return co_ro_num_complete;
+    }
+
+    public void setCo_ro_num_complete(Integer co_ro_num_complete) {
+        this.co_ro_num_complete = co_ro_num_complete;
+    }
 
     public Integer getCo_gr_max() { return co_gr_max; }
 

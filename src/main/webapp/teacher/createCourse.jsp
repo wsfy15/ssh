@@ -109,6 +109,14 @@
           </div>
 
           <div class="layui-form-item">
+            <label class="layui-form-label">平时作业所占比例</label>
+            <div class="layui-input-inline">
+              <input type="text" name="co_peacetimeProportion" lay-verify="num" maxlength="2" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">%</div>
+          </div>
+
+          <div class="layui-form-item">
             <label for="co_gr_min" class="layui-form-label">小组最少人数</label>
             <div class="layui-input-inline">
               <input type="text" id="co_gr_min" name="co_gr_min" lay-verify="num|groupConf" autocomplete="off" class="layui-input">

@@ -1,13 +1,7 @@
 package service;
 
-import dao.AssignmentDao;
-import dao.CourseDao;
-import dao.StudentDao;
-import dao.TeacherDao;
-import entity.Assignment;
-import entity.Course;
-import entity.Student;
-import entity.Teacher;
+import dao.*;
+import entity.*;
 import org.apache.http.entity.ContentType;
 import org.slf4j.Logger;
 import org.springframework.mock.web.MockMultipartFile;
@@ -19,9 +13,8 @@ import utils.MD5utils;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.sql.Timestamp;
+import java.util.*;
 
 @Transactional
 public class TeacherServiceImpl implements TeacherService {
@@ -31,6 +24,7 @@ public class TeacherServiceImpl implements TeacherService {
     private TeacherDao teacherDao;
     private StudentDao studentDao;
     private AssignmentDao assignmentDao;
+    private RollcallDao rollcallDao;
 
     /**
      * 添加学生到某节课的学生列表中
@@ -72,6 +66,7 @@ public class TeacherServiceImpl implements TeacherService {
         String course_id = CourseIDGenerator();
         logger.debug("course id: {}", course_id);
         course.setValid(1);
+        course.setCo_ro_num_complete(0);
         course.setCo_id(course_id);
         course.setTeacher(teacher);
         teacher.getCourses().add(course);
@@ -170,6 +165,46 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public Map<String, Integer> getRollcallCount(String co_id) {
+        Course course = courseDao.findById(co_id);
+        if(course != null){
+            Map<String, Integer> rollcallCount = new HashMap<>();
+            rollcallCount.put("complete", course.getCo_ro_num_complete());
+            rollcallCount.put("total", course.getCo_ro_num());
+            return rollcallCount;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean rollcall(String[] ids, String co_id) {
+        Course course = courseDao.findById(co_id);
+        if(course == null){
+            return false;
+        }
+
+        Timestamp timestamp = new Timestamp((new Date().getTime()));
+        for(String id : ids){
+            Rollcall rollcall = new Rollcall();
+            rollcall.setValid(1);
+            rollcall.setRo_date(timestamp);
+            rollcall.setCourse(course);
+
+            Student student = studentDao.findById(id);
+            if(student != null){
+                rollcall.setStudent(student);
+            }else{
+                continue;
+            }
+
+            rollcallDao.save(rollcall);
+        }
+
+        course.setCo_ro_num_complete(course.getCo_ro_num_complete() + 1);
+        return true;
+    }
+
+    @Override
     public List<Course> findCourseList(String id) {
         Teacher teacher = teacherDao.findById(id);
         logger.debug("course count: {}", teacher.getCourses().size());
@@ -229,4 +264,11 @@ public class TeacherServiceImpl implements TeacherService {
         this.assignmentDao = assignmentDao;
     }
 
+    public RollcallDao getRollcallDao() {
+        return rollcallDao;
+    }
+
+    public void setRollcallDao(RollcallDao rollcallDao) {
+        this.rollcallDao = rollcallDao;
+    }
 }

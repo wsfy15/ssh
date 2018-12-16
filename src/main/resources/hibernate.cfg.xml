@@ -19,5 +19,6 @@
         <mapping resource="classpath:entity/Class.hbm.xml" />
         <mapping resource="classpath:entity/Group.hbm.xml"/>
         <mapping resource="classpath:entity/GroupMember.hbm.xml"/>
+        <mapping resource="classpath:entity/Rollcall.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

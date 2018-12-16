@@ -9,6 +9,7 @@
         <property name="valid" column="co_valid" />
         <property name="co_name" column="co_name" />
         <property name="co_ro_num" column="co_ro_num" />
+        <property name="co_ro_num_complete" column="co_ro_num_complete" />
         <property name="co_date" type="date" column="co_date" />
         <property name="co_describe" column="co_describe" />
         <property name="co_peacetimeProportion" column="co_peacetimeProportion" />
@@ -32,5 +33,9 @@
             <one-to-many class="entity.Assignment" />
         </set>
 
+        <set name="rollcalls"  inverse="true">
+            <key column="ro_co_id" />
+            <one-to-many class="entity.Rollcall"/>
+        </set>
     </class>
 </hibernate-mapping>

@@ -5,6 +5,7 @@ import entity.Course;
 import entity.Student;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TeacherService {
 
@@ -28,4 +29,8 @@ public interface TeacherService {
     List<Assignment> getAssignment(String co_id);
 
     boolean modifyAssignment(Assignment assignment);
+
+    Map<String, Integer> getRollcallCount(String co_id);
+
+    boolean rollcall(String[] ids, String co_id);
 }

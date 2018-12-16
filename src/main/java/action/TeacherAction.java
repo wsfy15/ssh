@@ -315,4 +315,36 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
         }
         return NONE;
     }
+
+    /**
+     * 点名
+     * @return
+     */
+    public String rollcall(){
+        Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        String co_id = params.get("co_id")[0];
+        String[] ids = params.get("ids");
+
+        if(teacherService.rollcall(ids, co_id)){
+            FastJsonUtil.writeJson(ServletActionContext.getResponse(), "success");
+        } else{
+            FastJsonUtil.writeJson(ServletActionContext.getResponse(), "fail");
+        }
+
+        return NONE;
+    }
+
+    public String getRollcallCount(){
+        Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        String co_id = params.get("co_id")[0];
+        Map<String, Integer> rollcallCount = teacherService.getRollcallCount(co_id);
+        if(rollcallCount != null){
+            FastJsonUtil.writeJson(ServletActionContext.getResponse(), FastJsonUtil.toJSONString(rollcallCount));
+        }else{
+            FastJsonUtil.writeJson(ServletActionContext.getResponse(), "fail");
+        }
+
+        return NONE;
+    }
+
 }

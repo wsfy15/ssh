@@ -97,6 +97,10 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
+    <bean id="rollcallDao" class="dao.RollcallDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
     <bean id="userService" class="service.UserServiceImpl" >
         <property name="teacherDao" ref="teacherDao" />
         <property name="adminDao" ref="adminDao" />
@@ -113,6 +117,7 @@
         <property name="teacherDao" ref="teacherDao" />
         <property name="studentDao" ref="studentDao" />
         <property name="assignmentDao" ref="assignmentDao" />
+        <property name="rollcallDao" ref="rollcallDao" />
     </bean>
 
     <bean id="teacherAction" class="action.TeacherAction">

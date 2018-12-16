@@ -156,6 +156,12 @@
                         <cite>查看学生</cite>
                       </a>
                     </li >
+                  <li>
+                    <a id="rollcall" _href="${ pageContext.request.contextPath }/teacher/rollcall.jsp">
+                      <i class="iconfont">&#xe6a7;</i>
+                      <cite>点名</cite>
+                    </a>
+                  </li >
                 </ul>
             </li>
             <li>
