@@ -9,6 +9,7 @@ import com.opensymphony.xwork2.util.ValueStack;
 import entity.Course;
 import entity.Student;
 import org.apache.struts2.ServletActionContext;
+import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -81,7 +82,28 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
     public String searchmember(){
         HttpServletRequest  request = ServletActionContext.getRequest();
         String getvalue=request.getParameter("name");
-        System.out.println(getvalue);
+        logger.debug(getvalue);
+
+        List<Student> getstu=studentService.searchforstudent(getvalue);
+        String str = JSON.toJSONString(getstu);
+       // System.out.println(getstu);
+        HttpServletResponse response=ServletActionContext.getResponse();
+
+        if(getstu.isEmpty()){
+
+            try {
+                response.setContentType("text/javascript;charset=UTF-8");
+                response.getWriter().print("null");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+                FastJsonUtil.writeJson(response,str);
+        }
+
+
+
         return NONE;
     }
     public String getallclassmate(){

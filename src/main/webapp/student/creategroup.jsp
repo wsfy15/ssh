@@ -92,12 +92,19 @@
                 dataType:"json",
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 success:function (data) {
+                    console.log(data)
+                    var i=0;
+                    var k="opp";
                     $.each(data,function(i,v){
-                        $.each(v,function (key,val) {
-                            var opp = new Option(val.studentname,v.studentname);
-                            $("#select1").add(opp);
-                        });
 
+                       $.each(v,function (a,b) {
+                           if(a=="name"){
+                               var str=k+i;
+                               alert(str);
+                               $("#select1").append("<option value='"+b+"'id='"+str+"'>"+b+"</option>");//新增
+                           }
+                       })
+                        i++;
                     });
                 }
             });

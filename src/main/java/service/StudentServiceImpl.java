@@ -82,4 +82,13 @@ public class StudentServiceImpl implements StudentService {
         Set<Course> courses = student.getCourses();
         return new ArrayList<>(courses);
     }
+    @Override
+    public   List<Student> searchforstudent(String getvalue){
+        List<Student> list=studentDao.findbyproperty(getvalue);
+        if (list.isEmpty()) {
+            return null;
+        } else {
+            return list;
+        }
+    }
 }

@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FastJsonUtil {
+public class  FastJsonUtil {
 	
 	/**
 	 * 将对象转成json串
