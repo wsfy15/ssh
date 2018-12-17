@@ -162,6 +162,12 @@
                       <cite>点名</cite>
                     </a>
                   </li >
+                  <li>
+                    <a id="groupinfo" _href="${ pageContext.request.contextPath }/teacher/groupinfo.jsp">
+                      <i class="iconfont">&#xe6a7;</i>
+                      <cite>查看小组</cite>
+                    </a>
+                  </li >
                 </ul>
             </li>
             <li>

@@ -5,7 +5,6 @@ public class GroupMember {
 
     private  String id;// 复合的id
 
-
     private  Group group; //参考groupid
 
     private Student student;//参考学生id

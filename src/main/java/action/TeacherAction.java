@@ -29,10 +29,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @ClassName TeacherAction
@@ -347,4 +344,13 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
         return NONE;
     }
 
+    public String getGroup(){
+        Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        String co_id = params.get("co_id")[0];
+        List<Group> groups = teacherService.getGroup(co_id);
+        if(groups != null) {
+            FastJsonUtil.writeJson(ServletActionContext.getResponse(), FastJsonUtil.toJSONString(groups));
+        }
+        return NONE;
+    }
 }

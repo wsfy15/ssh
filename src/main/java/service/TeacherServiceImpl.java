@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Transactional
 public class TeacherServiceImpl implements TeacherService {
@@ -204,6 +205,18 @@ public class TeacherServiceImpl implements TeacherService {
 
         course.setCo_ro_num_complete(count);
         return true;
+    }
+
+    @Override
+    public List<Group> getGroup(String co_id) {
+        Course course = courseDao.findById(co_id);
+        if(course != null){
+            List<Group> groups = new ArrayList<>(course.getGroups());
+            List<Group> groups1 = groups.stream().filter((Group g) -> g.getValid() == 1).collect(Collectors.toList());Collectors.toList();
+            return groups1;
+        }
+
+        return null;
     }
 
     @Override

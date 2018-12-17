@@ -2,10 +2,12 @@ package service;
 
 import entity.Assignment;
 import entity.Course;
+import entity.Group;
 import entity.Student;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface TeacherService {
 
@@ -33,4 +35,6 @@ public interface TeacherService {
     Map<String, Integer> getRollcallCount(String co_id);
 
     boolean rollcall(String[] ids, String co_id);
+
+    List<Group> getGroup(String co_id);
 }
