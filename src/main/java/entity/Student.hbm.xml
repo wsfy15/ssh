@@ -10,7 +10,7 @@
         <property name="name" column="st_name" />
         <property name="classNo" column="st_class" />
         <property name="password" column="st_password" />
-        <set name="groupMembers">
+        <set name="groupMembers" inverse="true">
             <key column="gm_st_id" />
             <one-to-many class="entity.GroupMember" />
         </set>

@@ -6,7 +6,7 @@
     <!-- 常量定义在struts-core/org/apache/struts2/default.properties -->
     <!-- 20MB -->
     <constant name="struts.multipart.maxSize" value="20971520" />
-    <constant name="struts.multipart.saveDir" value="E:\javaProject\files" />
+    <constant name="struts.multipart.saveDir" value="/file"/>
 
     <package name="demo1" extends="struts-default" namespace="/">
 
@@ -53,6 +53,11 @@
         </action>
 
         <action name="student_*" class="studentAction" method="{1}">
+            <!--<interceptor-ref name="adminInterceptor">-->
+                <!--&lt;!&ndash; 配置不需要该拦截器去拦截的方法 &ndash;&gt;-->
+                <!--<param name="excludeMethods">login</param>-->
+            <!--</interceptor-ref>-->
+            <!--<interceptor-ref name="defaultStack" />-->
             <result name="course">/student/course-list.jsp</result>
         </action>
 

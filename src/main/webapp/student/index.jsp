@@ -20,6 +20,9 @@
   <script type="text/javascript" src="../lib/xadmin.js"></script>
 
   <script>
+      var username="${user.name}";
+      console.log("username"+username);
+      window.sessionStorage.setItem("usname",username);
       $(function () {
           // 加载该学生的课，显示在左侧选择框中
           var k=document.getElementById("courseselect");
@@ -31,6 +34,7 @@
               contentType: "application/x-www-form-urlencoded; charset=utf-8",
               success:function (data) {
                   var allcourse=JSON.stringify(data);
+                  console.log("allcourse"+allcourse);
                   window.sessionStorage.setItem("allcourse",allcourse);
                   $.each(data,function(i,v){
                       console.log("v:"+v.co_name);
@@ -52,7 +56,6 @@
       function onClassChange(name){
           if(name != "请选择课程"){
               // 显示该课的信息
-              alert(name);
               window.sessionStorage.setItem('courseid',name);
           }
 
@@ -118,7 +121,7 @@
         </a>
         <ul class="sub-menu">
           <li>
-            <a _href="${ pageContext.request.contextPath }/student_.action">
+            <a _href="${ pageContext.request.contextPath }/student/uploadassign.jsp">
               <i class="iconfont">&#xe6a7;</i>
               <cite>作业信息</cite>
               <%-- 在作业信息中进行提交 --%>

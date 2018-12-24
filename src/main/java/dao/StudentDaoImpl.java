@@ -1,5 +1,6 @@
 package dao;
 
+import entity.Course;
 import entity.Student;
 import org.apache.xmlbeans.impl.xb.xsdschema.RestrictionDocument;
 import org.hibernate.Criteria;
@@ -12,6 +13,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import  utils.hibernateUtils;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @ClassName TeacherDaoImpl
@@ -40,4 +42,9 @@ public class StudentDaoImpl extends BaseDaoImpl<Student> implements StudentDao {
         //System.out.println("查询学生+"+list);
         return list;
     }
+//    public Set<Course> getcourse(String id){
+//        DetachedCriteria criteria = DetachedCriteria.forClass(Course.class);
+//        criteria.add(Restrictions.eq("id",id ,MatchMode.ANYWHERE));
+//        List<Student> list = (List<Student>) this.getHibernateTemplate().findByCriteria(criteria);
+//    }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="entity.ClassCourse" table="ClassCourse">
+        <!-- 主键 -->
+        <id name="id" column="id" />
+
+        <many-to-one name="course" class="entity.Course" lazy="false">
+            <column name="clcourse_id" />
+        </many-to-one>
+
+        <many-to-one name="aClass" class="entity.Class" lazy="false">
+            <column name="clclass_id" />
+        </many-to-one>
+
+
+
+        <property name="valid" column="ho_valid" />
+
+    </class>
+</hibernate-mapping>

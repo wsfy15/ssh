@@ -53,6 +53,8 @@
 
           $.post(url, params, function (data) {
               if (data === "success") {
+                  window.sessionStorage.setItem("usid",params.id);
+
                   if (id.indexOf("1000") === 0) {
                       window.location.href = "/admin/index.jsp";
                   } else if (id.indexOf("1010") === 0) {
@@ -61,6 +63,7 @@
                       window.location.href = "/student/index.jsp";
                   }
               } else if (data === "firstLogin") {
+
                   window.sessionStorage.setItem("fromIndex", '1');
                   window.location.href = "/modifyPassword.jsp";
               } else {

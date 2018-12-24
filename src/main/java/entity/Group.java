@@ -14,11 +14,13 @@ public class Group {
     private  String gr_cheif;//小组leader编号
     private  String gr_email;//小组邮箱
     private  String gr_qq;//小组qq
-    private  Integer gr_phone;//小组联系电话
+    private  String gr_phone;//小组联系电话
+
     private  Integer gr_num;//小组成员数量
     private  Integer valid;
     private  Course course;
     private Set<GroupMember> groupMembers = new HashSet<>();//一个小组对多个小组成员
+
 
     public Set<GroupMember> getGroupMembers() {
         return groupMembers;
@@ -62,11 +64,11 @@ public class Group {
         this.gr_qq = gr_qq;
     }
 
-    public Integer getGr_phone() {
+    public String getGr_phone() {
         return gr_phone;
     }
 
-    public void setGr_phone(Integer gr_phone) {
+    public void setGr_phone(String gr_phone) {
         this.gr_phone = gr_phone;
     }
 

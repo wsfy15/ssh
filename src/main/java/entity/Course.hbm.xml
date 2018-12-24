@@ -22,6 +22,10 @@
             <key column="gr_co_id" />
             <one-to-many class="entity.Group"/>
         </set>
+        <set name="classCourses"  inverse="true">
+            <key column="clcourse_id" />
+            <one-to-many class="entity.ClassCourse"/>
+        </set>
 
         <set name="students" table="student_course" inverse="true">
             <key column="co_id" />

@@ -39,6 +39,17 @@ public class Course {
     @JSONField(serialize=false)
     private Set<Rollcall> rollcalls = new HashSet<>();
 
+    public Set<ClassCourse> getClassCourses() {
+        return classCourses;
+    }
+
+    public void setClassCourses(Set<ClassCourse> classCourses) {
+        this.classCourses = classCourses;
+    }
+
+    @JSONField(serialize=false)
+    private Set<ClassCourse> classCourses=new HashSet<>();
+
     public Set<Rollcall> getRollcalls() {
         return rollcalls;
     }

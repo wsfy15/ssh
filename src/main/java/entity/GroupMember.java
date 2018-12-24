@@ -9,6 +9,7 @@ public class GroupMember {
 
     private Student student;//参考学生id
 
+
     public Group getGroup() {
         return group;
     }

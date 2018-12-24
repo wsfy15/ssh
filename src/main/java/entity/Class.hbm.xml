@@ -5,7 +5,10 @@
 <hibernate-mapping>
     <class name="entity.Class" table="class">
         <id name="id" column="cl_id" />
-
+        <set name="classCourses"  inverse="true">
+        <key column="clclass_id" />
+        <one-to-many class="entity.ClassCourse"/>
+        </set>
         <property name="valid" column="cl_valid" />
 
     </class>
