@@ -3,6 +3,7 @@ package service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.JSONSerializer;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import dao.*;
 import entity.*;
 import org.apache.http.entity.ContentType;
@@ -15,12 +16,16 @@ import org.springframework.web.multipart.MultipartFile;
 import utils.ExcelUtils;
 import utils.LogUtils;
 import utils.MD5utils;
+import utils.TimeUtils;
 
 import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.Array;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -34,6 +39,15 @@ public class StudentServiceImpl implements StudentService {
     private  GroupDao groupDao;
     private  GroupMemberDao groupMemberDao;
     private  AssignmentDao  assignmentDao;
+    private  HomeWorkDao homeWorkDao;
+
+    public HomeWorkDao getHomeWorkDao() {
+        return homeWorkDao;
+    }
+
+    public void setHomeWorkDao(HomeWorkDao homeWorkDao) {
+        this.homeWorkDao = homeWorkDao;
+    }
 
     public StudentDao getStudentDao() {
         return studentDao;
@@ -178,5 +192,66 @@ public class StudentServiceImpl implements StudentService {
         }
         return null;
     }
+    public  String getgroupid(String courseid, String userid){
+        String groupid=null;
+        List<GroupMember> list=new ArrayList<>();
+        Student student=studentDao.findById(userid);
+        logger.debug(student.toString());
+        list=groupMemberDao.findbyuserid(student);
+        List<Group> list1=new ArrayList<>();
+        Course course=courseDao.findById(courseid);
+        logger.debug(course.toString());
+        list1=groupDao.findbycourse(course);
+        List<String> stringList1=new ArrayList<>();
+        List<String> stringList2=new ArrayList<>();
 
+        for(GroupMember groupMember:list){
+            stringList1.add(groupMember.getGroup().getGr_id());
+        }
+        for(Group group:list1){
+            stringList2.add(group.getGr_id());
+        }
+        List<String> stringList3=new ArrayList<>();
+       stringList1.retainAll(stringList2);
+       logger.debug(stringList1.get(0));
+       if(stringList1.size()!=1) {
+           return null;
+       }
+       else return stringList1.get(0);
+    }
+    public void savahomeworkpath(String groupid, String savepath, String uploadfileFileName){
+        Group group=groupDao.findById(groupid);
+        logger.debug(group.getGr_id());
+        Homework ahomework=homeWorkDao.findbygroupid_filename(group,uploadfileFileName);
+        Homework homework;
+        if(ahomework==null){
+           homework=new Homework();
+            homework.setGroup(group);
+            homework.setHo_name(uploadfileFileName);
+            homework.setHo_path(savepath);
+            Date date=new Date();
+            Timestamp timestamp = new Timestamp(date.getTime());
+            homework.setHo_time(timestamp);
+            homework.setValid(1);
+            homeWorkDao.save(homework);
+        }else {
+            homework=ahomework;
+            homework.setGroup(group);
+            homework.setHo_name(uploadfileFileName);
+            homework.setHo_path(savepath);
+            Date date=new Date();
+            Timestamp timestamp =new Timestamp(date.getTime());
+            homework.setHo_time(timestamp);
+            homework.setValid(1);
+            homeWorkDao.update(homework);
+        }
+    }
+    //获得小组
+    public Group getgroup(String groupid){
+        return groupDao.findById(groupid);
+    }
+    //通过小组获得其已交作业
+    public List<Homework> findhomework(Group group){
+        return homeWorkDao.findhomeworkbygroup(group);
+    }
 }

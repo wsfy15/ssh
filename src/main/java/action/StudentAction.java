@@ -8,9 +8,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.util.ValueStack;
 import com.sun.org.apache.bcel.internal.generic.NEW;
-import entity.Assignment;
-import entity.Course;
-import entity.Student;
+import entity.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.Session;
@@ -188,7 +186,26 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
     public  String uploadfile() throws IOException {
 
         HttpServletRequest request = ServletActionContext.getRequest();
-        String path = request.getSession().getServletContext().getRealPath("/files/"+uploadfileFileName);
+        String courseid=request.getParameter("co_id");
+        String userid=request.getParameter("us_id");
+        logger.debug(courseid);
+        logger.debug(userid);
+
+        String groupid= studentService.getgroupid(courseid,userid);
+        if(groupid==null){
+            HttpServletResponse response=ServletActionContext.getResponse();
+            Map map=new HashMap();
+            map.put("code",0);
+            map.put("data","error");
+            map.put("msg","");
+            map.put("count",7);
+
+            FastJsonUtil.writeJson(response, FastJsonUtil.toJSONString(map));
+            return NONE;
+        }
+        String savepath="/"+courseid+"/"+groupid+"/";
+        logger.debug(savepath);
+        String path = request.getSession().getServletContext().getRealPath(savepath+uploadfileFileName);
         logger.debug(path+"  "+uploadfileFileName+"  "+uploadfile.toString());
         File file=new File(path);
         if(file.exists())
@@ -196,6 +213,8 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
             file.delete();
         }
         FileUtils.copyFile(uploadfile,file);
+
+        studentService.savahomeworkpath(groupid,savepath,uploadfileFileName);
         HttpServletResponse response=ServletActionContext.getResponse();
         Map map=new HashMap();
         map.put("code",0);
@@ -205,6 +224,23 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
 
         FastJsonUtil.writeJson(response, FastJsonUtil.toJSONString(map));
 
+        return NONE;
+    }
+    public String gethomework1(){
+
+        logger.debug("123");
+         Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        String userid = params.get("us_id")[0];
+        String co_id=params.get("co_id")[0];
+        String groupid=studentService.getgroupid(co_id,userid);
+        Group group=studentService.getgroup(groupid);
+        logger.debug(group.getGr_id());
+        List<Homework> list=studentService.findhomework(group);
+        logger.debug(list.get(0).getHo_name());
+        HttpServletResponse response=ServletActionContext.getResponse();
+        if(list != null) {
+            FastJsonUtil.writeJson(response, FastJsonUtil.toJSONString(list));
+        }
         return NONE;
     }
     public String getallclassmate(){

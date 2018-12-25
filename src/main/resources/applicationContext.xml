@@ -103,6 +103,9 @@
     <bean id="ClassCourseDao" class="dao.ClassCourseDaoImpl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+    <bean id="homeWorkDao" class="dao.HomeWorkDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
 
     <bean id="userService" class="service.UserServiceImpl" >
         <property name="teacherDao" ref="teacherDao" />
@@ -113,6 +116,7 @@
     <bean id="userAction" class="action.UserAction">
         <property name="userService" ref="userService" />
     </bean>
+
 
 
     <bean id="teacherService" class="service.TeacherServiceImpl">
@@ -133,6 +137,7 @@
         <property name="groupMemberDao" ref="groupMemberDao"/>
         <property name="groupDao" ref="groupDao"/>
         <property name="assignmentDao" ref="assignmentDao"/>
+        <property name="homeWorkDao" ref="homeWorkDao"/>
     </bean>
 
     <bean id="studentAction" class="action.StudentAction">

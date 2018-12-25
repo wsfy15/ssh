@@ -1,5 +1,7 @@
 package entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,12 +22,22 @@ public class Group {
     private  Integer valid;
     private  Course course;
     private Set<GroupMember> groupMembers = new HashSet<>();//一个小组对多个小组成员
-
-
+    private Set<Homework> homeworks=new HashSet<>();//一个小组有多个作业
+    @JSONField(serialize=false)
+    public Set<Homework> getHomeworks() {
+        return homeworks;
+    }
+    @JSONField(serialize=false)
+    public void setHomeworks(Set<Homework> homeworks) {
+        this.homeworks = homeworks;
+    }
+    @JSONField(serialize=false)
     public Set<GroupMember> getGroupMembers() {
         return groupMembers;
     }
 
+
+    @JSONField(serialize=false)
     public void setGroupMembers(Set<GroupMember> groupMembers) {
         this.groupMembers = groupMembers;
     }
@@ -35,7 +47,7 @@ public class Group {
     public String getGr_id() {
         return gr_id;
     }
-
+    @JSONField(serialize=false)
     public void setGr_id(String gr_id) {
         this.gr_id = gr_id;
     }
@@ -43,7 +55,7 @@ public class Group {
     public String getGr_cheif() {
         return gr_cheif;
     }
-
+    @JSONField(serialize=false)
     public void setGr_cheif(String gr_cheif) {
         this.gr_cheif = gr_cheif;
     }
@@ -51,7 +63,7 @@ public class Group {
     public String getGr_email() {
         return gr_email;
     }
-
+    @JSONField(serialize=false)
     public void setGr_email(String gr_email) {
         this.gr_email = gr_email;
     }
@@ -59,7 +71,7 @@ public class Group {
     public String getGr_qq() {
         return gr_qq;
     }
-
+    @JSONField(serialize=false)
     public void setGr_qq(String gr_qq) {
         this.gr_qq = gr_qq;
     }
@@ -67,7 +79,7 @@ public class Group {
     public String getGr_phone() {
         return gr_phone;
     }
-
+    @JSONField(serialize=false)
     public void setGr_phone(String gr_phone) {
         this.gr_phone = gr_phone;
     }
@@ -75,7 +87,7 @@ public class Group {
     public Integer getGr_num() {
         return gr_num;
     }
-
+    @JSONField(serialize=false)
     public void setGr_num(Integer gr_num) {
         this.gr_num = gr_num;
     }
@@ -83,7 +95,7 @@ public class Group {
     public Integer getValid() {
         return valid;
     }
-
+    @JSONField(serialize=false)
     public void setValid(Integer valid) {
         this.valid = valid;
     }
@@ -91,7 +103,7 @@ public class Group {
     public Course getCourse() {
         return course;
     }
-
+    @JSONField(serialize=false)
     public void setCourse(Course course) {
         this.course = course;
     }

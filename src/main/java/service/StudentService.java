@@ -3,10 +3,7 @@ package service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import entity.Assignment;
-import entity.Course;
-import entity.GroupMember;
-import entity.Student;
+import entity.*;
 
 import java.util.List;
 import java.util.Set;
@@ -26,4 +23,12 @@ public interface StudentService {
     List<Assignment> findassignmentbyid(String assignid);
 
     List<Assignment> searchforassignments(String co_id);
+
+    String getgroupid(String courseid, String userid);
+
+    void savahomeworkpath(String groupid, String savepath, String uploadfileFileName);
+
+    Group getgroup(String groupid);
+
+    List<Homework> findhomework(Group group);
 }
