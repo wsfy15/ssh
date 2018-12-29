@@ -7,13 +7,9 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.util.ValueStack;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import entity.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
-import org.hibernate.Session;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import service.StudentService;
 import utils.FastJsonUtil;
@@ -21,13 +17,11 @@ import utils.LogUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.Console;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName StudentAction
@@ -198,13 +192,13 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
             FastJsonUtil.writeJson(response, FastJsonUtil.toJSONString(map));
             return NONE;
         }
-        String savepath="/"+courseid+"/"+groupid+"/";
+        String savepath = courseid+"\\"+groupid+"\\";
         logger.debug(savepath);
-        String path = request.getSession().getServletContext().getRealPath(savepath+uploadfileFileName);
+        String path = "E:\\javaProject\\files\\" + savepath + uploadfileFileName;
+//        String path = request.getSession().getServletContext().getRealPath(savepath+uploadfileFileName);
         logger.debug(path+"  "+uploadfileFileName+"  "+uploadfile.toString());
         File file=new File(path);
-        if(file.exists())
-        {
+        if(file.exists()) {
             file.delete();
         }
         FileUtils.copyFile(uploadfile,file);
