@@ -1,9 +1,6 @@
 package service;
 
-import entity.Assignment;
-import entity.Course;
-import entity.Group;
-import entity.Student;
+import entity.*;
 
 import java.util.List;
 import java.util.Map;
@@ -37,4 +34,10 @@ public interface TeacherService {
     boolean rollcall(String[] ids, String co_id);
 
     List<Group> getGroup(String co_id);
+
+    List<Homework> getHomeworks(String co_id);
+
+    Homework getHomework(String homework_id);
+
+    boolean modifyGrade(String ho_id, Float grade);
 }

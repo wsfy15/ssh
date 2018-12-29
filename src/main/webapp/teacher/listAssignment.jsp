@@ -143,8 +143,8 @@
 <body>
 <div class="x-nav">
       <span class="layui-breadcrumb">
-        <a href="">首页</a>
-        <a href="">作业管理</a>
+        <a href="javascript:void(0);">首页</a>
+        <a href="javascript:void(0);">作业管理</a>
         <a>
           <cite>查看作业</cite>
         </a>

@@ -45,7 +45,7 @@
 <body>
 <div class="x-nav">
       <span class="layui-breadcrumb">
-        <a href="">首页</a>
+        <a href="javascript:void(0);">首页</a>
         <a>
           <cite>课程信息</cite></a>
       </span>

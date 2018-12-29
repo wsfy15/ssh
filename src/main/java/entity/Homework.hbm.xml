@@ -13,6 +13,7 @@
         <property name="ho_time" column="ho_time" type="timestamp" />
         <property name="ho_path" column="ho_path" />
         <property name="ho_name"  column="ho_name" />
+        <property name="grade" column="grade" />
         <many-to-one name="group" class="entity.Group" lazy="false">
             <column name="ho_gr_id" />
         </many-to-one>

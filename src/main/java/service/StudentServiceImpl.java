@@ -122,7 +122,7 @@ public class StudentServiceImpl implements StudentService {
         return new ArrayList<>(courses);
     }
     @Override
-    public   List<Student> searchforstudent(String getvalue){
+    public   List<Student> searchForStudent(String getvalue){
         List<Student> list=studentDao.findbyproperty(getvalue);
         if (list.isEmpty()) {
             return null;
@@ -182,7 +182,7 @@ public class StudentServiceImpl implements StudentService {
         logger.debug(list.toString());
         return list;
     }
-    public List<Assignment> searchforassignments(String co_id){
+    public List<Assignment> searchForAssignments(String co_id){
         Course course = courseDao.findById(co_id);
         if(course != null){
             List<Assignment> assignments = new ArrayList<>(course.getAssignments());
@@ -192,7 +192,7 @@ public class StudentServiceImpl implements StudentService {
         }
         return null;
     }
-    public  String getgroupid(String courseid, String userid){
+    public  String getGroupId(String courseid, String userid){
         String groupid=null;
         List<GroupMember> list=new ArrayList<>();
         Student student=studentDao.findById(userid);
@@ -213,19 +213,19 @@ public class StudentServiceImpl implements StudentService {
         }
         List<String> stringList3=new ArrayList<>();
        stringList1.retainAll(stringList2);
-       logger.debug(stringList1.get(0));
+//       logger.debug(stringList1.get(0));
        if(stringList1.size()!=1) {
            return null;
        }
        else return stringList1.get(0);
     }
-    public void savahomeworkpath(String groupid, String savepath, String uploadfileFileName){
+    public void savaHomeworkPath(String groupid, String savepath, String uploadfileFileName){
         Group group=groupDao.findById(groupid);
         logger.debug(group.getGr_id());
         Homework ahomework=homeWorkDao.findbygroupid_filename(group,uploadfileFileName);
         Homework homework;
         if(ahomework==null){
-           homework=new Homework();
+            homework=new Homework();
             homework.setGroup(group);
             homework.setHo_name(uploadfileFileName);
             homework.setHo_path(savepath);
@@ -233,6 +233,7 @@ public class StudentServiceImpl implements StudentService {
             Timestamp timestamp = new Timestamp(date.getTime());
             homework.setHo_time(timestamp);
             homework.setValid(1);
+            homework.setGrade(0f);
             homeWorkDao.save(homework);
         }else {
             homework=ahomework;
@@ -243,15 +244,16 @@ public class StudentServiceImpl implements StudentService {
             Timestamp timestamp =new Timestamp(date.getTime());
             homework.setHo_time(timestamp);
             homework.setValid(1);
+            homework.setGrade(0f);
             homeWorkDao.update(homework);
         }
     }
     //获得小组
-    public Group getgroup(String groupid){
+    public Group getGroup(String groupid){
         return groupDao.findById(groupid);
     }
     //通过小组获得其已交作业
-    public List<Homework> findhomework(Group group){
+    public List<Homework> findHomework(Group group){
         return homeWorkDao.findhomeworkbygroup(group);
     }
 }

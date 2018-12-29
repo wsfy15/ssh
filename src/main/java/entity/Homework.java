@@ -19,13 +19,15 @@ public class Homework {
     private Timestamp ho_time;       // 作业提交时间
     private String ho_path;     // 作业存放的地址
     private String ho_name;     // 作业名称
-    private Group group; //绑定到小组
+    private Float grade;  // 分数
     private Integer valid;
+
+    @JSONField(serialize = false)
+    private Group group; //绑定到小组
 
     public String getId() {
         return id;
     }
-    @JSONField(serialize=false)
     public void setId(String id) {
         this.id = id;
     }
@@ -33,7 +35,6 @@ public class Homework {
     public Timestamp getHo_time() {
         return ho_time;
     }
-    @JSONField(serialize=false)
     public void setHo_time(Timestamp ho_time) {
         this.ho_time = ho_time;
     }
@@ -41,7 +42,6 @@ public class Homework {
     public String getHo_path() {
         return ho_path;
     }
-    @JSONField(serialize=false)
     public void setHo_path(String ho_path) {
         this.ho_path = ho_path;
     }
@@ -49,7 +49,6 @@ public class Homework {
     public String getHo_name() {
         return ho_name;
     }
-    @JSONField(serialize=false)
     public void setHo_name(String ho_name) {
         this.ho_name = ho_name;
     }
@@ -57,7 +56,6 @@ public class Homework {
     public Group getGroup() {
         return group;
     }
-    @JSONField(serialize=false)
     public void setGroup(Group group) {
         this.group = group;
     }
@@ -65,9 +63,15 @@ public class Homework {
     public Integer getValid() {
         return valid;
     }
-    @JSONField(serialize=false)
     public void setValid(Integer valid) {
         this.valid = valid;
+    }
+
+    public Float getGrade() {
+        return grade;
+    }
+    public void setGrade(Float grade) {
+        this.grade = grade;
     }
 
     @Override

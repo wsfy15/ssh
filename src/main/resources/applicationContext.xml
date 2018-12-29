@@ -105,7 +105,7 @@
     </bean>
     <bean id="homeWorkDao" class="dao.HomeWorkDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
-</bean>
+    </bean>
 
     <bean id="userService" class="service.UserServiceImpl" >
         <property name="teacherDao" ref="teacherDao" />
@@ -125,6 +125,7 @@
         <property name="studentDao" ref="studentDao" />
         <property name="assignmentDao" ref="assignmentDao" />
         <property name="rollcallDao" ref="rollcallDao" />
+        <property name="homeWorkDao" ref="homeWorkDao" />
     </bean>
 
     <bean id="teacherAction" class="action.TeacherAction">

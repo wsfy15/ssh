@@ -26,6 +26,7 @@ public class TeacherServiceImpl implements TeacherService {
     private StudentDao studentDao;
     private AssignmentDao assignmentDao;
     private RollcallDao rollcallDao;
+    private HomeWorkDao homeWorkDao;
 
     /**
      * 添加学生到某节课的学生列表中
@@ -220,6 +221,43 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public List<Homework> getHomeworks(String co_id) {
+        Course course = courseDao.findById(co_id);
+        if(course == null) {
+            return null;
+        }
+
+        List<Homework> homeworkList = new ArrayList<>();
+        Set<Group> groups = course.getGroups();
+        for(Group group : groups){
+            Set<Homework> homeworks = group.getHomeworks();
+            for(Homework homework : homeworks){
+                homeworkList.add(homework);
+            }
+        }
+
+        return homeworkList;
+    }
+
+    @Override
+    public Homework getHomework(String homework_id) {
+        Homework homework = homeWorkDao.findById(homework_id);
+        return homework;
+    }
+
+    @Override
+    public boolean modifyGrade(String ho_id, Float grade) {
+        Homework homework = homeWorkDao.findById(ho_id);
+        if(homework == null){
+            return false;
+        }
+
+        homework.setGrade(grade);
+        homeWorkDao.update(homework);
+        return true;
+    }
+
+    @Override
     public List<Course> findCourseList(String id) {
         Teacher teacher = teacherDao.findById(id);
         logger.debug("course count: {}", teacher.getCourses().size());
@@ -285,5 +323,13 @@ public class TeacherServiceImpl implements TeacherService {
 
     public void setRollcallDao(RollcallDao rollcallDao) {
         this.rollcallDao = rollcallDao;
+    }
+
+    public HomeWorkDao getHomeWorkDao() {
+        return homeWorkDao;
+    }
+
+    public void setHomeWorkDao(HomeWorkDao homeWorkDao) {
+        this.homeWorkDao = homeWorkDao;
     }
 }

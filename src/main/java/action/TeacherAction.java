@@ -12,19 +12,23 @@ import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
 import com.opensymphony.xwork2.util.ValueStack;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.slf4j.Logger;
+import org.springframework.util.FileCopyUtils;
 import service.TeacherService;
 import utils.ExcelUtils;
 import utils.FastJsonUtil;
 import utils.LogUtils;
 import utils.TimeUtils;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -120,6 +124,7 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
     }
 
     public String addByExcel() {
+//        String co_id = (String)ServletActionContext.getRequest().getParameterMap().get("co_id");
         String co_id = (String)ServletActionContext.getRequest().getParameterMap().get("co_id")[0];
         if (uploadFileName != null && co_id != null) {
             // 打印
@@ -278,6 +283,7 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
     }
 
     public String getAssignment(){
+//        String co_id = (String) ServletActionContext.getRequest().getParameterMap().get("co_id");
         String co_id = (String) ServletActionContext.getRequest().getParameterMap().get("co_id")[0];
         List<Assignment> assignments = teacherService.getAssignment(co_id);
         FastJsonUtil.writeJson(ServletActionContext.getResponse(), FastJsonUtil.toJSONString(assignments));
@@ -351,6 +357,73 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
         if(groups != null) {
             FastJsonUtil.writeJson(ServletActionContext.getResponse(), FastJsonUtil.toJSONString(groups));
         }
+        return NONE;
+    }
+
+    /**
+     * 获取所有已提交的作业
+     * @return
+     */
+    public String getHomeworks(){
+        Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        String co_id = params.get("co_id")[0];
+        List<Homework> homeworkList = teacherService.getHomeworks(co_id);
+        if(homeworkList != null){
+            FastJsonUtil.writeJson(ServletActionContext.getResponse(), FastJsonUtil.toJSONString(homeworkList));
+        }
+        return NONE;
+    }
+
+    /**
+     * 下载某个指定的作业文件
+     * @return
+     */
+    public String getHomework(){
+        Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        String id = params.get("id")[0];
+        Homework homework = teacherService.getHomework(id);
+        String path = "E:\\javaProject\\files\\" + homework.getHo_path() + homework.getHo_name();
+        logger.debug(path);
+        File file = new File(path);
+        if(!file.exists()){
+            return ERROR;
+        }
+
+        HttpServletResponse response = ServletActionContext.getResponse();
+        try {
+            response.setHeader("content-disposition",
+                    "attachment;filename=" + URLEncoder.encode(homework.getHo_name(), "utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream(path);
+            ServletOutputStream outputStream = response.getOutputStream();
+            FileCopyUtils.copy(fileInputStream, new BufferedOutputStream(outputStream));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return NONE;
+    }
+
+    public String modifyGrade(){
+        Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        String ho_id = params.get("id")[0];
+        String grade = params.get("grade")[0];
+
+        try (PrintWriter writer = ServletActionContext.getResponse().getWriter()){
+
+            if (teacherService.modifyGrade(ho_id, Float.parseFloat(grade))){
+                writer.print("success");
+            } else {
+                writer.print("fail");
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
         return NONE;
     }
 }

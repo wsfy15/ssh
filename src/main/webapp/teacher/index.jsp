@@ -190,7 +190,7 @@
                       </a>
                     </li >
                     <li>
-                      <a id="checkHW" _href="${ pageContext.request.contextPath }/teacher_.action">
+                      <a id="checkHW" _href="${ pageContext.request.contextPath }/teacher/markHomework.jsp">
                         <i class="iconfont">&#xe6a7;</i>
                         <cite>检查作业</cite>
                       </a>
