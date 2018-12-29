@@ -136,7 +136,7 @@
             var inp= $("#search").val();//获取输入的值
             $.ajax({
                 type:"POST",
-                url:"${ pageContext.request.contextPath }/student/student_searchmember.action",
+                url:"${ pageContext.request.contextPath }/student/student_searchMember.action",
                 data: {"name":inp},
                 dataType:"json",
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
@@ -231,13 +231,12 @@ $("#buttonchoose").click(function(){
        //console.log(jsonStr);
        $.ajax({
            type:"POST",
-           url:"${ pageContext.request.contextPath }/student_uploadgroup.action",
+           url:"${ pageContext.request.contextPath }/student_uploadGroup.action",
            data:{"data":jsonStr},
            dataType:"json",
            contentType: "application/x-www-form-urlencoded; charset=utf-8",
            success:function (data) {
-
-
+                alert(data.toString());
            }
 
 

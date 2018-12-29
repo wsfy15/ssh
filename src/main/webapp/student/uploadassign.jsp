@@ -62,7 +62,7 @@
             let params = {
                 "co_id": courseId
             };
-            let url = "${ pageContext.request.contextPath }/student/student_getassign.action";
+            let url = "${ pageContext.request.contextPath }/student/student_getAssign.action";
             $.post(url, params, function (data) {
                 var assigns = [];
                 $.each(data, function (i, o) {
@@ -99,7 +99,7 @@
             }, "json");
         })
         $(function () {
-            let url = "${ pageContext.request.contextPath }/student/student_gethomework1.action";
+            let url = "${ pageContext.request.contextPath }/student/student_getHomework1.action";
             $.post(url, params1, function (data) {
                 var homeworks = [];
                 $.each(data, function (i, o) {
@@ -153,7 +153,7 @@
         //执行实例
         upload.render({
             elem: '#test1'
-            ,url: '${pageContext.request.contextPath}/student/student_uploadfile.action'
+            ,url: '${pageContext.request.contextPath}/student/student_uploadFile.action'
             ,data:params1
             ,auto: false //选择文件后不自动上传
             ,bindAction: '#testListAction' //指向一个按钮触发上传
@@ -163,7 +163,7 @@
                 var files = obj.pushFile();
 
             }
-            ,field:"uploadfile"
+            ,field:"uploadFile"
             ,done:function(res){
                 alert("上传成功");
                 window.location.reload();

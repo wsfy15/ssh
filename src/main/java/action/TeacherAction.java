@@ -120,7 +120,7 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
     }
 
     public String addByExcel() {
-        String co_id = (String)ServletActionContext.getRequest().getParameterMap().get("co_id")[0];
+        String co_id = (String)ServletActionContext.getRequest().getParameterMap().get("co_id");
         if (uploadFileName != null && co_id != null) {
             // 打印
             logger.debug("文件名：{}", uploadFileName);
@@ -278,7 +278,7 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
     }
 
     public String getAssignment(){
-        String co_id = (String) ServletActionContext.getRequest().getParameterMap().get("co_id")[0];
+        String co_id = (String) ServletActionContext.getRequest().getParameterMap().get("co_id");
         List<Assignment> assignments = teacherService.getAssignment(co_id);
         FastJsonUtil.writeJson(ServletActionContext.getResponse(), FastJsonUtil.toJSONString(assignments));
         return NONE;

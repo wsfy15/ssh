@@ -13,7 +13,7 @@ public interface StudentService {
 //    JSONArray findCourse(String id);
     List<Course> findCourseList(String id);
 
-    List<Student> searchforstudent(String getvalue);
+    List<Student> searchForStudent(String getvalue);
 
     boolean upload(JSONArray array,String courseid);
     void uploadgroup(GroupMember groupMember, JSONObject[] jsonObject, int num);
@@ -22,13 +22,13 @@ public interface StudentService {
 
     List<Assignment> findassignmentbyid(String assignid);
 
-    List<Assignment> searchforassignments(String co_id);
+    List<Assignment> searchForAssignments(String co_id);
 
-    String getgroupid(String courseid, String userid);
+    String getGroupId(String courseid, String userid);
 
-    void savahomeworkpath(String groupid, String savepath, String uploadfileFileName);
+    void savaHomeworkPath(String groupid, String savepath, String uploadfileFileName);
 
-    Group getgroup(String groupid);
+    Group getGroup(String groupid);
 
-    List<Homework> findhomework(Group group);
+    List<Homework> findHomework(Group group);
 }

@@ -29,7 +29,7 @@
           //ajax获取数据
           $.ajax({
               type:"POST",
-              url:"${ pageContext.request.contextPath }/student_courselist.action",
+              url:"${ pageContext.request.contextPath }/student_courseList.action",
               dataType:"json",
               contentType: "application/x-www-form-urlencoded; charset=utf-8",
               success:function (data) {
@@ -45,12 +45,9 @@
               }
 
           });
-
           // var z;
           // z.setAttribute("")
           // k.append();
-
-
       })
 
       function onClassChange(name){
