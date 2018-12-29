@@ -39,21 +39,20 @@ public class Course {
     @JSONField(serialize=false)
     private Set<Rollcall> rollcalls = new HashSet<>();
 
+    @JSONField(serialize=false)
+    private Set<ClassCourse> classCourses=new HashSet<>();
+
     public Set<ClassCourse> getClassCourses() {
         return classCourses;
     }
-
     public void setClassCourses(Set<ClassCourse> classCourses) {
         this.classCourses = classCourses;
     }
 
-    @JSONField(serialize=false)
-    private Set<ClassCourse> classCourses=new HashSet<>();
 
     public Set<Rollcall> getRollcalls() {
         return rollcalls;
     }
-
     public void setRollcalls(Set<Rollcall> rollcalls) {
         this.rollcalls = rollcalls;
     }
@@ -61,23 +60,19 @@ public class Course {
     public Integer getCo_ro_num_complete() {
         return co_ro_num_complete;
     }
-
     public void setCo_ro_num_complete(Integer co_ro_num_complete) {
         this.co_ro_num_complete = co_ro_num_complete;
     }
 
     public Integer getCo_gr_max() { return co_gr_max; }
-
     public void setCo_gr_max(Integer co_gr_max) { this.co_gr_max = co_gr_max; }
 
     public Integer getCo_gr_min() { return co_gr_min; }
-
     public void setCo_gr_min(Integer co_gr_min) { this.co_gr_min = co_gr_min; }
 
     public String getCo_id() {
         return co_id;
     }
-
     public void setCo_id(String co_id) {
         this.co_id = co_id;
     }
@@ -85,7 +80,6 @@ public class Course {
     public String getCo_name() {
         return co_name;
     }
-
     public void setCo_name(String co_name) {
         this.co_name = co_name;
     }
@@ -93,7 +87,6 @@ public class Course {
     public Integer getCo_ro_num() {
         return co_ro_num;
     }
-
     public void setCo_ro_num(Integer co_ro_num) {
         this.co_ro_num = co_ro_num;
     }
@@ -101,7 +94,6 @@ public class Course {
     public Date getCo_date() {
         return co_date;
     }
-
     public void setCo_date(Date co_date) {
         this.co_date = co_date;
     }
@@ -109,7 +101,6 @@ public class Course {
     public String getCo_gr_prefix() {
         return co_gr_prefix;
     }
-
     public void setCo_gr_prefix(String co_gr_prefix) {
         this.co_gr_prefix = co_gr_prefix;
     }
@@ -117,7 +108,6 @@ public class Course {
     public String getCo_describe() {
         return co_describe;
     }
-
     public void setCo_describe(String co_describe) {
         this.co_describe = co_describe;
     }
@@ -125,9 +115,6 @@ public class Course {
     public Teacher getTeacher() {
         return teacher;
     }
-
-
-
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
@@ -136,7 +123,6 @@ public class Course {
     public Set<Student> getStudents() {
         return students;
     }
-
     public void setStudents(Set<Student> students) {
         this.students = students;
     }
@@ -144,7 +130,6 @@ public class Course {
     public Set<Group> getGroups() {
         return groups;
     }
-
     public void setGroups(Set<Group> groups) {
         this.groups = groups;
     }
@@ -152,7 +137,6 @@ public class Course {
     public Integer getValid() {
         return valid;
     }
-
     public void setValid(Integer valid) {
         this.valid = valid;
     }
@@ -160,7 +144,6 @@ public class Course {
     public Integer getCo_peacetimeProportion() {
         return co_peacetimeProportion;
     }
-
     public void setCo_peacetimeProportion(Integer co_peacetimeProportion) {
         this.co_peacetimeProportion = co_peacetimeProportion;
     }
@@ -168,7 +151,6 @@ public class Course {
     public Set<Assignment> getAssignments() {
         return assignments;
     }
-
     public void setAssignments(Set<Assignment> assignments) {
         this.assignments = assignments;
     }
@@ -186,10 +168,10 @@ public class Course {
                 ", co_gr_min=" + co_gr_min +
                 ", co_gr_prefix='" + co_gr_prefix + '\'' +
                 ", valid=" + valid +
-                ", teacher=" + teacher +
-                ", assignments=" + assignments +
-                ", students=" + students +
-                ", groups=" + groups +
+//                ", teacher=" + teacher +
+//                ", assignments=" + assignments +
+//                ", students=" + students +
+//                ", groups=" + groups +
                 '}';
     }
 }

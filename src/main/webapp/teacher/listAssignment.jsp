@@ -75,13 +75,13 @@
               describe.innerText = assignments[i].as_describe;
               tr.appendChild(describe);
 
-              let assignTime = document.createElement("td");
-              assignTime.innerText = assignments[i].as_assigntime;
-              tr.appendChild(assignTime);
-
               let ddl = document.createElement("td");
               ddl.innerText = assignments[i].as_ddl;
               tr.appendChild(ddl);
+
+              let assignTime = document.createElement("td");
+              assignTime.innerText = assignments[i].as_assigntime;
+              tr.appendChild(assignTime);
 
               let weight = document.createElement("td");
               weight.innerText = assignments[i].as_weight;

@@ -12,7 +12,6 @@ public class ClassCourse {
     public Integer getValid() {
         return valid;
     }
-
     public void setValid(Integer valid) {
         this.valid = valid;
     }
@@ -20,7 +19,6 @@ public class ClassCourse {
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
@@ -28,7 +26,6 @@ public class ClassCourse {
     public Course getCourse() {
         return course;
     }
-
     public void setCourse(Course course) {
         this.course = course;
     }
@@ -36,7 +33,6 @@ public class ClassCourse {
     public Class getaClass() {
         return aClass;
     }
-
     public void setaClass(Class aClass) {
         this.aClass = aClass;
     }

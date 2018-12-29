@@ -3,9 +3,8 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="entity.Group" table="Groupp   ">
-        <id name="gr_id" column="gr_id" >
-        </id>
+    <class name="entity.Group" table="Groupp">
+        <id name="gr_id" column="gr_id" ></id>
 
         <property name="valid" column="valid" />
         <property name="gr_cheif" column="gr_cheif" />

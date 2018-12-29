@@ -58,7 +58,8 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
         valueStack.set("courseList", courseList);
         return "course";
     }
-//学生选了哪些课程，在左上角提示
+
+    //学生选了哪些课程，在左上角提示
     public  String courselist(){
         Map<String, Object> session = ActionContext.getContext().getSession();
         Student student = (Student) session.get("user");
@@ -84,6 +85,7 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
         return NONE;
 
     }
+
     //模糊寻找小组成员
     public String searchmember(){
         HttpServletRequest  request = ServletActionContext.getRequest();
@@ -110,33 +112,29 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
         return NONE;
     }
 
+    public String uploadgroup() throws IOException {
+        HttpServletRequest request = ServletActionContext.getRequest();
+        logger.debug("uploadgroup" + request.getParameter("data"));
+        String getinfor = request.getParameter("data");
+        JSONArray jsonArray = JSONArray.parseArray(getinfor);
+        int num = jsonArray.size();
+        System.out.println(num);
+        JSONObject[] jsonObjects = new JSONObject[num];
+        for (int i = 0; i < jsonArray.size(); i++) {
+            jsonObjects[i] = jsonArray.getJSONObject(i);
+            logger.debug(jsonObjects[i].toJSONString());
+        }
 
-        public String uploadgroup() throws IOException {
-        HttpServletRequest  request = ServletActionContext.getRequest();
-        logger.debug("uploadgroup"+request.getParameter("data"));
-        String getinfor=request.getParameter("data");
-        JSONArray jsonArray=  JSONArray.parseArray(getinfor);
-            int num=jsonArray.size();
-            System.out.println(num);
-            JSONObject[] jsonObjects=new JSONObject[num];
-            for(int i=0;i<jsonArray.size();i++){
-                jsonObjects[i]=jsonArray.getJSONObject(i);
-                logger.debug(jsonObjects[i].toJSONString());
-            }
+        boolean a = studentService.upload(jsonArray, (String) jsonObjects[num - 1].get("courseid"));
+        HttpServletResponse response = ServletActionContext.getResponse();
 
-            boolean a=studentService.upload(jsonArray, (String) jsonObjects[num-1].get("courseid"));
-            HttpServletResponse response=ServletActionContext.getResponse();
-
-            if(a==true){
-
-                    response.setContentType("text/javascript;charset=UTF-8");
-                    response.getWriter().print("success");
-
-            }
-            else{
-                response.setContentType("text/javascript;charset=UTF-8");
-                response.getWriter().print("error");
-            }
+        if (a == true) {
+            response.setContentType("text/javascript;charset=UTF-8");
+            response.getWriter().print("success");
+        } else {
+            response.setContentType("text/javascript;charset=UTF-8");
+            response.getWriter().print("error");
+        }
         return NONE;
     }
 
@@ -162,7 +160,6 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
     public File getUploadfile() {
         return uploadfile;
     }
-
     public void setUploadfile(File uploadfile) {
         this.uploadfile = uploadfile;
     }
@@ -170,7 +167,6 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
     public String getUploadfileFileName() {
         return uploadfileFileName;
     }
-
     public void setUploadfileFileName(String uploadfileFileName) {
         this.uploadfileFileName = uploadfileFileName;
     }
@@ -178,7 +174,6 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
     public String getUploadfileContentType() {
         return uploadfileContentType;
     }
-
     public void setUploadfileContentType(String uploadfileContentType) {
         this.uploadfileContentType = uploadfileContentType;
     }
@@ -226,6 +221,7 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
 
         return NONE;
     }
+
     public String gethomework1(){
 
         logger.debug("123");
@@ -243,6 +239,7 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
         }
         return NONE;
     }
+
     public String getallclassmate(){
         return NONE;
     }

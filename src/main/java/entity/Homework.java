@@ -69,4 +69,15 @@ public class Homework {
     public void setValid(Integer valid) {
         this.valid = valid;
     }
+
+    @Override
+    public String toString() {
+        return "Homework{" +
+                "id='" + id + '\'' +
+                ", ho_time=" + ho_time +
+                ", ho_path='" + ho_path + '\'' +
+                ", ho_name='" + ho_name + '\'' +
+                ", group=" + group +
+                '}';
+    }
 }

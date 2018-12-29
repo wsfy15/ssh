@@ -28,7 +28,6 @@ public class Student extends User {
     public Set<Rollcall> getRollcalls() {
         return rollcalls;
     }
-
     public void setRollcalls(Set<Rollcall> rollcalls) {
         this.rollcalls = rollcalls;
     }
@@ -36,7 +35,6 @@ public class Student extends User {
     public Set<GroupMember> getGroupMembers() {
         return groupMembers;
     }
-
     public void setGroupMembers(Set<GroupMember> groupMembers) {
         this.groupMembers = groupMembers;
     }
@@ -44,7 +42,6 @@ public class Student extends User {
     public String getClassNo() {
         return classNo;
     }
-
     public void setClassNo(String classNo) {
         this.classNo = classNo;
     }
@@ -52,7 +49,6 @@ public class Student extends User {
     public Set<Course> getCourses() {
         return courses;
     }
-
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
     }

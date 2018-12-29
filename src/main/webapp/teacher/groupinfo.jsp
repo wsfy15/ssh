@@ -33,7 +33,6 @@
       $(function () {
           // 加载小组名单
           let courseId = window.sessionStorage.getItem("co_id");
-          console.log(courseId);
           let params = {
               "co_id": courseId
           };
@@ -41,6 +40,8 @@
           let url = "${ pageContext.request.contextPath }/teacher/teacher_getGroup.action";
           $.post(url, params, function (data) {
               groups = [];
+
+              // 存储小组数据
               $.each(data, function (i, o) {
                   var group = {};
                   group.gr_id = o.gr_id;
@@ -48,20 +49,20 @@
                   group.gr_qq = o.gr_qq;
                   group.gr_phone = o.gr_phone;
                   group.groupMembers = o.groupMembers;
-                  for(let i = 0, j = 0; i < group.groupMembers.length; i++, j++){
-                      if(group.groupMembers[i].student.id === group.gr_id){
-                          group.gr_cheif = group.groupMembers[i].student.name;
+                  for(let i = 0, j = 1; i < group.groupMembers.length; i++, j++){
+                      if(group.groupMembers[i].student.id === o.gr_cheif){
+                          group["leader"] = group.groupMembers[i].student.name;
                           j--;
                       } else{
                           let fieldName = "member" + j;
-                          group.fieldName = group.groupMembers[i].student.name;
+                          group[fieldName] = group.groupMembers[i].student.name;
                       }
                   }
                   groups.push(group);
               });
-
+              console.log(groups)
+              // 表头
               let count = data[0].course.co_gr_max - 1;
-              console.log("count: " + count);
               var cols = [
                   {field: 'gr_id', title: '小组ID', sort: true, fixed: 'left'},
                   {field: 'gr_phone', title: '联系电话'},
@@ -69,15 +70,16 @@
                   {field: 'gr_email', title: '邮箱'},
                   {field: 'leader', title: '组长'}
               ];
-              for(let i = 0; i < count; i++){
+              for(let i = 1; i <= count; i++){
                   cols.push({field: 'member' + i, title: '组员' + i})
               }
 
+              // 渲染table
               layui.use(['table'], function (table) {
                   table.render({
                       elem: '#group',
                       height: 600,
-                      data: group,
+                      data: groups,
                       page: true,
                       cols: [cols]
                   });
