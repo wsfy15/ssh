@@ -3,6 +3,7 @@ package service;
 import dao.*;
 import entity.*;
 import org.apache.http.entity.ContentType;
+import org.hibernate.criterion.DetachedCriteria;
 import org.slf4j.Logger;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,8 @@ import utils.MD5utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -268,6 +271,78 @@ public class TeacherServiceImpl implements TeacherService {
         homeWorkDao.update(homework);
         return true;
     }
+
+    @Override
+    public List<Homework> filterHomework(String co_id, String as_id, String group_id, String start, String end) {
+        Course course = courseDao.findById(co_id);
+        if (course == null){
+            return null;
+        }
+
+        // 先取得相关的assignment，再通过assignment取得其homework
+        List<Assignment> assignments = new ArrayList<>();
+        if (as_id.trim().length() > 0){
+            Assignment assignment = assignmentDao.findById(as_id);
+            assignments.add(assignment);
+        } else {
+            Set<Assignment> assignmentSet = course.getAssignments();
+            assignments.addAll(assignmentSet);
+        }
+
+        List<Homework> homeworkList = new ArrayList<>();
+        for(Assignment assignment : assignments) {
+            Set<Homework> homeworks = assignment.getHomeworks();
+            Set<Homework> tmp = null;   // 暂存中间结果
+
+            // 是否指定group
+            if (group_id.trim().length() > 0) {
+                tmp = homeworks.stream().filter(
+                        (Homework homework) -> homework.getGroup().getGr_id().equals(group_id)
+                ).collect(Collectors.toSet());
+            } else {
+                tmp = homeworks;
+            }
+
+            homeworks = tmp;
+            if (start.trim().length() > 0){
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+                Date parsedDate = null;
+                try {
+                    parsedDate = dateFormat.parse(start);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+
+                tmp = homeworks.stream().filter(
+                        (Homework homework) -> homework.getHo_time().getTime() > timestamp.getTime()
+                ).collect(Collectors.toSet());
+            }
+
+            homeworks = tmp;
+            if (end.trim().length() > 0){
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                Date parsedDate = null;
+                try {
+                    parsedDate = dateFormat.parse(end);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+
+                tmp = homeworks.stream().filter(
+                        (Homework homework) -> homework.getHo_time().getTime() < timestamp.getTime()
+                ).collect(Collectors.toSet());
+            }
+
+            homeworks = tmp;
+            homeworkList.addAll(homeworks);
+        }
+
+        return homeworkList;
+    }
+
 
     @Override
     public List<Course> findCourseList(String id) {

@@ -26,4 +26,5 @@ public class HomeWorkDaoImpl extends BaseDaoImpl<Homework> implements HomeWorkDa
         criteria.add(Restrictions.eq("group",group));
         return  (List<Homework>) this.getHibernateTemplate().findByCriteria(criteria);
     }
+
 }

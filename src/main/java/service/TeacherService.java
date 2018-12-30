@@ -1,6 +1,7 @@
 package service;
 
 import entity.*;
+import org.hibernate.criterion.DetachedCriteria;
 
 import java.util.List;
 import java.util.Map;
@@ -42,4 +43,6 @@ public interface TeacherService {
     boolean modifyGrade(String ho_id, Float grade);
 
     boolean modifyCorrection(String ho_id, String correction);
+
+    List<Homework> filterHomework(String co_id, String as_id, String group_id, String start, String end);
 }

@@ -15,6 +15,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.xmlbeans.impl.xb.xsdschema.Public;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.springframework.util.FileCopyUtils;
 import service.TeacherService;
@@ -441,6 +443,38 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
         } catch (IOException e){
             e.printStackTrace();
         }
+
+        return NONE;
+    }
+
+    public String getGroups(){
+        Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        String co_id = params.get("co_id")[0];
+
+        List<Group> groups = teacherService.getGroup(co_id);
+        FastJsonUtil.writeJson(ServletActionContext.getResponse(), FastJsonUtil.toJSONString(groups));
+        return NONE;
+    }
+
+    public String getAssignments(){
+        Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        String co_id = params.get("co_id")[0];
+
+        List<Assignment> assignments = teacherService.getAssignment(co_id);
+        FastJsonUtil.writeJson(ServletActionContext.getResponse(), FastJsonUtil.toJSONString(assignments));
+        return NONE;
+    }
+
+    public String filterHomeworks(){
+        Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        String as_id = params.get("assignment")[0];
+        String co_id = params.get("co_id")[0];
+        String end = params.get("end")[0];
+        String start = params.get("start")[0];
+        String group_id = params.get("group")[0];
+
+        List<Homework> homeworkList = teacherService.filterHomework(co_id, as_id, group_id, start, end);
+        FastJsonUtil.writeJson(ServletActionContext.getResponse(), FastJsonUtil.toJSONString(homeworkList));
 
         return NONE;
     }

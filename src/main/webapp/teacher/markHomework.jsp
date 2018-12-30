@@ -132,6 +132,44 @@
           }
       }
 
+      function renderTable(data){
+          homeworks = [];
+          $.each(data, function (i, o) {
+              var homework = {};
+              homework.id = o.id;
+              homework.ho_name = o.ho_name;
+              homework.time_stamp = o.ho_time;
+              homework.ho_time = formatDateYMDhms(new Date(o.ho_time));
+              homework.grade = o.grade;
+              homework.submit_user = o.submit_user.name;
+              homework.group_id = o.group.gr_id;
+              homework.correction = o.correction;
+              homework.opinion = o.opinion;
+              homework.assignment = o.assignment.as_name;
+              homeworks.push(homework);
+          });
+
+          // 根据time_stamp排序
+          homeworks.sort(compare("time_stamp"));
+
+          layui.use(['laypage'], function (laypage) {
+              //分页
+              laypage.render({
+                  elem: 'page' //分页容器的id
+                  , count: homeworks.length //总页数
+                  , limit: 10
+                  // , limits: [5, 10, 15]
+                  , skin: '#1E9FFF' //自定义选中色值
+                  , skip: true //开启跳页
+                  , jump: function (obj, first) {
+                      // if (!first) {
+                      toPage(obj.curr, obj.limit);
+                      // }
+                  }
+              });
+          });
+      }
+
       $(function () {
           // 加载作业列表
           let courseId = window.sessionStorage.getItem("co_id");
@@ -139,44 +177,55 @@
               "co_id": courseId
           };
           let url = "${ pageContext.request.contextPath }/teacher/teacher_getHomeworks.action";
+
+          // 首次 加载所有homework
           $.post(url, params, function (data) {
-              console.log(data);
-              homeworks = [];
-              $.each(data, function (i, o) {
-                  var homework = {};
-                  homework.id = o.id;
-                  homework.ho_name = o.ho_name;
-                  homework.time_stamp = o.ho_time;
-                  homework.ho_time = formatDateYMDhms(new Date(o.ho_time));
-                  homework.grade = o.grade;
-                  homework.submit_user = o.submit_user.name;
-                  homework.group_id = o.group.gr_id;
-                  homework.correction = o.correction;
-                  homework.opinion = o.opinion;
-                  homework.assignment = o.assignment.as_name;
-                  homeworks.push(homework);
-              });
-
-              // 根据time_stamp排序
-              homeworks.sort(compare("time_stamp"));
-
-              layui.use(['laypage'], function (laypage) {
-                  //分页
-                  laypage.render({
-                      elem: 'page' //分页容器的id
-                      , count: homeworks.length //总页数
-                      , limit: 10
-                      // , limits: [5, 10, 15]
-                      , skin: '#1E9FFF' //自定义选中色值
-                      , skip: true //开启跳页
-                      , jump: function (obj, first) {
-                          // if (!first) {
-                          toPage(obj.curr, obj.limit);
-                          // }
-                      }
-                  });
-              });
+              renderTable(data);
           }, "json");
+
+          // 获取小组列表
+          $.post("${ pageContext.request.contextPath }/teacher/teacher_getGroups.action", params, function (data) {
+              $.each(data, function (i, o) {
+                  $("[name=group]").append("<option value='" + o.gr_id + "'>" + o.gr_id + "</option>");
+              })
+          }, "json");
+
+          // 获取作业列表
+          $.post("${ pageContext.request.contextPath }/teacher/teacher_getAssignments.action", params, function (data) {
+              $.each(data, function (i, o) {
+                  $("[name=assignment]").append("<option value='" + o.as_id + "'>" + o.as_name + "</option>");
+              })
+          }, "json");
+
+          layui.use(['laydate', 'form', 'layer'], function(laydate, form, layer){
+              //执行一个laydate实例
+              laydate.render({
+                  elem: '#start' //指定元素
+                  ,type: 'datetime'
+              });
+
+              //执行一个laydate实例
+              laydate.render({
+                  elem: '#end' //指定元素
+                  ,type: 'datetime'
+              });
+
+              form.on('submit(filter)', function(data){
+                  data.field.co_id = courseId;
+                  console.log(data.field);
+                  if(data.field.start && data.field.end && data.field.start > data.field.end){
+                      layer.msg('日期选择有误!', {icon: 5, time: 1000});
+                      return false;
+                  }
+
+                  $.post("${ pageContext.request.contextPath }/teacher/teacher_filterHomeworks.action", data.field, function (data) {
+                      console.log(data);
+                      renderTable(data);
+                  }, "json");
+                  return false;
+              });
+          });
+
       })
   </script>
 </head>
@@ -196,6 +245,38 @@
 </div>
 
 <div class="x-body">
+  <div class="layui-row">
+    <form class="layui-form layui-col-md12 x-so">
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <span>from</span>
+              <input class="layui-input" placeholder="开始日" name="start" id="start" autocomplete="off">
+            </td>
+            <td>
+              <span>to</span>
+              <input class="layui-input" placeholder="截止日" name="end" id="end" autocomplete="off">
+            </td>
+            <td>
+              <select name="group">
+                <option value="">请选择小组</option>
+              </select>
+            </td>
+            <td>
+              <select name="assignment">
+                <option value="">请选择作业</option>
+              </select>
+            </td>
+            <td>
+              <button class="layui-btn"  lay-submit="" lay-filter="filter"><i class="layui-icon">&#xe615;</i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+
   <table class="layui-table">
     <thead>
     <tr>
