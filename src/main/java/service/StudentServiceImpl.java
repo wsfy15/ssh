@@ -219,14 +219,17 @@ public class StudentServiceImpl implements StudentService {
        }
        else return stringList1.get(0);
     }
-    public void savaHomeworkPath(String groupid, String savepath, String uploadfileFileName){
+    public void saveHomeworkPath(String groupid, String savepath, String uploadfileFileName,String assignId){
         Group group=groupDao.findById(groupid);
+        Assignment assignment=assignmentDao.findById(assignId);
         logger.debug(group.getGr_id());
+        logger.debug(assignment.getAs_name());
         Homework ahomework=homeWorkDao.findbygroupid_filename(group,uploadfileFileName);
         Homework homework;
         if(ahomework==null){
             homework=new Homework();
             homework.setGroup(group);
+            homework.setAssignment(assignment);
             homework.setHo_name(uploadfileFileName);
             homework.setHo_path(savepath);
             Date date=new Date();
@@ -238,6 +241,7 @@ public class StudentServiceImpl implements StudentService {
         }else {
             homework=ahomework;
             homework.setGroup(group);
+            homework.setAssignment(assignment);
             homework.setHo_name(uploadfileFileName);
             homework.setHo_path(savepath);
             Date date=new Date();

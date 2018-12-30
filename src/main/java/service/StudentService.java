@@ -26,7 +26,7 @@ public interface StudentService {
 
     String getGroupId(String courseid, String userid);
 
-    void savaHomeworkPath(String groupid, String savepath, String uploadfileFileName);
+    void saveHomeworkPath(String groupid, String savepath, String uploadfileFileName,String assignId);
 
     Group getGroup(String groupid);
 

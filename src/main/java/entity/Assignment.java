@@ -4,6 +4,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @ClassName Assignment
@@ -23,6 +25,8 @@ public class Assignment {
 
     @JSONField(serialize=false)
     private Course course;      // // 相关联的课程
+
+    private Set<Homework> homeworks=new HashSet<>();//关联作业
 
     public String getAs_id() {
         return as_id;
@@ -86,5 +90,13 @@ public class Assignment {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Set<Homework> getHomeworks() {
+        return homeworks;
+    }
+
+    public void setHomeworks(Set<Homework> homeworks) {
+        this.homeworks = homeworks;
     }
 }

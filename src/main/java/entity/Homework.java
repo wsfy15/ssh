@@ -25,6 +25,9 @@ public class Homework {
     @JSONField(serialize = false)
     private Group group; //绑定到小组
 
+    @JSONField(serialize = false)
+    private Assignment assignment;//绑定到作业布置
+
     public String getId() {
         return id;
     }
@@ -72,6 +75,14 @@ public class Homework {
     }
     public void setGrade(Float grade) {
         this.grade = grade;
+    }
+
+    public Assignment getAssignment() {
+        return assignment;
+    }
+
+    public void setAssignment(Assignment assignment) {
+        this.assignment = assignment;
     }
 
     @Override

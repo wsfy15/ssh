@@ -203,9 +203,11 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
         HttpServletRequest request = ServletActionContext.getRequest();
         String courseid=request.getParameter("co_id");
         String userid=request.getParameter("us_id");
+        String assignId=request.getParameter("assignID");
         logger.debug(courseid);
         logger.debug(userid);
-
+        logger.debug(assignId);
+        
 //        获取小组id，若获取失败，返回error到web
         String groupid= studentService.getGroupId(courseid,userid);
         if(groupid==null){
@@ -223,9 +225,9 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
 //        上传文件，若名字相同则先删除再保存
         String savepath = courseid+"\\"+groupid+"\\";
         logger.debug(savepath);
-        String path = "E:\\javaProject\\files\\" + savepath + uploadFileFileName;
+//        String path = "E:\\javaProject\\files\\" + savepath + uploadFileFileName;
 //        String path = request.getSession().getServletContext().getRealPath(savepath+uploadfileFileName);
-//        String path="D:\\code data\\java\\ssh1\\homeworks"+savepath+uploadfileFileName;
+        String path="D:\\code data\\java\\ssh1\\homeworks"+savepath+uploadFileFileName;
         logger.debug(uploadFileFileName);
         logger.debug(path+"  "+uploadFileFileName+"  "+uploadFile.toString());
 
@@ -234,7 +236,8 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
             file.delete();
         }
         FileUtils.copyFile(uploadFile, file);
-        studentService.savaHomeworkPath(groupid, savepath, uploadFileFileName);
+
+        studentService.saveHomeworkPath(groupid, savepath, uploadFileFileName,assignId);
 //        发送成功信息
         HttpServletResponse response=ServletActionContext.getResponse();
         Map map=new HashMap();

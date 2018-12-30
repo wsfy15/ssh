@@ -17,5 +17,8 @@
         <many-to-one name="group" class="entity.Group" lazy="false">
             <column name="ho_gr_id" />
         </many-to-one>
+        <many-to-one name="assignment" class="entity.Assignment" lazy="false">
+            <column name="ho_as_id"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

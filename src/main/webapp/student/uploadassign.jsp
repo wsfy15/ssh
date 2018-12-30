@@ -26,7 +26,8 @@
     <script src="../lib1/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="../lib/xadmin.js"></script>
     <script>
-        var assignID;
+        var assignID=null;//作业布置的信息
+        //转化时间戳的函数
         function stampToTime(timestamp) {
             if(timestamp == 0) {
                 return "";
@@ -52,7 +53,9 @@
                 return datestring;
             }
         }
-        var params1;
+
+        var params1;//保存courseID和userid的参数表
+        //获取所选的课
         $(function () {
             let courseId = window.sessionStorage.getItem("courseid");
             let username=window.sessionStorage.getItem("usname");
@@ -79,6 +82,7 @@
                 let count = data.size - 1;
                 console.log("count: " + count);
                 var cols = [
+                    {field:'单选',type:'radio'}
                     ,{field: 'as_id', title: 'ID', width:80}
                     ,{field: 'as_name', title: '作业名', width:80}
                     ,{field: 'as_weight', title: '权重', width: 80 }
@@ -98,6 +102,8 @@
                 });
             }, "json");
         })
+
+        //获取已提交的课
         $(function () {
             let url = "${ pageContext.request.contextPath }/student/student_getHomework1.action";
             $.post(url, params1, function (data) {
@@ -129,6 +135,11 @@
                 });
             }, "json");
         })
+    //    判断是否已经选择了assignment
+        function checkAssign() {
+          return confirm('ok');
+        }
+
     </script>
 </head>
 <body>
@@ -137,19 +148,20 @@
 
     <table id="homework" lay-filter="test"></table>
 </div>
-<button type="button" class="layui-btn" id="test1"name="uploadfile2">
+<button type="button" class="layui-btn" id="test1"name="uploadfile2" disabled="disabled">
     <i class="layui-icon">&#xe67c;</i>选择文件
 </button>
-<button type="button" class="layui-btn" id="testListAction" name="uploadfile" onclick="return confirm('确定上传吗？')">
+<button type="button" class="layui-btn" id="testListAction" name="uploadfile" onclick="return confirm('确定上传吗？')" disabled="disabled">
     <i class="layui-icon">&#xe67c;</i>上传文件
 </button>
 
 <script>
+
     layui.use(['upload','table'], function(){
         var upload = layui.upload;
         var table=layui.table;
 
-        //执行实例
+        //上传的课
         upload.render({
             elem: '#test1'
             ,url: '${pageContext.request.contextPath}/student/student_uploadFile.action'
@@ -172,9 +184,13 @@
         });
 // 选中情况
         table.on('radio(test)', function(obj){
-            console.log(obj.checked); //当前是否选中状态
+            // console.log(obj.checked); //当前是否选中状态
             console.log(obj.data); //选中行的相关数据
             assignID=obj.data.as_id;
+            $("#test1").removeAttr("disabled");
+            $("#testListAction").removeAttr("disabled");
+            params1.assignID=assignID;
+            console.log(params1)
         });
     });
 

@@ -14,5 +14,9 @@
         <property name="as_weight" column="as_weight" />
 
         <many-to-one name="course" class="entity.Course" column="co_course" lazy="false"/>
+        <set name="homeworks" inverse="true">
+            <key column="ho_as_id"></key>
+            <one-to-many class="entity.Homework"/>
+        </set>
     </class>
 </hibernate-mapping>
