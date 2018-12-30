@@ -258,6 +258,18 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public boolean modifyCorrection(String ho_id, String correction) {
+        Homework homework = homeWorkDao.findById(ho_id);
+        if(homework == null){
+            return false;
+        }
+
+        homework.setCorrection(correction);
+        homeWorkDao.update(homework);
+        return true;
+    }
+
+    @Override
     public List<Course> findCourseList(String id) {
         Teacher teacher = teacherDao.findById(id);
         logger.debug("course count: {}", teacher.getCourses().size());

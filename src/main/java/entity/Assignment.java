@@ -26,6 +26,7 @@ public class Assignment {
     @JSONField(serialize=false)
     private Course course;      // // 相关联的课程
 
+    @JSONField(serialize = false)
     private Set<Homework> homeworks=new HashSet<>();//关联作业
 
     public String getAs_id() {

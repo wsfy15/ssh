@@ -125,7 +125,7 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
 
     public String addByExcel() {
 //        String co_id = (String)ServletActionContext.getRequest().getParameterMap().get("co_id");
-        String co_id = (String)ServletActionContext.getRequest().getParameterMap().get("co_id");
+        String co_id = (String)((Map<String, String[]>)ServletActionContext.getRequest().getParameterMap()).get("co_id")[0];
         if (uploadFileName != null && co_id != null) {
             // 打印
             logger.debug("文件名：{}", uploadFileName);
@@ -284,7 +284,7 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
 
     public String getAssignment(){
 //        String co_id = (String) ServletActionContext.getRequest().getParameterMap().get("co_id");
-        String co_id = (String) ServletActionContext.getRequest().getParameterMap().get("co_id");
+        String co_id = (String) ((Map<String, String[]>)ServletActionContext.getRequest().getParameterMap()).get("co_id")[0];
         List<Assignment> assignments = teacherService.getAssignment(co_id);
         FastJsonUtil.writeJson(ServletActionContext.getResponse(), FastJsonUtil.toJSONString(assignments));
         return NONE;
@@ -414,8 +414,26 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
         String grade = params.get("grade")[0];
 
         try (PrintWriter writer = ServletActionContext.getResponse().getWriter()){
-
             if (teacherService.modifyGrade(ho_id, Float.parseFloat(grade))){
+                writer.print("success");
+            } else {
+                writer.print("fail");
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return NONE;
+    }
+
+    public String modifyCorrection(){
+        Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        String ho_id = params.get("id")[0];
+        String correction = params.get("correction")[0];
+
+        try (PrintWriter writer = ServletActionContext.getResponse().getWriter()){
+
+            if (teacherService.modifyCorrection(ho_id, correction)){
                 writer.print("success");
             } else {
                 writer.print("fail");

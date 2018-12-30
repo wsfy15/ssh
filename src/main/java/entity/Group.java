@@ -17,9 +17,9 @@ public class Group {
     private  String gr_email;//小组邮箱
     private  String gr_qq;//小组qq
     private  String gr_phone;//小组联系电话
-
     private  Integer gr_num;//小组成员数量
     private  Integer valid;
+
     private  Course course;
 
 //    @JSONField(serialize=false)

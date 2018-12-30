@@ -40,4 +40,6 @@ public interface TeacherService {
     Homework getHomework(String homework_id);
 
     boolean modifyGrade(String ho_id, Float grade);
+
+    boolean modifyCorrection(String ho_id, String correction);
 }

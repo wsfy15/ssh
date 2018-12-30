@@ -225,9 +225,9 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
 //        上传文件，若名字相同则先删除再保存
         String savepath = courseid+"\\"+groupid+"\\";
         logger.debug(savepath);
-//        String path = "E:\\javaProject\\files\\" + savepath + uploadFileFileName;
+        String path = "E:\\javaProject\\files\\" + savepath + uploadFileFileName;
 //        String path = request.getSession().getServletContext().getRealPath(savepath+uploadfileFileName);
-        String path="D:\\code data\\java\\ssh1\\homeworks"+savepath+uploadFileFileName;
+//        String path="D:\\code data\\java\\ssh1\\homeworks"+savepath+uploadFileFileName;
         logger.debug(uploadFileFileName);
         logger.debug(path+"  "+uploadFileFileName+"  "+uploadFile.toString());
 
@@ -237,7 +237,7 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
         }
         FileUtils.copyFile(uploadFile, file);
 
-        studentService.saveHomeworkPath(groupid, savepath, uploadFileFileName,assignId);
+        studentService.saveHomeworkPath(groupid, savepath, uploadFileFileName,assignId, userid);
 //        发送成功信息
         HttpServletResponse response=ServletActionContext.getResponse();
         Map map=new HashMap();

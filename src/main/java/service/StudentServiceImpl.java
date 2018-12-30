@@ -219,9 +219,10 @@ public class StudentServiceImpl implements StudentService {
        }
        else return stringList1.get(0);
     }
-    public void saveHomeworkPath(String groupid, String savepath, String uploadfileFileName,String assignId){
+    public void saveHomeworkPath(String groupid, String savepath, String uploadfileFileName,String assignId, String userid){
         Group group=groupDao.findById(groupid);
         Assignment assignment=assignmentDao.findById(assignId);
+        Student student = studentDao.findById(userid);
         logger.debug(group.getGr_id());
         logger.debug(assignment.getAs_name());
         Homework ahomework=homeWorkDao.findbygroupid_filename(group,uploadfileFileName);
@@ -237,6 +238,9 @@ public class StudentServiceImpl implements StudentService {
             homework.setHo_time(timestamp);
             homework.setValid(1);
             homework.setGrade(0f);
+            homework.setOpinion("");
+            homework.setCorrection("");
+            homework.setSubmit_user(student);
             homeWorkDao.save(homework);
         }else {
             homework=ahomework;
@@ -249,6 +253,7 @@ public class StudentServiceImpl implements StudentService {
             homework.setHo_time(timestamp);
             homework.setValid(1);
             homework.setGrade(0f);
+            homework.setSubmit_user(student);
             homeWorkDao.update(homework);
         }
     }

@@ -21,11 +21,15 @@ public class Homework {
     private String ho_name;     // 作业名称
     private Float grade;  // 分数
     private Integer valid;
+    private String correction;  // 批改说明
+    private String opinion;     // 学生意见
 
-    @JSONField(serialize = false)
+    private Student submit_user;    //提交人
+
+//    @JSONField(serialize = false)
     private Group group; //绑定到小组
 
-    @JSONField(serialize = false)
+//    @JSONField(serialize = false)
     private Assignment assignment;//绑定到作业布置
 
     public String getId() {
@@ -80,9 +84,29 @@ public class Homework {
     public Assignment getAssignment() {
         return assignment;
     }
-
     public void setAssignment(Assignment assignment) {
         this.assignment = assignment;
+    }
+
+    public Student getSubmit_user() {
+        return submit_user;
+    }
+    public void setSubmit_user(Student submit_user) {
+        this.submit_user = submit_user;
+    }
+
+    public String getCorrection() {
+        return correction;
+    }
+    public void setCorrection(String correction) {
+        this.correction = correction;
+    }
+
+    public String getOpinion() {
+        return opinion;
+    }
+    public void setOpinion(String opinion) {
+        this.opinion = opinion;
     }
 
     @Override

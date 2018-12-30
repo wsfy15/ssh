@@ -24,7 +24,7 @@
 
       function score(id) {
           layui.use(['layer'], function (layer) {
-              let grade = $('#' + id).val();
+              let grade = $('[name=score_' + id + ']').val();
               grade = parseFloat(grade);
               console.log(typeof grade);
               if (grade > 100 || grade < 0) {
@@ -43,11 +43,27 @@
                   } else {
                       layer.msg("修改失败", {icon: 5, time: 1000});
                   }
-
-
               });
           });
       }
+      function submitCorrection(id) {
+          layui.use(['layer'], function (layer) {
+              let correction = $('[name=correction_' + id + ']').val();
+              let params = {
+                  "id": id,
+                  "correction": correction
+              };
+              let url = "${ pageContext.request.contextPath }/teacher_modifyCorrection.action";
+              $.post(url, params, function (data) {
+                  if (data === "success") {
+                      layer.msg('修改成功', {icon: 1, time: 1000});
+                  } else {
+                      layer.msg("修改失败", {icon: 5, time: 1000});
+                  }
+              });
+          });
+      }
+
 
       function toPage(curPage, limit) {
           // 先清除数据，再添加
@@ -65,24 +81,54 @@
               let tr = document.createElement("tr");
               tr.setAttribute("name", homeworks[i].id)
 
+              let assignment = document.createElement("td");
+              assignment.innerText = homeworks[i].assignment;
+              tr.appendChild(assignment);
+
+              let groupId = document.createElement("td");
+              groupId.innerText = homeworks[i].group_id;
+              tr.appendChild(groupId);
+
               let name = document.createElement("td");
-              name.innerText = homeworks[i].ho_name;
+              name.innerHTML = '<a class="x-a" href="${ pageContext.request.contextPath }/teacher_getHomework.action?id=' + homeworks[i].id + '">' + homeworks[i].ho_name + '</a>';
               tr.appendChild(name);
 
               let submitTime = document.createElement("td");
               submitTime.innerText = homeworks[i].ho_time;
               tr.appendChild(submitTime);
 
-              let download = document.createElement("td");
-              // download.innerHTML = '<a href="javascript:void(0);" onclick=download(this)> 下载</a>';
-              download.innerHTML = '<a href="${ pageContext.request.contextPath }/teacher_getHomework.action?id=' + homeworks[i].id + '"> 下载</a>';
-              tr.appendChild(download);
+              let submitUser = document.createElement("td");
+              submitUser.innerText = homeworks[i].submit_user;
+              tr.appendChild(submitUser);
 
               let score = document.createElement("td");
-              score.innerHTML = '<div><input id="' + homeworks[i].id + '" type="number" min="0" max="100" step="0.5" value="' + homeworks[i].grade + '"> <a href="javascript:void(0);" onclick=score("' + homeworks[i].id + '")>提交</a>  </div>';
+              score.innerHTML = '<div><input name="score_' + homeworks[i].id + '" type="number" min="0" max="100" step="0.5" value="' + homeworks[i].grade + '"> <a href="javascript:void(0);" onclick=score("' + homeworks[i].id + '")>提交</a>  </div>';
               tr.appendChild(score);
 
+              let correction = document.createElement("td");
+              correction.innerHTML = '<div><input name="correction_' + homeworks[i].id + '"  value="' + homeworks[i].correction + '"> <a href="javascript:void(0);" onclick=submitCorrection("' + homeworks[i].id + '")>提交</a>  </div>';
+              tr.appendChild(correction);
+
+              let opinion = document.createElement("td");
+              opinion.innerText = homeworks[i].opinion;
+              tr.appendChild(opinion);
+
               document.getElementById("homeworkTable").appendChild(tr);
+          }
+      }
+
+      // 用于排序
+      function compare(property){
+          return function (obj1, obj2) {
+              var val1 = obj1[property];
+              var val2 = obj2[property];
+              if (val1 < val2 ) { //正序
+                  return 1;
+              } else if (val1 > val2 ) {
+                  return -1;
+              } else {
+                  return 0;
+              }
           }
       }
 
@@ -100,10 +146,19 @@
                   var homework = {};
                   homework.id = o.id;
                   homework.ho_name = o.ho_name;
+                  homework.time_stamp = o.ho_time;
                   homework.ho_time = formatDateYMDhms(new Date(o.ho_time));
                   homework.grade = o.grade;
+                  homework.submit_user = o.submit_user.name;
+                  homework.group_id = o.group.gr_id;
+                  homework.correction = o.correction;
+                  homework.opinion = o.opinion;
+                  homework.assignment = o.assignment.as_name;
                   homeworks.push(homework);
               });
+
+              // 根据time_stamp排序
+              homeworks.sort(compare("time_stamp"));
 
               layui.use(['laypage'], function (laypage) {
                   //分页
@@ -144,10 +199,14 @@
   <table class="layui-table">
     <thead>
     <tr>
+      <th>作业</th>
+      <th>小组编号</th>
       <th>名称</th>
       <th>提交时间</th>
-      <th>查看</th>
-      <th>评分</th>
+      <th>提交人</th>
+      <th>成绩</th>
+      <th>批改说明</th>
+      <th>学生意见</th>
     </tr>
     </thead>
 
