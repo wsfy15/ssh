@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="entity.Grade" table="Grade">
+        <id name="id" column="id">
+            <generator class="uuid" />
+        </id>
+
+
+        <property name="student_id" column="student_id" />
+        <property name="student_class" column="student_class" />
+        <property name="student_name" column="student_name" />
+        <property name="course_id" column="course_id" />
+        <property name="final_grade" column="final_grade" />
+        <array name="rollcall" table="grade_rollcall">
+            <key column="sid" />
+            <list-index column="idx" />
+            <element type="java.lang.Integer" column="rollcall" />
+        </array>
+        <map name="homework" table="grade_homework">
+            <key column="sid" />
+            <map-key type="string" column="key_" />
+            <element column="grade" type="float" />
+        </map>
+
+        <property name="valid" column="valid" />
+    </class>
+</hibernate-mapping>

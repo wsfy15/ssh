@@ -4,6 +4,7 @@ import dao.*;
 import entity.*;
 import org.apache.http.entity.ContentType;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,7 @@ public class TeacherServiceImpl implements TeacherService {
     private AssignmentDao assignmentDao;
     private RollcallDao rollcallDao;
     private HomeWorkDao homeWorkDao;
+    private GradeDao gradeDao;
 
     /**
      * 添加学生到某节课的学生列表中
@@ -343,6 +345,108 @@ public class TeacherServiceImpl implements TeacherService {
         return homeworkList;
     }
 
+    @Override
+    public List<Grade> getGrade(String co_id) {
+        Course course = courseDao.findById(co_id);
+        if(course == null){
+            return null;
+        }
+
+        Set<Student> students = course.getStudents();
+        List<Grade> gradeList = new ArrayList<>();
+
+        DetachedCriteria criteria = DetachedCriteria.forClass(Grade.class);
+        criteria.add(Restrictions.eq("course_id", co_id));
+
+        return gradeDao.findByCriteria(criteria);
+    }
+
+    @Override
+    public Integer updateGrade(String co_id) {
+        Course course = courseDao.findById(co_id);
+        if (course == null){
+            return -1;
+        }
+
+        if(!course.getCo_ro_num().equals(course.getCo_ro_num_complete())){
+            return -2;
+        }
+
+        Set<Student> students = course.getStudents();
+        Set<Group> courseGroups = course.getGroups();
+        for (Student student : students){
+           // 先查找數據庫是否已有相關記錄
+            DetachedCriteria criteria = DetachedCriteria.forClass(Grade.class);
+            criteria.add(Restrictions.eq("student_id", student.getId()));
+            List<Grade> gradeList = gradeDao.findByCriteria(criteria);
+
+            Grade grade;
+            Float final_grade = 0f;
+            if(gradeList != null && gradeList.size() > 0){
+                grade = gradeList.get(0);
+            } else {
+                grade = new Grade();
+                grade.setValid(1);
+                grade.setCourse_id(co_id);
+                grade.setStudent_class(student.getClassNo());
+                grade.setStudent_name(student.getName());
+                grade.setStudent_id(student.getId());
+            }
+
+            // 查找點名未到信息
+            Set<Rollcall> rollcalls = student.getRollcalls();
+            Set<Rollcall> tmp = rollcalls.stream().filter(
+                    (Rollcall rollcall) -> rollcall.getCourse().getCo_id().equals(co_id) && rollcall.getStudent().equals(student)
+            ).collect(Collectors.toSet());
+            Integer[] grade_rollcall = new Integer[tmp.size()];
+            int index = 0;
+            for(Rollcall rollcall : tmp){
+                grade_rollcall[index++] = rollcall.getCount();
+            }
+            grade.setRollcall(grade_rollcall);
+
+            Integer rollcall_count = course.getCo_ro_num();
+            if(rollcall_count != 0) {
+                final_grade = ((rollcall_count - tmp.size()) / (float)rollcall_count) * (float) course.getCo_peacetimeProportion();
+            }
+
+            // 作業 先找到所属的group，再得到该组的作业得分
+            Set<GroupMember> groupMembers = student.getGroupMembers();
+            Group group = null;
+            for(GroupMember groupMembers1 : groupMembers){
+                if (courseGroups.contains(groupMembers1.getGroup())){
+                    group = groupMembers1.getGroup();
+                    break;
+                }
+            }
+
+            if (group == null){
+               grade.setHomework(null);
+            } else {
+                // 得到所有作业
+                Set<Assignment> assignments = course.getAssignments();
+                Integer totalWeight = 0;
+                for(Assignment assignment : assignments){
+                    totalWeight += assignment.getAs_weight();
+                }
+
+                Map<String, Float> grade_homework = new HashMap<>();
+                Set<Homework> homeworks = group.getHomeworks();
+                for(Homework homework : homeworks){
+                    grade_homework.put(homework.getAssignment().getAs_name(), homework.getGrade());
+                    final_grade += 0.01f * homework.getGrade() * (homework.getAssignment().getAs_weight() / (float)totalWeight) * (100 - course.getCo_peacetimeProportion());
+                }
+
+                grade.setHomework(grade_homework);
+            }
+            grade.setFinal_grade(final_grade);
+
+            gradeDao.saveOrUpdate(grade);
+        }
+
+        return 0;
+    }
+
 
     @Override
     public List<Course> findCourseList(String id) {
@@ -418,5 +522,13 @@ public class TeacherServiceImpl implements TeacherService {
 
     public void setHomeWorkDao(HomeWorkDao homeWorkDao) {
         this.homeWorkDao = homeWorkDao;
+    }
+
+    public GradeDao getGradeDao() {
+        return gradeDao;
+    }
+
+    public void setGradeDao(GradeDao gradeDao) {
+        this.gradeDao = gradeDao;
     }
 }

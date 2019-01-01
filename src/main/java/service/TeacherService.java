@@ -45,4 +45,8 @@ public interface TeacherService {
     boolean modifyCorrection(String ho_id, String correction);
 
     List<Homework> filterHomework(String co_id, String as_id, String group_id, String start, String end);
+
+    List<Grade> getGrade(String co_id);
+
+    Integer updateGrade(String co_id);
 }

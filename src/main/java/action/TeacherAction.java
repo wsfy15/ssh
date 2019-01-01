@@ -478,4 +478,41 @@ public class TeacherAction extends ActionSupport implements ModelDriven<Teacher>
 
         return NONE;
     }
+
+    public String updateGrade(){
+        Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        String co_id = params.get("co_id")[0];
+        try(PrintWriter writer = ServletActionContext.getResponse().getWriter()){
+            Integer res = teacherService.updateGrade(co_id);
+            logger.debug("updateGrade res: {}", res);
+            switch (res){
+                case -1:
+                    writer.print("notfound");       // 查无此课
+                    break;
+                case -2:
+                    writer.print("checkrollcall");  // 点名次数不够
+                    break;
+                case 0:
+                    writer.print("success");
+                    break;
+                default:
+                    break;
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return NONE;
+    }
+
+    public String getGrade(){
+        Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        String co_id = params.get("co_id")[0];
+
+        List<Grade> gradeList = teacherService.getGrade(co_id);
+        logger.debug("getGrade");
+        logger.debug(FastJsonUtil.toJSONString(gradeList));
+        FastJsonUtil.writeJson(ServletActionContext.getResponse(), FastJsonUtil.toJSONString(gradeList));
+        return NONE;
+    }
 }

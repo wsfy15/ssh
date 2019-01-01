@@ -27,7 +27,7 @@ public class Course {
     private Integer valid;
     private Teacher teacher;       // 课程教师编号
 
-    @JSONField(serialize=false)
+//    @JSONField(serialize=false)
     private Set<Assignment> assignments = new HashSet<>();
 
     @JSONField(serialize=false)

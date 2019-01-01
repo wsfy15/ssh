@@ -18,6 +18,8 @@ public interface BaseDao<T> {
 
     void update(T t);
 
+    void saveOrUpdate(T t);
+
     T findById(String id);
 
     List<T> findAll();

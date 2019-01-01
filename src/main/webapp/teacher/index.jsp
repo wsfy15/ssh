@@ -196,9 +196,9 @@
                       </a>
                     </li >
                     <li>
-                      <a id="setGrade"  _href="${ pageContext.request.contextPath }/teacher_.action">
+                      <a id="setGrade"  _href="${ pageContext.request.contextPath }/teacher/gradeinfo.jsp">
                         <i class="iconfont">&#xe6a7;</i>
-                        <cite>计算成绩</cite>
+                        <cite>查看成绩</cite>
                       </a>
                     </li >
                 </ul>
