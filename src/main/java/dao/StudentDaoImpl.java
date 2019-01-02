@@ -12,6 +12,8 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import  utils.hibernateUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -34,13 +36,25 @@ public class StudentDaoImpl extends BaseDaoImpl<Student> implements StudentDao {
     }
 
     @Override
-    public List<Student> findbyproperty(String property) {
+    public List<Student> findbyproperty(String property,Course course) {
         //System.out.println(property);
+        logger.debug(course.getCo_id());
         DetachedCriteria criteria = DetachedCriteria.forClass(Student.class);
         criteria.add(Restrictions.like("name", property,MatchMode.ANYWHERE));
+        //criteria.add(Restrictions.eq("course",course));
         List<Student> list = (List<Student>) this.getHibernateTemplate().findByCriteria(criteria);
+        List<Student> alist= new ArrayList<>();
+        for(Student student:list){
+            Set<Course> courseList=student.getCourses();
+            for(Course course1:courseList){
+                logger.debug(course1.getCo_id());
+                if(course1.getCo_id().equals(course.getCo_id())){
+                    alist.add(student);
+                }
+            }
+        }
         //System.out.println("查询学生+"+list);
-        return list;
+        return alist;
     }
 //    public Set<Course> getcourse(String id){
 //        DetachedCriteria criteria = DetachedCriteria.forClass(Course.class);

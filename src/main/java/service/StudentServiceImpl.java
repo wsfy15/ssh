@@ -122,8 +122,9 @@ public class StudentServiceImpl implements StudentService {
         return new ArrayList<>(courses);
     }
     @Override
-    public   List<Student> searchForStudent(String getvalue){
-        List<Student> list=studentDao.findbyproperty(getvalue);
+    public   List<Student> searchForStudent(String getvalue,String courseId){
+        Course course=courseDao.findById(courseId);
+        List<Student> list=studentDao.findbyproperty(getvalue,course);
         if (list.isEmpty()) {
             return null;
         } else {
@@ -225,7 +226,14 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentDao.findById(userid);
         logger.debug(group.getGr_id());
         logger.debug(assignment.getAs_name());
-        Homework ahomework=homeWorkDao.findbygroupid_filename(group,uploadfileFileName);
+        Set<Homework> homeworkList=group.getHomeworks();
+        Homework ahomework=null;
+        for(Homework homework:homeworkList){
+            if(homework.getAssignment().getAs_id()==assignId)
+                ahomework=homework;
+        }
+
+//        Homework ahomework=homeWorkDao.findbygroupid_filename(group,uploadfileFileName);
         Homework homework;
         if(ahomework==null){
             homework=new Homework();

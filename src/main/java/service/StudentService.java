@@ -13,7 +13,7 @@ public interface StudentService {
 //    JSONArray findCourse(String id);
     List<Course> findCourseList(String id);
 
-    List<Student> searchForStudent(String getvalue);
+    List<Student> searchForStudent(String getvalue,String courseId);
 
     boolean upload(JSONArray array,String courseid);
     void uploadgroup(GroupMember groupMember, JSONObject[] jsonObject, int num);

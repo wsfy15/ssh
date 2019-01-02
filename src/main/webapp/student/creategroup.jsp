@@ -137,7 +137,7 @@
             $.ajax({
                 type:"POST",
                 url:"${ pageContext.request.contextPath }/student/student_searchMember.action",
-                data: {"name":inp},
+                data: {"name":inp,"courseId":courseid},
                 dataType:"json",
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 success:function (data) {

@@ -9,7 +9,7 @@ import java.util.Set;
 
 public interface StudentDao extends BaseDao<Student> {
     boolean login(String id, String password);
-    List<Student> findbyproperty(String property);
+    List<Student> findbyproperty(String property, Course course);
 
 //    Set<Course> getcourse(String id);
 }
