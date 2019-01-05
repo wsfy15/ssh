@@ -40,6 +40,7 @@ public class StudentServiceImpl implements StudentService {
     private  GroupMemberDao groupMemberDao;
     private  AssignmentDao  assignmentDao;
     private  HomeWorkDao homeWorkDao;
+    private  GradeDao gradeDao;
 
     public HomeWorkDao getHomeWorkDao() {
         return homeWorkDao;
@@ -89,6 +90,13 @@ public class StudentServiceImpl implements StudentService {
         this.assignmentDao = assignmentDao;
     }
 
+    public GradeDao getGradeDao() {
+        return gradeDao;
+    }
+
+    public void setGradeDao(GradeDao gradeDao) {
+        this.gradeDao = gradeDao;
+    }
     //    public JSONArray findCourse(String id) {
 //
 //        //Student student = studentDao.findById(id);
@@ -272,5 +280,10 @@ public class StudentServiceImpl implements StudentService {
     //通过小组获得其已交作业
     public List<Homework> findHomework(Group group){
         return homeWorkDao.findhomeworkbygroup(group);
+    }
+
+    public List<Grade> getgradelist(String userId){
+        List<Grade> list = gradeDao.findByUserId(userId);
+        return list;
     }
 }

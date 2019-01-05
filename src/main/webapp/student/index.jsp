@@ -131,7 +131,7 @@
             </a>
           </li>
           <li>
-            <a _href="${ pageContext.request.contextPath }/student_.action">
+            <a _href="${ pageContext.request.contextPath }/student/showscore.jsp">
               <i class="iconfont">&#xe6a7;</i>
               <cite>成绩查看</cite>
               <%-- 包括每一次作业的成绩 --%>

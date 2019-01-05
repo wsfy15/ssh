@@ -53,6 +53,7 @@ public class Grade {
         this.course_id = course_id;
     }
 
+
     public Float getFinal_grade() {
         return final_grade;
     }

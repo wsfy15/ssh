@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface GradeDao extends BaseDao<Grade> {
     List<Grade> findByCriteria(DetachedCriteria criteria);
+
+    List<Grade> findByUserId(String userId);
 }

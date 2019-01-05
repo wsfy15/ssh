@@ -9,6 +9,7 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.util.ValueStack;
 import entity.*;
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.ss.formula.functions.Npv;
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import service.StudentService;
@@ -274,5 +275,12 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
         return NONE;
     }
 
-
+    public String getScoure(){
+        Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
+        String userId = params.get("userId")[0];
+        List<Grade> list = studentService.getgradelist(userId);
+        HttpServletResponse response=ServletActionContext.getResponse();
+        FastJsonUtil.writeJson(response, FastJsonUtil.toJSONString(list));
+        return NONE;
+    }
 }

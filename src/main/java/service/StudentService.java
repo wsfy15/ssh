@@ -31,4 +31,6 @@ public interface StudentService {
     Group getGroup(String groupid);
 
     List<Homework> findHomework(Group group);
+
+    List<Grade> getgradelist(String userId);
 }

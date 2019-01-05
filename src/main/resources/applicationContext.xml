@@ -144,6 +144,7 @@
         <property name="groupDao" ref="groupDao"/>
         <property name="assignmentDao" ref="assignmentDao"/>
         <property name="homeWorkDao" ref="homeWorkDao"/>
+        <property name="gradeDao" ref="gradeDao" />
     </bean>
 
     <bean id="studentAction" class="action.StudentAction">
