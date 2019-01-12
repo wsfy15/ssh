@@ -1,6 +1,8 @@
 package dao;
 
 import entity.Course;
+import entity.Group;
+import entity.GroupMember;
 import entity.Student;
 import org.apache.xmlbeans.impl.xb.xsdschema.RestrictionDocument;
 import org.hibernate.Criteria;
@@ -56,6 +58,15 @@ public class StudentDaoImpl extends BaseDaoImpl<Student> implements StudentDao {
         //System.out.println("查询学生+"+list);
         return alist;
     }
+     public List<Student> findallreadyhavegroup(Course course,StudentDao studentDao){
+        List<Student> list=new ArrayList<>();
+        for(Group group:course.getGroups()){
+            for(GroupMember groupMember :group.getGroupMembers()){
+                list.add(studentDao.findById(groupMember.getStudent().getId()))  ;
+            }
+         }
+        return list;
+     }
 //    public Set<Course> getcourse(String id){
 //        DetachedCriteria criteria = DetachedCriteria.forClass(Course.class);
 //        criteria.add(Restrictions.eq("id",id ,MatchMode.ANYWHERE));

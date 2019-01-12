@@ -133,6 +133,8 @@ public class StudentServiceImpl implements StudentService {
     public   List<Student> searchForStudent(String getvalue,String courseId){
         Course course=courseDao.findById(courseId);
         List<Student> list=studentDao.findbyproperty(getvalue,course);
+        List<Student> list1=studentDao.findallreadyhavegroup(course ,studentDao);
+        list.removeAll(list1);
         if (list.isEmpty()) {
             return null;
         } else {

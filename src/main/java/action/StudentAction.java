@@ -191,6 +191,13 @@ public class StudentAction extends ActionSupport implements ModelDriven<Student>
     public  String getAssign() throws IOException {
         Map<String, String[]> params = ServletActionContext.getRequest().getParameterMap();
         String co_id = params.get("co_id")[0];
+        if (co_id==null){
+            Map map= new HashMap();
+            map.put("error","服务器未接受请求");
+            FastJsonUtil.writeJson(ServletActionContext.getResponse(),FastJsonUtil.toJSONString(map));
+            logger.debug("已经到这里了");
+            return NONE;
+        }
 //        获取作业list
         List<Assignment> assignments = studentService.searchForAssignments(co_id);
         if(assignments != null) {

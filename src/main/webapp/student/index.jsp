@@ -145,14 +145,6 @@
           <cite>小组管理</cite>
           <i class="iconfont nav_right">&#xe697;</i>
         </a>
-        <ul class="sub-menu">
-          <li>
-            <a _href="${ pageContext.request.contextPath }/student_getAllCourse.action">
-              <i class="iconfont">&#xe6a7;</i>
-              <cite>创建小组(todo)</cite>
-            </a>
-          </li>
-        </ul>
       </li>
 
     </ul>

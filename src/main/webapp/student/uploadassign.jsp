@@ -67,39 +67,48 @@
             };
             let url = "${ pageContext.request.contextPath }/student/student_getAssign.action";
             $.post(url, params, function (data) {
-                var assigns = [];
-                $.each(data, function (i, o) {
-                    var assign = {};
-                    assign.as_id = o.as_id;
-                    assign.as_name = o.as_name;
-                    assign.as_weight = o.as_weight;
-                    assign.as_describe = o.as_describe;
-                    assign.as_assigntime =stampToTime(o.as_assigntime);
-                    assign.as_ddl = stampToTime(o.as_ddl);
-                    assigns.push(assign);
-                });
-
-                let count = data.size - 1;
-                console.log("count: " + count);
-                var cols = [
-                    {field:'单选',type:'radio'}
-                    ,{field: 'as_id', title: 'ID', width:80}
-                    ,{field: 'as_name', title: '作业名', width:80}
-                    ,{field: 'as_weight', title: '权重', width: 80 }
-                    ,{field: 'as_describe', title: '描述', width:80}
-                    ,{field: 'as_assigntime', title: '布置时间', width: 80}
-                    ,{field: 'as_ddl', title: 'deadline', width: 177}
-                ];
-
-                layui.use(['table'], function (table) {
-                    table.render({
-                        elem: '#group',
-                        height: 200,
-                        data: assigns,
-                        page: true,
-                        cols: [cols]
+                console.log("进入");
+                if(data.size==1)
+                {
+                    layer.alert(data.error,{icon:2});
+                    console.log("退出");
+                }
+                else{
+                    var assigns = [];
+                    $.each(data, function (i, o) {
+                        var assign = {};
+                        assign.as_id = o.as_id;
+                        assign.as_name = o.as_name;
+                        assign.as_weight = o.as_weight;
+                        assign.as_describe = o.as_describe;
+                        assign.as_assigntime =stampToTime(o.as_assigntime);
+                        assign.as_ddl = stampToTime(o.as_ddl);
+                        assigns.push(assign);
                     });
-                });
+
+                    let count = data.size - 1;
+                    console.log("count: " + count);
+                    var cols = [
+                        {field:'单选',type:'radio'}
+                        ,{field: 'as_id', title: 'ID', width:80}
+                        ,{field: 'as_name', title: '作业名', width:80}
+                        ,{field: 'as_weight', title: '权重', width: 80 }
+                        ,{field: 'as_describe', title: '描述', width:80}
+                        ,{field: 'as_assigntime', title: '布置时间', width: 80}
+                        ,{field: 'as_ddl', title: 'deadline', width: 177}
+                    ];
+
+                    layui.use(['table'], function (table) {
+                        table.render({
+                            elem: '#group',
+                            height: 200,
+                            data: assigns,
+                            page: true,
+                            cols: [cols]
+                        });
+                    });
+                }
+
             }, "json");
         })
 
